@@ -784,8 +784,8 @@ body.term .reel.tap-stop::after{box-shadow:inset 0 0 0 2px rgba(143,240,180,.35)
 .reels{--back:#8c1230; --back-img:repeating-linear-gradient(45deg, rgba(255,230,160,.22) 0 3px, transparent 3px 9px), repeating-linear-gradient(-45deg, rgba(255,230,160,.22) 0 3px, transparent 3px 9px)}
 body.retro .reels{--back:#0d4a2b; --back-img:repeating-conic-gradient(#1f8a4c 0 25%, #0d4a2b 0 50%) 0 0/8px 8px}
 body.term .reels{--back:#06120c; --back-img:repeating-linear-gradient(45deg, #0d2519 0 3px, #06120c 3px 7px)}
-.reels.shuffling .card{animation:shuf .56s ease-in-out both}
-.reels.shuffling .card::after{content:""; position:absolute; inset:0; border-radius:inherit; background:var(--back); background-image:var(--back-img); animation:shufBack .56s linear both; pointer-events:none}
+.reels.shuffling .card{animation:shuf var(--shufd,.56s) ease-in-out both}
+.reels.shuffling .card::after{content:""; position:absolute; inset:0; border-radius:inherit; background:var(--back); background-image:var(--back-img); animation:shufBack var(--shufd,.56s) linear both; pointer-events:none}
 @keyframes shuf{
   0%{transform:scaleX(1)} 18%{transform:scaleX(0)}
   30%{transform:scaleX(1) translateY(-4px)}
@@ -814,20 +814,56 @@ body.term .mixgrid td{background:#081810; color:#8ff0b4}
 body.term .mixgrid td.hit{background:#8ff0b4; color:#06120c}
 
 /* 16-bit look: casino table colours */
-body.retro{background:#0a3d24;
+body.retro:not(.term){background:#0a3d24;
   background-image:radial-gradient(ellipse at 50% 30%, #17703f 0%, #0c4e2d 42%, #06291a 100%),
     repeating-conic-gradient(rgba(0,0,0,.05) 0 25%, transparent 0 50%) 0 0/4px 4px}
-body.retro .cabinet{background:#111412;
+body.retro:not(.term) .cabinet{background:#111412;
   box-shadow:0 0 0 6px #0b0d0c, 0 0 0 11px #c8102e, 0 0 0 16px #0b0d0c, 0 0 0 19px #f5c542, 0 30px 60px rgba(0,0,0,.6),
     inset 0 0 80px rgba(245,197,66,.07), inset 0 0 0 4px #6d0a1a}
-body.retro .reels-frame{background:#0b0d0c; box-shadow:0 0 0 4px #f5c542, 0 0 0 7px #0b0d0c, 6px 6px 0 7px #030504}
-body.retro .brand h1{color:#f5c542; -webkit-text-fill-color:#f5c542; text-shadow:3px 3px 0 #c8102e, 6px 6px 0 #6d0a1a, 0 0 14px rgba(245,197,66,.5)}
-body.retro .panel{background:#0e1410; border-color:#9c7a2e}
-body.retro .tabs button[aria-selected="true"], body.retro .pt tr.hit td{background:#c8102e; color:#fbf7ec}
-body.retro .sb-score{border-color:#f5c542}
-body.retro .spin{background:#c8102e}
-body.retro .bulb{background:#3a2a0c}
+body.retro:not(.term) .reels-frame{background:#0b0d0c; box-shadow:0 0 0 4px #f5c542, 0 0 0 7px #0b0d0c, 6px 6px 0 7px #030504}
+body.retro:not(.term) .brand h1{color:#f5c542; -webkit-text-fill-color:#f5c542; text-shadow:3px 3px 0 #c8102e, 6px 6px 0 #6d0a1a, 0 0 14px rgba(245,197,66,.5)}
+body.retro:not(.term) .panel{background:#0e1410; border-color:#9c7a2e}
+body.retro:not(.term) .tabs button[aria-selected="true"], body.retro:not(.term) .pt tr.hit td{background:#c8102e; color:#fbf7ec}
+body.retro:not(.term) .sb-score{border-color:#f5c542}
+body.retro:not(.term) .spin:not(.stopmode){background:#c8102e}
+body.retro:not(.term) .bulb{background:#3a2a0c}
 @keyframes chase-px{0%,18%{background:#ffe08a; box-shadow:0 0 8px #f5c542}19%,100%{background:#3a2a0c; box-shadow:none}}
+
+/* "Take your call": red instant button (speed) */
+.autogrp{display:flex; flex-direction:column; align-items:center; gap:6px}
+.instant{position:relative; width:74px; height:74px; border:0; padding:0; border-radius:50%; background:transparent; cursor:pointer;
+  --ring:linear-gradient(180deg,#e9edf1,#9aa3ad 55%,#5d656e); -webkit-tap-highlight-color:transparent}
+.instant::before{content:""; position:absolute; inset:0; border-radius:50%; background:var(--ring);
+  box-shadow:0 6px 0 #2a2f35, 0 10px 18px rgba(0,0,0,.55), inset 0 2px 2px rgba(255,255,255,.7)}
+.instant .dome{position:absolute; inset:9px; border-radius:50%; display:grid; place-items:center;
+  background:radial-gradient(circle at 38% 28%, #ff9aa3 0%, #ff2d45 22%, #d40f2a 55%, #7d0514 100%);
+  box-shadow:0 6px 0 #6a0412, inset 0 -6px 10px rgba(0,0,0,.35), inset 0 4px 6px rgba(255,255,255,.35);
+  transition:transform .08s, box-shadow .08s}
+.instant .hspd{font-weight:900; font-size:19px; color:#fff; text-shadow:0 2px 0 rgba(90,0,10,.7); letter-spacing:.02em; font-variant-numeric:tabular-nums}
+.instant:active .dome, .instant.press .dome{transform:translateY(5px) scaleY(.94); box-shadow:0 1px 0 #6a0412, inset 0 -3px 8px rgba(0,0,0,.4), inset 0 3px 5px rgba(255,255,255,.3)}
+.instant .leds{position:absolute; left:50%; bottom:-14px; transform:translateX(-50%); display:flex; gap:5px}
+.instant .leds i{width:7px; height:7px; border-radius:50%; background:#3a1016; box-shadow:inset 0 1px 1px rgba(0,0,0,.6)}
+.instant[data-speed="0"] .leds i:nth-child(-n+1), .instant[data-speed="1"] .leds i:nth-child(-n+2), .instant[data-speed="2"] .leds i{background:#ff3b52; box-shadow:0 0 6px #ff3b52}
+.instant[data-speed="2"] .dome{animation:hot .9s ease-in-out infinite alternate}
+@keyframes hot{to{filter:brightness(1.18) saturate(1.15)}}
+.hornlbl{font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--faint); margin-top:12px}
+body.retro .instant::before{border-radius:0; background:#9aa3ad; box-shadow:inset -4px -4px 0 #5d656e, inset 4px 4px 0 #e9edf1, 0 0 0 3px #0b0d0c, 4px 6px 0 3px #030504}
+body.retro .instant .dome{border-radius:0; background:#c8102e; box-shadow:inset -5px -5px 0 #6d0a1a, inset 5px 5px 0 #ff6f86, 0 5px 0 #6d0a1a}
+body.retro .instant .hspd{font-family:var(--display); font-size:12px; font-weight:400; text-shadow:2px 2px 0 #6d0a1a}
+body.retro .instant .leds i{border-radius:0}
+body.retro .hornlbl{font-family:var(--display); font-size:7px; letter-spacing:.06em; color:#d9c9a3}
+body.term .instant::before{border-radius:0; background:#0c1f15; box-shadow:0 0 0 2px #4f9f73}
+body.term .instant .dome{border-radius:0; background:#b3263a; box-shadow:inset -4px -4px 0 #6a0e1c, inset 4px 4px 0 #e0566a, 0 4px 0 #4a0a14}
+body.term .instant .hspd{font-family:var(--ui); font-size:24px; font-weight:400; color:#fff; text-shadow:none}
+body.term .instant .leds i{border-radius:0; background:#123424}
+body.term .instant[data-speed="0"] .leds i:nth-child(-n+1), body.term .instant[data-speed="1"] .leds i:nth-child(-n+2), body.term .instant[data-speed="2"] .leds i{background:#e0566a; box-shadow:none}
+body.term .hornlbl{font-family:var(--ui) !important; font-size:16px !important; color:#4f9f73}
+.instant .dome{filter:brightness(calc(1 + var(--boost, 0) * .35)); box-shadow:0 6px 0 #6a0412, inset 0 -6px 10px rgba(0,0,0,.35), inset 0 4px 6px rgba(255,255,255,.35), 0 0 calc(var(--boost, 0) * 26px) rgba(255,60,80,calc(var(--boost, 0) * .9))}
+.instant[data-speed="2"] .dome{animation:none}
+.instant .hspd{font-size:16px}
+.reels.jiggle .card{animation:jig .22s ease-out}
+@keyframes jig{30%{transform:translateY(-5px) rotate(-2deg)}65%{transform:translateY(2px) rotate(1.5deg)}}
+body.retro .reels.jiggle .card{animation-timing-function:steps(2)}
 
 @media (prefers-reduced-motion: reduce){ .reels.shuffling .card{animation:none} }
 
@@ -929,7 +965,13 @@ body.retro .bulb{background:#3a2a0c}
             <button class="autobtn" id="newGameBtn" type="button">New game</button>
           </div>
           <div class="spinwrap"><button class="spin ready" id="spinBtn" type="button"><span id="spinLbl">SPIN</span><small id="spinSub">10 left</small></button></div>
-          <div class="autogrp" aria-hidden="true"></div>
+          <div class="autogrp">
+            <button class="instant" id="hornBtn" type="button" aria-label="Take your call: rev up the shuffle and the reels" title="Take your call: tap (or hold) to rev up the shuffle and the reels — keep tapping to keep them fast">
+              <span class="dome"></span>
+              <span class="leds" aria-hidden="true"><i></i><i></i><i></i></span>
+            </button>
+            <span class="lbl hornlbl">Take your call</span>
+          </div>
         </div>
         <div class="receipt-wrap" id="receiptWrap" hidden>
           <div class="rhead">Points this spin</div>
@@ -986,10 +1028,11 @@ body.retro .bulb{background:#3a2a0c}
     <h3 id="howTitle">How to play</h3>
     <ul>
       <li>Every game gives you <b>10 spins</b>. <b>Pull the lever</b>, <b>swipe down on the cards</b>, press SPIN or hit the spacebar to start.</li>
+      <li><b>Take your call (red button):</b> tap it — or hold it — to rev up the shuffle and the reels, up to ×3. Keep tapping to keep them fast; stop and they slow back down. Tap between spins to charge up the next one. It never changes your chances.</li>
       <li><b>Every spin is freshly shuffled.</b> Each reel is its own deck, shuffled fairly with secure random numbers before every spin, so no run can be predicted.</li>
       <li><b>You decide when to stop — luck decides the cards.</b> The reels keep spinning until you <b>tap the reels</b>, press <b>STOP</b>, hit the spacebar or pull the lever again. Each reel then coasts a random distance and settles, so every spin is a fresh lucky draw.</li>
       <li><b>3 of the same in any line</b> (across, down or corner to corner): KKK = <b>1,000</b> (jackpot) · QQQ = 400 · ♥♥♥ = 250 · JJJ = 250 · ♦♦♦ = 180 · ♣♣♣ = 120 · ♠♠♠ = 80.</li>
-      <li><b>Royal Line:</b> J, Q and K in one line, any order = <b>200</b>.</li>
+      <li><b>Royal Line:</b> J, Q, K <b>in order</b> along a line (J → Q → K, or K → Q → J) = <b>200</b>.</li>
       <li><b>2 + 1 suits</b> — two cards of one suit <b>side by side</b> plus one of another suit, on any of the 8 lines (♥ ♥ ♠ and ♠ ♥ ♥ score, ♥ ♠ ♥ doesn't). Each mix has its own score, from ♥♥ + ♦ = 25 down to ♠♠ + ♣ = 5 (see the grid in Points). J, Q and K only score as a set of 3.</li>
       <li>Every spin is a <b>lucky draw</b> — the odds reshuffle each time, so any suit can come in a streak. All four suits are equally likely; J, Q and K are rarer, the King rarest. <b>Face-down cards</b> (▒) never match.</li>
       <li><b>♥ meter:</b> it fills with the points you score. Reach <b>200, 500, 900, 1,400, 2,000…</b> points in a game and each one gives you <b>3 extra spins</b>. Keep scoring to keep going!</li>
@@ -1201,7 +1244,9 @@ function runSelfTests(log = console.log) {
     ['2+1: two suits + a face card or face-down card → no score', () => evaluateGridRetro(G('2H 5H 13K 3X 7X 4X 8X 6X 10X'), 10).lineWins.length === 0],
     ['2+1: ♣ ♠ ♠ on the bottom row → 2 Spades + 1 Club, 5 points', () => { const r = evaluateGridRetro(G('2H 5D 9C 3D 7H 4C 8C 6S 10S'), 10); const w = r.lineWins.find(x => x.line === 3); return w && w.key === 'mSC' && w.payout === 5; }],
     ['Retro: K K K → Three Kings, 1,000 points, jackpot', () => { const r = evaluateGridRetro(G('13K 13K 13K 2C 3D 4S 5H 6C 7D'), 10); return r.lineWins.some(w => w.key === 'rK' && w.payout === 1000) && r.jackpot; }],
-    ['Retro: K J Q (any order) → Royal Line, 200 points', () => evaluateLineRetro(L('13K 11J 12Q')).key === 'rRoyal' && evaluateLineRetro(L('13K 11J 12Q')).multiplier * 10 === 200],
+    ['Royal Line: J Q K in order → 200 points', () => evaluateLineRetro(L('11J 12Q 13K')).key === 'rRoyal' && evaluateLineRetro(L('11J 12Q 13K')).multiplier * 10 === 200],
+    ['Royal Line: K Q J (same run, other way) → Royal Line', () => evaluateLineRetro(L('13K 12Q 11J')).key === 'rRoyal'],
+    ['Royal Line: K J Q (out of order) → no score', () => evaluateLineRetro(L('13K 11J 12Q')).multiplier === 0 && evaluateLineRetro(L('12Q 11J 13K')).multiplier === 0],
     ['Retro: Q Q ♣ on a row → no win (J, Q, K only count as 3)', () => { const r = evaluateGridRetro(G('12Q 12Q 2C 3D 4S 5H 6C 7D 8S'), 10); return !r.lineWins.some(x => x.line === 1); }],
     ['Lucky draw: odds always add up to 100%, face-down share fixed', () => { const w = luckyWeights(); const t = Object.values(w).reduce((a, b) => a + b, 0); return Math.abs(t - 1) < 1e-9 && w.X === RETRO_WEIGHTS.X; }],
     ['Warm-up: fewer face-down cards when asked', () => { const w = luckyWeights(RETRO_WEIGHTS, Math.random, .22); return Math.abs(w.X - .22) < 1e-9 && Math.abs(Object.values(w).reduce((a, b) => a + b, 0) - 1) < 1e-9; }],
@@ -1226,7 +1271,7 @@ const RETRO_PAYTABLE = [
   { key: 'rQ',   name: 'Three Queens',   eg: 'Q Q Q', mult: 40 },
   { key: 'rH',   name: 'Three Hearts',   eg: '♥ ♥ ♥', mult: 25 },
   { key: 'rJ',   name: 'Three Jacks',    eg: 'J J J', mult: 25 },
-  { key: 'rRoyal', name: 'Royal Line',   eg: 'J Q K any order', mult: 20 },
+  { key: 'rRoyal', name: 'Royal Line',   eg: 'J Q K in order', mult: 20 },
   { key: 'rD',   name: 'Three Diamonds', eg: '♦ ♦ ♦', mult: 18 },
   { key: 'rC',   name: 'Three Clubs',    eg: '♣ ♣ ♣', mult: 12 },
   { key: 'rS',   name: 'Three Spades',   eg: '♠ ♠ ♠', mult: 8 },
@@ -1258,7 +1303,7 @@ function evaluateLineRetro(cards) {
   const s = cards.map(c => c.s);
   let key = null;
   if (s[0] !== 'X' && s[0] === s[1] && s[1] === s[2]) key = 'r' + s[0];
-  else if ([...s].sort().join('') === 'JKQ') key = 'rRoyal';
+  else if (s.join('') === 'JQK' || s.join('') === 'KQJ') key = 'rRoyal';   // in sequence: J→Q→K (or K→Q→J read the other way)
   if (!key) return { key: null, name: 'No win', multiplier: 0 };
   return { key, name: RPT[key].name, multiplier: RPT[key].mult };
 }
@@ -1316,6 +1361,12 @@ const scoreWarm = () => Math.min(.10, Math.floor(S.score / 150) * .01);
 const coldLuck = () => Math.min(.18, (S.cold || 0) * .03);
 const LUCK_MAX = .28;
 const warmUp = () => Math.min(RETRO_WEIGHTS.X - .02, scoreWarm() + coldLuck());
+// "Take your call" — the player revs the machine by hand. Every press adds a burst of boost (0…1),
+// holding keeps pumping, and the boost fades on its own, so speed stays up only while you keep pressing.
+// Speed multiplier = 1 + 2 × boost (×1 … ×3). Only how fast things move — never which cards you get.
+let boost = 0, boostLoop = false, boostLast = 0;
+const speedMult = () => 1 + 2 * boost;
+const SPD = () => { const m = speedMult(); return { reel: m, shuffle: Math.max(180, 560 / m), coast: 1 / Math.sqrt(m) }; };
 const MIN_HIGH = 500;           // the high score to beat is never below 500
 const SAVE_KEY = 'royal-reels-v1';
 // ♥ meter: fills with the points you score in a game. Milestones at 200, 500, 900, 1,400, 2,000, 2,700…
@@ -1326,7 +1377,7 @@ const metersPassed = score => { let i = 0; while (score >= meterGoal(i)) i++; re
 
 function freshState() {
   return {
-    v: 5, mode: 'retro', theme: 'pixel', cold: 0, pending: null, ended: null, meterIdx: 0,
+    v: 5, mode: 'retro', theme: 'pixel', cold: 0, pending: null, ended: null, meterIdx: 0, speed: 0,
     score: 0, spinsLeft: SPINS_PER_GAME, startSpins: SPINS_PER_GAME, hearts: 0, highs: {},
     history: [], combos: {}, totalSpins: 0, wins: 0, biggest: 0, games: 0,
   };
@@ -1387,6 +1438,7 @@ const Sound = (() => {
     chime(mult) { const f = 520 * Math.pow(2, Math.min(Math.log2(mult + 1), 7) / 4); tone(f, .35, 'sine', .22); tone(f * 1.5, .3, 'sine', .1, .05); },
     fanfare(big) { const n = big ? [523, 659, 784, 1047, 784, 1047, 1319] : [523, 659, 784, 1047]; n.forEach((f, i) => { tone(f, .28, 'square', .09, i * .11); tone(f / 2, .28, 'triangle', .12, i * .11); }); },
     coin() { tone(1320, .08, 'square', .06); tone(1760, .12, 'square', .05, .06); },
+    press(lv = 0, b = 0) { tone(160, .06, 'square', .16, 0, 90); const f = 330 + 520 * b; tone(f, .12, 'sawtooth', .07, .03, f * 1.35); },
     level() { [392, 523, 659, 784, 1047].forEach((f, i) => tone(f, .22, 'triangle', .14, i * .08)); },
   };
 })();
@@ -1478,6 +1530,31 @@ function collectCards() {
 const REEL_LEN = 48;
 let reelRun = null;
 const mod = (a, n) => ((a % n) + n) % n;
+/* "Take your call": one press = one burst of boost; the boost fades by itself (faster while spinning). */
+function pumpBoost() {
+  boost = Math.min(1, boost + .2);
+  Sound.press(Math.min(2, Math.floor(boost * 3)), boost);
+  buzz(12);
+  const b = $('hornBtn'); b.classList.remove('press'); void b.offsetWidth; b.classList.add('press');
+  if (phase === 'idle' && !RM) {                                  // between spins: the cards jiggle as you rev
+    const reels = $('reels'); reels.classList.remove('jiggle'); void reels.offsetWidth; reels.classList.add('jiggle');
+  }
+  if (!boostLoop) { boostLoop = true; boostLast = performance.now(); requestAnimationFrame(boostTick); }
+  renderBoost();
+}
+function boostTick(now) {
+  const dt = Math.min(100, now - boostLast) / 1000; boostLast = now;
+  const fade = phase === 'spinning' ? .3 : .12;                  // per second
+  boost = Math.max(0, boost - fade * dt);
+  if (reelRun) reelRun.V = reelRun.V0 * speedMult();              // the spinning reels follow your revving
+  renderBoost();
+  if (boost > 0) requestAnimationFrame(boostTick); else boostLoop = false;
+}
+function renderBoost() {
+  const m = speedMult(), el = $('hornBtn');
+  el.dataset.speed = m < 1.6 ? 0 : m < 2.3 ? 1 : 2;
+  el.style.setProperty('--boost', boost.toFixed(3));
+}
 /* Visible shuffle: the cards flip face-down and riffle before every spin. */
 function shuffleFx() {
   return new Promise(res => {
@@ -1485,16 +1562,19 @@ function shuffleFx() {
     $('winNum').className = 'wnum zero'; $('winNum').textContent = 'Shuffling…';
     reels.classList.remove('shuffling'); void reels.offsetWidth; reels.classList.add('shuffling');
     cardEls.forEach((el, i) => el && el.style.setProperty('--sx', ((i % 3) - 1) * 14 + 'px'));
-    for (let i = 0; i < 9; i++) setTimeout(() => Sound.tick(), 40 + i * 45);            // riffle sound
+    const dur = RM ? 120 : SPD().shuffle;
+    reels.style.setProperty('--shufd', dur + 'ms');
+    for (let i = 0; i < 9; i++) setTimeout(() => Sound.tick(), (40 + i * 45) * dur / 560);   // riffle sound
     buzz([6, 30, 6, 30, 6]);
-    setTimeout(() => { reels.classList.remove('shuffling'); $('winNum').textContent = 'Tap the reels or press STOP'; res(); }, RM ? 120 : 560);
+    setTimeout(() => { reels.classList.remove('shuffling'); $('winNum').textContent = 'Tap the reels or press STOP'; res(); }, dur);
   });
 }
 function startReels(power = 1) {
   return new Promise(resolve => {
     const H = slotH(), N = REEL_LEN, NH = N * H;
-    const V = (H / 60) * Math.max(.85, Math.min(1.25, power));   // cruise ≈ 16 cards per second
-    const run = { H, N, NH, V, reels: [], done: 0, resolve, lastTick: 0, last: performance.now(), retro: isRetro() };
+    const V0 = (H / 60) * Math.max(.85, Math.min(1.25, power));  // ×1 cruise ≈ 16 cards per second
+    const V = V0 * speedMult();                                   // revved up by "Take your call"
+    const run = { H, N, NH, V, V0, reels: [], done: 0, resolve, lastTick: 0, last: performance.now(), retro: isRetro() };
     reelEls.forEach((reel, c) => {
       const prev = [currentGrid[c], currentGrid[c + 3], currentGrid[c + 6]];
       const A = shuffledDeck(spinWeights, N);                    // a freshly shuffled deck every spin
@@ -1554,7 +1634,7 @@ function reelTick(now) {
 /* Slow stop: the reel coasts a RANDOM distance (a 0.9-2.0 s slow-down, about 5-11 cards; luck decides),
    stretched by less than one card so it finishes exactly on a card edge, then settles with a small bounce. */
 function beginSlowStop(run, r, now) {
-  const v = r.v, Tn = RM ? 250 : 900 + RNG() * 1100;
+  const v = r.v, Tn = RM ? 250 : (900 + RNG() * 1100) * SPD().coast;
   const D0 = v * Tn / 3;
   const off = mod(-r.pos, run.NH);
   const D = D0 + mod(off - D0, run.H);                         // land on a card edge
@@ -1581,7 +1661,7 @@ function reelFree(r) { return r && !r.landed && r.state !== 'lock' && r.stopAt =
 function stopAll() {
   const run = reelRun; if (!run || !run.reels.some(reelFree)) return;
   const now = performance.now();
-  run.reels.forEach((r, i) => { if (reelFree(r)) r.stopAt = now + i * 280 + RNG() * 120; });
+  run.reels.forEach((r, i) => { if (reelFree(r)) r.stopAt = now + (i * 280 + RNG() * 120) * SPD().coast; });
   buzz([10, 20, 10]); renderHUD();
 }
 function stopNext() { stopAll(); }
@@ -1803,6 +1883,7 @@ function celebrate(res, final, tier) {
 function renderHUD() {
   if (!scoreAnimating) $('mScore').textContent = fmt(S.score);
   $('mSpinsLeft').textContent = S.spinsLeft;
+  renderBoost();
   $('mHighTag').textContent = bonusSpins() ? `+${bonusSpins()} spin${bonusSpins() > 1 ? 's' : ''} per game` : 'to beat';
   $('termStat').textContent = `Score: ${fmt(S.score)} · Spins: ${S.spinsLeft} · High: ${fmt(highScore())}`;
   $('sbSpins').classList.toggle('low', S.spinsLeft > 0 && S.spinsLeft <= 5);
@@ -1891,7 +1972,7 @@ function symHTML(cards) {
 function renderReceipt(res, grid, total) {
   const wrap = $('receiptWrap'), ul = $('receipt');
   wrap.hidden = false;
-  if (!total) { ul.innerHTML = `<li class="none">No match this time. Look for 3 of a kind, J-Q-K, or two same-suit cards side by side plus one other suit in any line.</li>`; return; }
+  if (!total) { ul.innerHTML = `<li class="none">No match this time. Look for 3 of a kind, J-Q-K in order, or two same-suit cards side by side plus one other suit in any line.</li>`; return; }
   const rows = [];
   const lines = [...res.lineWins].sort((a, b) => b.payout - a.payout);
   lines.slice(0, 5).forEach(w => rows.push(`<li><span>Line ${w.line} · ${PAYLINES[w.lineIndex].name}</span><span class="rs">${symHTML(w.positions.map(p => grid[p]))}</span><b>+${fmt(w.payout)}</b></li>`));
@@ -2201,6 +2282,13 @@ function buildBulbs() {
 /* ---------- Wire up ---------- */
 function bind() {
   $('spinBtn').addEventListener('click', () => { if (phase === 'spinning') stopNext(); else spin(); });
+  // press = one burst; hold = keep pumping every 170 ms; keyboard Enter on the button = one burst
+  let pumpT = null;
+  const hb = $('hornBtn');
+  const release = () => { clearInterval(pumpT); pumpT = null; hb.classList.remove('press'); };
+  hb.addEventListener('pointerdown', e => { e.preventDefault(); Sound.init(); pumpBoost(); clearInterval(pumpT); pumpT = setInterval(pumpBoost, 170); hb.setPointerCapture(e.pointerId); });
+  hb.addEventListener('pointerup', release); hb.addEventListener('pointercancel', release); hb.addEventListener('lostpointercapture', release);
+  hb.addEventListener('click', e => { if (e.detail === 0) pumpBoost(); });
   $('newGameBtn').addEventListener('click', () => { if (phase === 'idle') confirmThen('new', 'This', () => newGame()); });
   $('mega').addEventListener('click', () => celebrateSkip && celebrateSkip());
   document.querySelectorAll('.looks button').forEach(b => b.addEventListener('click', () => setLook(b.dataset.look)));
