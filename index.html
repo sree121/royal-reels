@@ -1133,11 +1133,12 @@ const BN = Object.fromEntries(BONUSES.map(b => [b.key, b]));
 const COMBO_RULES = [];   // simple scoring: every winning line just adds its points
 
 const isRed = s => s === 'H' || s === 'D';
-// Retro reels: the 4 suits are equally likely; J, Q, K are rarer (the King rarest); 30% land face-down (X).
-const RETRO_WEIGHTS = { H: .13, D: .13, C: .13, S: .13, J: .07, Q: .06, K: .05, X: .30 };
+// Reels: the 4 suits are equally likely; J, Q, K are rarer (the King rarest); 10% land face-down (X).
+// (Same proportions as before for the other cards, scaled up to fill the remaining 90%.)
+const RETRO_WEIGHTS = { H: .1671, D: .1671, C: .1671, S: .1671, J: .09, Q: .0772, K: .0645, X: .10 };
 // Lottery draw: every spin reshuffles the odds at random around those averages, so one spin may be
-// heart-heavy and the next full of Kings. Simulated: every suit's 3-match ~1 in 31 spins, Royal Line
-// ~1 in 97, KKK ~1 in 406; ~29% of spins score; a 10-spin game beats 1,000 about 1 time in 11.
+// heart-heavy and the next full of Kings. Simulated (shuffled-deck reels, random stops): ~68% of spins
+// score; a typical 10-spin game ≈ 760 points; ~65% of first games beat 500.
 /* Unpredictable randomness: the browser's cryptographic generator (not a seedable pattern). */
 const RNG = (() => {
   const c = (typeof crypto !== 'undefined' && crypto.getRandomValues) ? crypto : null;
