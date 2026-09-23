@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Royal Reels — a retro card slot game. Match suits, land Three Kings, beat the high score.">
-<meta name="theme-color" content="#1a1c2c">
+<meta name="theme-color" content="#0a3d24">
 <title>Royal Reels</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -258,7 +258,7 @@ button:focus-visible{outline:2px solid var(--gold-hi); outline-offset:2px}
 .pt td{padding:4px 6px; border-bottom:1px solid rgba(230,178,76,.1); vertical-align:middle}
 .pt td.eg{color:var(--faint); font-size:12px; white-space:nowrap}
 .pt .bd{display:block; font-size:12px; color:var(--faint)}
-body.retro .pt .bd{font-size:17px; color:#94b0c2}
+body.retro .pt .bd{font-size:17px; color:#d9c9a3}
 .pt td.m{text-align:right; font-weight:700; color:var(--gold); font-variant-numeric:tabular-nums; white-space:nowrap}
 .pt tr.hit td{background:rgba(230,178,76,.18); color:#fff}
 .pt tr.hit td.m{color:var(--gold-hi)}
@@ -313,7 +313,7 @@ body.retro .pt .bd{font-size:17px; color:#94b0c2}
 .btn{border:0; border-radius:12px; padding:10px 18px; font-weight:700; letter-spacing:.06em; background:linear-gradient(180deg,var(--gold-hi),var(--gold)); color:#2a0812}
 
 /* =====================================================================
-   RETRO MODE — 16-bit console on a CRT television (Sweetie-16 palette)
+   RETRO MODE — 16-bit pixel look on a CRT, in casino colours (felt green, black lacquer, red, gold)
    ===================================================================== */
 .crt{position:fixed; inset:0; pointer-events:none; z-index:90; display:none}
 body.retro .crt{display:block;
@@ -324,15 +324,15 @@ body.retro .crt{display:block;
   animation:flicker 4s steps(1) infinite}
 @keyframes flicker{0%{opacity:1}47%{opacity:.93}48%{opacity:1}83%{opacity:.96}84%{opacity:1}}
 body.retro{
-  --ground:#1a1c2c; --gold:#ffcd75; --gold-hi:#f4f4f4; --gold-lo:#566c86;
-  --ink:#f4f4f4; --muted:#94b0c2; --faint:#566c86; --cyan:#73eff7; --magenta:#a7f070; --heart:#b13e53;
-  --panel:#1a1c2c; --panel2:#1a1c2c; --line:#566c86;
+  --ground:#0b0d0c; --gold:#f5c542; --gold-hi:#fbf7ec; --gold-lo:#9c7a2e;
+  --ink:#fbf7ec; --muted:#d9c9a3; --faint:#9c7a2e; --cyan:#ffe08a; --magenta:#3fd07a; --heart:#c8102e;
+  --panel:#0b0d0c; --panel2:#0b0d0c; --line:#9c7a2e;
   --ui:'VT323', 'Courier New', monospace; --display:'Press Start 2P', 'Courier New', monospace;
   font-size:20px;
-  background:#1a1c2c;
+  background:#0b0d0c;
   background-image:
-    radial-gradient(circle at 50% 30%, rgba(59,93,201,.25), transparent 65%),
-    repeating-conic-gradient(#1a1c2c 0 25%, #1d2032 0 50%) 0 0/8px 8px;
+    radial-gradient(circle at 50% 30%, rgba(31,138,76,.25), transparent 65%),
+    repeating-conic-gradient(#0b0d0c 0 25%, #0a2a1a 0 50%) 0 0/8px 8px;
 }
 body.retro .app{animation:crtOn .7s cubic-bezier(.2,.8,.2,1)}
 @keyframes crtOn{
@@ -342,128 +342,128 @@ body.retro .app{animation:crtOn .7s cubic-bezier(.2,.8,.2,1)}
   100%{transform:none; filter:none}
 }
 body.retro *{border-radius:0 !important}
-body.retro .brand h1{font-family:var(--display); font-size:clamp(16px,2.6vw,26px); background:none; color:#ffcd75; -webkit-text-fill-color:#ffcd75;
-  text-shadow:3px 3px 0 #b13e53, 6px 6px 0 #5d275d, 0 0 12px rgba(255,205,117,.5); filter:none; line-height:1.3}
-body.retro .brand .tag{font-family:var(--display); font-size:8px; letter-spacing:.14em; color:#73eff7; margin-top:8px}
-body.retro .lv, body.retro .ghost, body.retro .autobtn{font-family:var(--display); font-size:9px; letter-spacing:.06em; background:#333c57; border:3px solid #1a1c2c;
-  box-shadow:inset -3px -3px 0 #1a1c2c, inset 3px 3px 0 #566c86, 3px 3px 0 #0d0e16; padding:9px 12px}
-body.retro .ghost[aria-pressed="true"]{background:#b13e53; color:#f4f4f4; box-shadow:inset -3px -3px 0 #5d275d, inset 3px 3px 0 #ef7d57, 3px 3px 0 #0d0e16}
-body.retro .lv b{font-size:11px; color:#ffcd75}
+body.retro .brand h1{font-family:var(--display); font-size:clamp(16px,2.6vw,26px); background:none; color:#f5c542; -webkit-text-fill-color:#f5c542;
+  text-shadow:3px 3px 0 #c8102e, 6px 6px 0 #6d0a1a, 0 0 12px rgba(245,197,66,.5); filter:none; line-height:1.3}
+body.retro .brand .tag{font-family:var(--display); font-size:8px; letter-spacing:.14em; color:#ffe08a; margin-top:8px}
+body.retro .lv, body.retro .ghost, body.retro .autobtn{font-family:var(--display); font-size:9px; letter-spacing:.06em; background:#14261c; border:3px solid #0b0d0c;
+  box-shadow:inset -3px -3px 0 #0b0d0c, inset 3px 3px 0 #9c7a2e, 3px 3px 0 #030504; padding:9px 12px}
+body.retro .ghost[aria-pressed="true"]{background:#c8102e; color:#fbf7ec; box-shadow:inset -3px -3px 0 #6d0a1a, inset 3px 3px 0 #e4572e, 3px 3px 0 #030504}
+body.retro .lv b{font-size:11px; color:#f5c542}
 body.retro #xpText, body.retro .heartm small{font-size:18px}
-body.retro .xpbar, body.retro .heartbar{height:14px; background:#0d0e16; border:3px solid #566c86}
-body.retro .xpbar i{background:repeating-linear-gradient(90deg,#a7f070 0 8px,#38b764 8px 10px)}
-body.retro .heartbar i{background:repeating-linear-gradient(90deg,#b13e53 0 8px,#5d275d 8px 10px)}
+body.retro .xpbar, body.retro .heartbar{height:14px; background:#030504; border:3px solid #9c7a2e}
+body.retro .xpbar i{background:repeating-linear-gradient(90deg,#3fd07a 0 8px,#1e9e57 8px 10px)}
+body.retro .heartbar i{background:repeating-linear-gradient(90deg,#c8102e 0 8px,#6d0a1a 8px 10px)}
 body.retro .cabinet{
-  background:#333c57; border:0; padding:34px 28px 28px;
+  background:#14261c; border:0; padding:34px 28px 28px;
   border-radius:0 !important;
-  box-shadow: 0 0 0 6px #1a1c2c, 0 0 0 12px #566c86, 0 0 0 18px #1a1c2c, 0 0 0 20px #94b0c2, 0 30px 60px rgba(0,0,0,.6),
-    inset 0 0 80px rgba(115,239,247,.10), inset 0 0 0 4px #29366f;
+  box-shadow: 0 0 0 6px #0b0d0c, 0 0 0 12px #9c7a2e, 0 0 0 18px #0b0d0c, 0 0 0 20px #d9c9a3, 0 30px 60px rgba(0,0,0,.6),
+    inset 0 0 80px rgba(255,224,138,.10), inset 0 0 0 4px #0d4a2b;
 }
-body.retro .cabinet.free{box-shadow: 0 0 0 6px #1a1c2c, 0 0 0 12px #b13e53, 0 0 0 18px #1a1c2c, 0 0 0 20px #ef7d57, 0 0 50px rgba(177,62,83,.6), inset 0 0 0 4px #5d275d}
-body.retro .bulb{width:8px; height:8px; margin:-4px 0 0 -4px; background:#29366f; box-shadow:none; animation-name:chase-px; animation-timing-function:steps(1)}
-@keyframes chase-px{0%,18%{background:#ffcd75; box-shadow:0 0 6px #ffcd75}19%,100%{background:#29366f; box-shadow:none}}
+body.retro .cabinet.free{box-shadow: 0 0 0 6px #0b0d0c, 0 0 0 12px #c8102e, 0 0 0 18px #0b0d0c, 0 0 0 20px #e4572e, 0 0 50px rgba(200,16,46,.6), inset 0 0 0 4px #6d0a1a}
+body.retro .bulb{width:8px; height:8px; margin:-4px 0 0 -4px; background:#0d4a2b; box-shadow:none; animation-name:chase-px; animation-timing-function:steps(1)}
+@keyframes chase-px{0%,18%{background:#f5c542; box-shadow:0 0 6px #f5c542}19%,100%{background:#0d4a2b; box-shadow:none}}
 body.retro .cabinet.party .bulb:nth-child(odd){animation-name:chase-px2}
-@keyframes chase-px2{0%,18%{background:#a7f070}19%,100%{background:#29366f}}
-body.retro .meter, body.retro .chip{background:#1a1c2c; border:3px solid #566c86; box-shadow:3px 3px 0 #0d0e16}
-body.retro .meter span{font-family:var(--display); font-size:7px; letter-spacing:.04em; color:#94b0c2; margin-bottom:4px}
-body.retro .meter b{font-size:28px; font-weight:400; line-height:.9; color:#ffcd75; text-shadow:0 0 6px rgba(255,205,117,.5)}
-body.retro .meter.credits b{color:#a7f070; text-shadow:0 0 8px rgba(167,240,112,.55)}
+@keyframes chase-px2{0%,18%{background:#3fd07a}19%,100%{background:#0d4a2b}}
+body.retro .meter, body.retro .chip{background:#0b0d0c; border:3px solid #9c7a2e; box-shadow:3px 3px 0 #030504}
+body.retro .meter span{font-family:var(--display); font-size:7px; letter-spacing:.04em; color:#d9c9a3; margin-bottom:4px}
+body.retro .meter b{font-size:28px; font-weight:400; line-height:.9; color:#f5c542; text-shadow:0 0 6px rgba(245,197,66,.5)}
+body.retro .meter.credits b{color:#3fd07a; text-shadow:0 0 8px rgba(63,208,122,.55)}
 body.retro .chip{font-family:var(--display); font-size:8px; letter-spacing:.04em; font-weight:400; padding:7px 9px}
-body.retro .chip.on{color:#ffcd75; border-color:#ffcd75}
-body.retro .chip.hot{color:#ef7d57; border-color:#ef7d57; box-shadow:3px 3px 0 #0d0e16}
-body.retro .heartm .h{color:#b13e53; font-size:22px}
-body.retro .mk{font-family:var(--display); font-size:7px; font-weight:400; background:#1a1c2c; border:2px solid #566c86; color:#94b0c2}
-body.retro .mk.lit{color:#1a1c2c; animation:mkblink .5s steps(1) infinite}
+body.retro .chip.on{color:#f5c542; border-color:#f5c542}
+body.retro .chip.hot{color:#e4572e; border-color:#e4572e; box-shadow:3px 3px 0 #030504}
+body.retro .heartm .h{color:#c8102e; font-size:22px}
+body.retro .mk{font-family:var(--display); font-size:7px; font-weight:400; background:#0b0d0c; border:2px solid #9c7a2e; color:#d9c9a3}
+body.retro .mk.lit{color:#0b0d0c; animation:mkblink .5s steps(1) infinite}
 @keyframes mkblink{50%{filter:brightness(1.6)}}
-body.retro .reels-frame{background:#1a1c2c; box-shadow:0 0 0 4px #566c86, 0 0 0 7px #1a1c2c, 6px 6px 0 7px #0d0e16}
-body.retro .reel{background:repeating-conic-gradient(#29366f 0 25%, #253063 0 50%) 0 0/6px 6px; box-shadow:inset 0 6px 0 #1a1c2c, inset 0 -6px 0 #1a1c2c}
-body.retro .reel.tension{box-shadow:0 0 0 4px #ef7d57; animation:tense-px .3s steps(1) infinite}
-@keyframes tense-px{50%{box-shadow:0 0 0 4px #ffcd75}}
-body.retro .payline-glow{border-top:2px dashed rgba(115,239,247,.2)}
+body.retro .reels-frame{background:#0b0d0c; box-shadow:0 0 0 4px #9c7a2e, 0 0 0 7px #0b0d0c, 6px 6px 0 7px #030504}
+body.retro .reel{background:repeating-conic-gradient(#0d4a2b 0 25%, #0b3f25 0 50%) 0 0/6px 6px; box-shadow:inset 0 6px 0 #0b0d0c, inset 0 -6px 0 #0b0d0c}
+body.retro .reel.tension{box-shadow:0 0 0 4px #e4572e; animation:tense-px .3s steps(1) infinite}
+@keyframes tense-px{50%{box-shadow:0 0 0 4px #f5c542}}
+body.retro .payline-glow{border-top:2px dashed rgba(255,224,138,.2)}
 body.retro .strip.blur .card{filter:none; opacity:.8}
 body.retro .slot{padding:6px}
-.card.px{background:#f4f4f4; display:grid; place-items:center;
-  box-shadow:inset -5px -5px 0 #94b0c2, inset 5px 5px 0 #ffffff, 0 0 0 3px #1a1c2c, 4px 4px 0 3px rgba(13,14,22,.6)}
+.card.px{background:#fbf7ec; display:grid; place-items:center;
+  box-shadow:inset -5px -5px 0 #d9c9a3, inset 5px 5px 0 #ffffff, 0 0 0 3px #0b0d0c, 4px 4px 0 3px rgba(3,5,4,.6)}
 .card.px::before{display:none}
 .card.px svg{width:68%; height:auto; max-height:78%; image-rendering:pixelated; display:block}
 body.retro .card.win{animation:pxwin .56s steps(1) infinite; transform:translateY(-4px)}
 body.retro .card.win.flip{animation:pxpop .42s steps(4), pxwin .56s .42s steps(1) infinite}
 @keyframes pxwin{
-  0%{background:#f4f4f4; box-shadow:inset -5px -5px 0 #94b0c2, inset 5px 5px 0 #fff, 0 0 0 4px var(--glow), 0 0 0 7px #1a1c2c}
-  50%{background:#ffcd75; box-shadow:inset -5px -5px 0 #ef7d57, inset 5px 5px 0 #fff4d6, 0 0 0 4px #f4f4f4, 0 0 0 7px var(--glow)}
+  0%{background:#fbf7ec; box-shadow:inset -5px -5px 0 #d9c9a3, inset 5px 5px 0 #fff, 0 0 0 4px var(--glow), 0 0 0 7px #0b0d0c}
+  50%{background:#f5c542; box-shadow:inset -5px -5px 0 #e4572e, inset 5px 5px 0 #fff4d6, 0 0 0 4px #fbf7ec, 0 0 0 7px var(--glow)}
 }
 @keyframes pxpop{0%{transform:translateY(0) scale(1)}50%{transform:translateY(-12px) scale(1.12)}100%{transform:translateY(-4px) scale(1)}}
 body.retro .card.dim{opacity:.35; filter:grayscale(1) brightness(.7)}
-body.retro .winbox .wlab{font-family:var(--display); font-size:8px; letter-spacing:.2em; color:#73eff7}
-body.retro .winbox .wnum{font-family:var(--display); font-size:clamp(22px,4.5vw,34px); color:#ffcd75; text-shadow:3px 3px 0 #b13e53, 0 0 12px rgba(255,205,117,.5); padding-top:6px}
-body.retro .winbox .wnum.zero{font-family:var(--display); font-size:10px; color:#94b0c2; text-shadow:none; letter-spacing:.06em; padding-top:10px; line-height:1.6}
+body.retro .winbox .wlab{font-family:var(--display); font-size:8px; letter-spacing:.2em; color:#ffe08a}
+body.retro .winbox .wnum{font-family:var(--display); font-size:clamp(22px,4.5vw,34px); color:#f5c542; text-shadow:3px 3px 0 #c8102e, 0 0 12px rgba(245,197,66,.5); padding-top:6px}
+body.retro .winbox .wnum.zero{font-family:var(--display); font-size:10px; color:#d9c9a3; text-shadow:none; letter-spacing:.06em; padding-top:10px; line-height:1.6}
 body.retro .winbox .wsub{font-size:20px; font-weight:400}
 .wtick{min-height:0; font-size:13px; font-weight:700; letter-spacing:.06em; color:var(--gold-hi)}
-body.retro .wtick{font-family:var(--display); font-size:9px; letter-spacing:.04em; color:#1a1c2c; background:var(--tc,#ffcd75); display:inline-block; padding:6px 8px; margin-top:6px; box-shadow:3px 3px 0 #0d0e16}
+body.retro .wtick{font-family:var(--display); font-size:9px; letter-spacing:.04em; color:#0b0d0c; background:var(--tc,#f5c542); display:inline-block; padding:6px 8px; margin-top:6px; box-shadow:3px 3px 0 #030504}
 body.retro .wtick:empty{display:none}
-body.retro .spin{width:132px; height:78px; border-radius:0 !important; background:#b13e53;
-  box-shadow: inset -6px -6px 0 #5d275d, inset 6px 6px 0 #ef7d57, 0 0 0 4px #1a1c2c, 0 8px 0 4px #1a1c2c;
-  font-family:var(--display); font-size:17px; color:#f4f4f4; text-shadow:3px 3px 0 #5d275d}
+body.retro .spin{width:132px; height:78px; border-radius:0 !important; background:#c8102e;
+  box-shadow: inset -6px -6px 0 #6d0a1a, inset 6px 6px 0 #e4572e, 0 0 0 4px #0b0d0c, 0 8px 0 4px #0b0d0c;
+  font-family:var(--display); font-size:17px; color:#fbf7ec; text-shadow:3px 3px 0 #6d0a1a}
 body.retro .spin small{font-family:var(--ui); font-size:17px; letter-spacing:.04em; font-weight:400; text-shadow:none; margin-top:4px}
-body.retro .spin:active, body.retro .spin.pressed{transform:translateY(8px); box-shadow: inset -6px -6px 0 #5d275d, inset 6px 6px 0 #ef7d57, 0 0 0 4px #1a1c2c, 0 0 0 4px #1a1c2c}
-body.retro .spin.free{background:#38b764; box-shadow: inset -6px -6px 0 #257179, inset 6px 6px 0 #a7f070, 0 0 0 4px #1a1c2c, 0 8px 0 4px #1a1c2c; text-shadow:3px 3px 0 #257179}
+body.retro .spin:active, body.retro .spin.pressed{transform:translateY(8px); box-shadow: inset -6px -6px 0 #6d0a1a, inset 6px 6px 0 #e4572e, 0 0 0 4px #0b0d0c, 0 0 0 4px #0b0d0c}
+body.retro .spin.free{background:#1e9e57; box-shadow: inset -6px -6px 0 #0f5c38, inset 6px 6px 0 #3fd07a, 0 0 0 4px #0b0d0c, 0 8px 0 4px #0b0d0c; text-shadow:3px 3px 0 #0f5c38}
 body.retro .spin.ready:not(:disabled){animation:breathe-px 1s steps(1) infinite}
 @keyframes breathe-px{50%{filter:brightness(1.18)}}
 body.retro .betgrp .lbl, body.retro .autogrp .lbl{font-family:var(--display) !important; font-size:7px !important}
-body.retro .stepper{background:#1a1c2c; border:3px solid #566c86}
-body.retro .stepper output{font-size:28px; font-weight:400; color:#ffcd75}
-body.retro .stepper button{font-family:var(--display); font-size:14px; color:#73eff7}
-body.retro .autobtn.active{background:#257179; color:#73eff7}
-body.retro .panel{background:#1a1c2c; border:3px solid #566c86; box-shadow:6px 6px 0 #0d0e16}
-body.retro .panel h2{font-family:var(--display); font-size:12px; color:#ffcd75; line-height:1.6}
+body.retro .stepper{background:#0b0d0c; border:3px solid #9c7a2e}
+body.retro .stepper output{font-size:28px; font-weight:400; color:#f5c542}
+body.retro .stepper button{font-family:var(--display); font-size:14px; color:#ffe08a}
+body.retro .autobtn.active{background:#0f5c38; color:#ffe08a}
+body.retro .panel{background:#0b0d0c; border:3px solid #9c7a2e; box-shadow:6px 6px 0 #030504}
+body.retro .panel h2{font-family:var(--display); font-size:12px; color:#f5c542; line-height:1.6}
 body.retro .panel h2 small{font-size:18px; letter-spacing:.02em}
-body.retro .mission{background:#333c57; border:2px solid #29366f}
+body.retro .mission{background:#14261c; border:2px solid #0d4a2b}
 body.retro .mission .mt{font-size:21px; font-weight:400; line-height:1}
-body.retro .mission .mr{font-size:22px; font-weight:400; color:#a7f070}
-body.retro .mission .mbar{height:10px; background:#0d0e16}
-body.retro .mission .mbar i{background:repeating-linear-gradient(90deg,#ffcd75 0 6px,#ef7d57 6px 8px)}
+body.retro .mission .mr{font-size:22px; font-weight:400; color:#3fd07a}
+body.retro .mission .mbar{height:10px; background:#030504}
+body.retro .mission .mbar i{background:repeating-linear-gradient(90deg,#f5c542 0 6px,#e4572e 6px 8px)}
 body.retro .mission .mp{font-size:17px}
-body.retro .tabs{background:#0d0e16}
+body.retro .tabs{background:#030504}
 body.retro .tabs button{font-family:var(--display); font-size:8px; font-weight:400; padding:9px 4px}
-body.retro .tabs button[aria-selected="true"]{background:#3b5dc9; color:#f4f4f4}
+body.retro .tabs button[aria-selected="true"]{background:#1f8a4c; color:#fbf7ec}
 body.retro .pt{font-size:20px}
 body.retro .pt td.eg{font-size:18px; white-space:normal}
 body.retro .pt{table-layout:fixed}
 body.retro .pt td:first-child{width:52%}
 body.retro .pt td.m{width:22%}
 .panel{overflow:hidden}
-body.retro .pt td.m{font-weight:400; color:#ffcd75}
-body.retro .pt .sec td{font-family:var(--display); font-size:7px; letter-spacing:.08em; color:#73eff7; border-bottom:2px solid #566c86}
-body.retro .pt tr.hit td{background:#3b5dc9}
+body.retro .pt td.m{font-weight:400; color:#f5c542}
+body.retro .pt .sec td{font-family:var(--display); font-size:7px; letter-spacing:.08em; color:#ffe08a; border-bottom:2px solid #9c7a2e}
+body.retro .pt tr.hit td{background:#1f8a4c}
 body.retro .pt tr.hit td.m{color:#fff}
-body.retro .eg .r{color:#ef7d57}
-body.retro .linemap svg{background:#0d0e16; border:2px solid #333c57; image-rendering:pixelated}
-body.retro .hist li, body.retro .stats div{background:#333c57}
-body.retro .mc{font-size:15px; background:#f4f4f4; font-family:var(--ui)}
-body.retro .mc.w{box-shadow:0 0 0 2px #ffcd75}
-body.retro .hist .hw{font-weight:400; font-size:24px; color:#ffcd75}
+body.retro .eg .r{color:#e4572e}
+body.retro .linemap svg{background:#030504; border:2px solid #14261c; image-rendering:pixelated}
+body.retro .hist li, body.retro .stats div{background:#14261c}
+body.retro .mc{font-size:15px; background:#fbf7ec; font-family:var(--ui)}
+body.retro .mc.w{box-shadow:0 0 0 2px #f5c542}
+body.retro .hist .hw{font-weight:400; font-size:24px; color:#f5c542}
 body.retro .hist .hw small{font-size:16px}
-body.retro .stats b{font-weight:400; font-size:28px; color:#ffcd75}
+body.retro .stats b{font-weight:400; font-size:28px; color:#f5c542}
 body.retro .stats span{font-family:var(--display); font-size:7px}
 body.retro .combos{font-size:20px}
-body.retro .toast{font-family:var(--ui); font-size:20px; font-weight:400; background:#1a1c2c; border:3px solid #ffcd75; box-shadow:5px 5px 0 #0d0e16; animation-timing-function:steps(3)}
-body.retro .toast.pink{border-color:#b13e53}
-body.retro .toast.cyan{border-color:#73eff7}
-body.retro .banner .bt, body.retro .mega .mt{font-family:var(--display); background:none; color:#ffcd75; -webkit-text-fill-color:#ffcd75;
-  text-shadow:4px 4px 0 #b13e53, 8px 8px 0 #5d275d; filter:none; animation:pxbanner .5s steps(5) both, pxflash .5s .5s steps(1) infinite}
+body.retro .toast{font-family:var(--ui); font-size:20px; font-weight:400; background:#0b0d0c; border:3px solid #f5c542; box-shadow:5px 5px 0 #030504; animation-timing-function:steps(3)}
+body.retro .toast.pink{border-color:#c8102e}
+body.retro .toast.cyan{border-color:#ffe08a}
+body.retro .banner .bt, body.retro .mega .mt{font-family:var(--display); background:none; color:#f5c542; -webkit-text-fill-color:#f5c542;
+  text-shadow:4px 4px 0 #c8102e, 8px 8px 0 #6d0a1a; filter:none; animation:pxbanner .5s steps(5) both, pxflash .5s .5s steps(1) infinite}
 body.retro .banner .bt{font-size:clamp(18px,4.4vw,32px)}
 body.retro .mega .mt{font-size:clamp(28px,8vw,76px); line-height:1.2}
-body.retro .banner.bonusb .bt{color:#73eff7; -webkit-text-fill-color:#73eff7; font-size:clamp(12px,2.6vw,18px); line-height:1.5}
-body.retro .banner.freeb .bt{color:#a7f070; -webkit-text-fill-color:#a7f070}
+body.retro .banner.bonusb .bt{color:#ffe08a; -webkit-text-fill-color:#ffe08a; font-size:clamp(12px,2.6vw,18px); line-height:1.5}
+body.retro .banner.freeb .bt{color:#3fd07a; -webkit-text-fill-color:#3fd07a}
 body.retro .banner .bs, body.retro .mega .mh{font-family:var(--display); font-size:8px; letter-spacing:.06em; line-height:1.6}
-body.retro .mega{background:rgba(26,28,44,.92)}
-body.retro .mega .ms{font-family:var(--display); font-size:clamp(18px,4.5vw,36px); color:#a7f070; text-shadow:3px 3px 0 #257179; margin-top:12px}
+body.retro .mega{background:rgba(11,13,12,.92)}
+body.retro .mega .ms{font-family:var(--display); font-size:clamp(18px,4.5vw,36px); color:#3fd07a; text-shadow:3px 3px 0 #0f5c38; margin-top:12px}
 @keyframes pxbanner{from{transform:scale(.2); opacity:0}to{transform:none; opacity:1}}
-@keyframes pxflash{50%{-webkit-text-fill-color:#f4f4f4; color:#f4f4f4}}
-body.retro .dialog{background:#1a1c2c; border:4px solid #566c86; box-shadow:8px 8px 0 #0d0e16}
-body.retro .dialog h3{font-family:var(--display); font-size:16px; color:#ffcd75; line-height:1.5}
+@keyframes pxflash{50%{-webkit-text-fill-color:#fbf7ec; color:#fbf7ec}}
+body.retro .dialog{background:#0b0d0c; border:4px solid #9c7a2e; box-shadow:8px 8px 0 #030504}
+body.retro .dialog h3{font-family:var(--display); font-size:16px; color:#f5c542; line-height:1.5}
 body.retro .dialog p, body.retro .dialog li{font-size:20px; line-height:1.15}
-body.retro .btn{font-family:var(--display); font-size:10px; background:#a7f070; color:#1a1c2c; box-shadow:inset -4px -4px 0 #38b764, inset 4px 4px 0 #e6ffc8, 4px 4px 0 #0d0e16; padding:14px 16px}
+body.retro .btn{font-family:var(--display); font-size:10px; background:#3fd07a; color:#0b0d0c; box-shadow:inset -4px -4px 0 #1e9e57, inset 4px 4px 0 #e6ffc8, 4px 4px 0 #030504; padding:14px 16px}
 @media (max-width:520px){ body.retro .meter span{font-size:6px} body.retro .meter b{font-size:24px} body.retro .spin{width:124px} }
 
 /* ---------- Scoreboard, difficulty, receipt ---------- */
@@ -477,10 +477,10 @@ body.retro .btn{font-family:var(--display); font-size:10px; background:#a7f070; 
 .sb-score b{font-family:var(--display); font-weight:400; font-size:clamp(28px,5vw,40px); color:#fff; text-shadow:0 0 16px rgba(255,210,120,.6)}
 .sb-score.bump b{animation:bump .35s ease-out 3}
 @keyframes bump{50%{transform:scale(1.12); color:var(--gold-hi)}}
-.sb .pop{position:absolute; right:10px; top:6px; font-style:normal; font-weight:700; font-size:18px; color:#a7f070; opacity:0; pointer-events:none; text-shadow:0 0 8px rgba(167,240,112,.6)}
+.sb .pop{position:absolute; right:10px; top:6px; font-style:normal; font-weight:700; font-size:18px; color:#3fd07a; opacity:0; pointer-events:none; text-shadow:0 0 8px rgba(63,208,122,.6)}
 .sb .pop.go{animation:floatUp 1.6s ease-out forwards}
 @keyframes floatUp{0%{opacity:0; transform:translateY(10px)}15%{opacity:1}100%{opacity:0; transform:translateY(-26px)}}
-.sb-high.newhigh{border-color:#a7f070; animation:newhigh .5s steps(1) 6}
+.sb-high.newhigh{border-color:#3fd07a; animation:newhigh .5s steps(1) 6}
 @keyframes newhigh{50%{background:#2a3d12}}
 .sb-coins b{color:#fff}
 .subread{display:flex; flex-wrap:wrap; justify-content:center; gap:6px 18px; font-size:13px; color:var(--muted); letter-spacing:.04em}
@@ -509,60 +509,60 @@ body.retro .btn{font-family:var(--display); font-size:10px; background:#a7f070; 
 .receipt li.tot{border-bottom:0; padding-top:8px; grid-template-columns:minmax(0,1fr) auto auto}
 .receipt li.tot span{font-weight:700; letter-spacing:.08em; text-transform:uppercase}
 .receipt li.tot b{font-size:18px}
-.receipt li.tot b.sc{color:#a7f070}
+.receipt li.tot b.sc{color:#3fd07a}
 .receipt li.none{grid-template-columns:1fr; color:var(--muted)}
 @media (max-width:520px){ .scoreboard{grid-template-columns:1fr 1fr} .sb-score{grid-column:1/-1} .sb b{font-size:22px} .controls{grid-template-areas:"spin spin" "bet auto"} }
 /* retro versions */
-body.retro .sb{background:#1a1c2c; border:3px solid #566c86; box-shadow:3px 3px 0 #0d0e16}
-body.retro .sb span{font-family:var(--display); font-size:8px; letter-spacing:.06em; color:#94b0c2; margin-bottom:6px}
-body.retro .sb b{font-weight:400; font-size:32px; line-height:.9; color:#ffcd75}
-body.retro .sb small{font-size:16px; color:#566c86}
-body.retro .sb-score{border-color:#ffcd75; box-shadow:0 0 0 3px #1a1c2c, 0 0 0 6px #ffcd75, 5px 5px 0 6px #0d0e16}
-body.retro .sb-score span{color:#ffcd75}
-body.retro .sb-score b{font-family:var(--display); font-size:clamp(20px,3.6vw,30px); line-height:1.2; color:#f4f4f4; text-shadow:3px 3px 0 #b13e53, 0 0 12px rgba(255,205,117,.6)}
+body.retro .sb{background:#0b0d0c; border:3px solid #9c7a2e; box-shadow:3px 3px 0 #030504}
+body.retro .sb span{font-family:var(--display); font-size:8px; letter-spacing:.06em; color:#d9c9a3; margin-bottom:6px}
+body.retro .sb b{font-weight:400; font-size:32px; line-height:.9; color:#f5c542}
+body.retro .sb small{font-size:16px; color:#9c7a2e}
+body.retro .sb-score{border-color:#f5c542; box-shadow:0 0 0 3px #0b0d0c, 0 0 0 6px #f5c542, 5px 5px 0 6px #030504}
+body.retro .sb-score span{color:#f5c542}
+body.retro .sb-score b{font-family:var(--display); font-size:clamp(20px,3.6vw,30px); line-height:1.2; color:#fbf7ec; text-shadow:3px 3px 0 #c8102e, 0 0 12px rgba(245,197,66,.6)}
 body.retro .sb-score.bump b{animation:bump-px .3s steps(2) 4}
-@keyframes bump-px{50%{color:#ffcd75; transform:translateY(-3px)}}
-body.retro .sb .pop{font-family:var(--display); font-size:11px; font-weight:400; color:#a7f070; text-shadow:2px 2px 0 #257179}
-body.retro .sb-coins b{color:#a7f070; text-shadow:0 0 8px rgba(167,240,112,.5)}
-body.retro .sb-high.newhigh{border-color:#a7f070}
-body.retro .subread{font-size:20px; color:#94b0c2}
-body.retro .subread b{color:#ffcd75; font-weight:400}
-body.retro .diff .dl, body.retro .heartm .hl{font-family:var(--display); font-size:7px; letter-spacing:.04em; color:#94b0c2}
-body.retro .dbtns{background:#1a1c2c; border:3px solid #566c86; padding:3px; gap:3px}
+@keyframes bump-px{50%{color:#f5c542; transform:translateY(-3px)}}
+body.retro .sb .pop{font-family:var(--display); font-size:11px; font-weight:400; color:#3fd07a; text-shadow:2px 2px 0 #0f5c38}
+body.retro .sb-coins b{color:#3fd07a; text-shadow:0 0 8px rgba(63,208,122,.5)}
+body.retro .sb-high.newhigh{border-color:#3fd07a}
+body.retro .subread{font-size:20px; color:#d9c9a3}
+body.retro .subread b{color:#f5c542; font-weight:400}
+body.retro .diff .dl, body.retro .heartm .hl{font-family:var(--display); font-size:7px; letter-spacing:.04em; color:#d9c9a3}
+body.retro .dbtns{background:#0b0d0c; border:3px solid #9c7a2e; padding:3px; gap:3px}
 body.retro .dbtns button{font-family:var(--display); font-size:8px; font-weight:400; padding:8px 10px}
-body.retro .dbtns button[aria-checked="true"]{background:#ffcd75; color:#1a1c2c; box-shadow:inset -3px -3px 0 #ef7d57}
-body.retro .dbtns button[data-diff="easy"][aria-checked="true"]{background:#a7f070; box-shadow:inset -3px -3px 0 #38b764}
-body.retro .dbtns button[data-diff="hard"][aria-checked="true"]{background:#b13e53; color:#f4f4f4; box-shadow:inset -3px -3px 0 #5d275d}
-body.retro .diff small{font-size:18px; color:#94b0c2}
-body.retro .receipt-wrap{background:#1a1c2c; border:3px solid #566c86; box-shadow:4px 4px 0 #0d0e16}
-body.retro .rhead{font-family:var(--display); font-size:8px; letter-spacing:.06em; color:#73eff7; margin-bottom:8px}
+body.retro .dbtns button[aria-checked="true"]{background:#f5c542; color:#0b0d0c; box-shadow:inset -3px -3px 0 #e4572e}
+body.retro .dbtns button[data-diff="easy"][aria-checked="true"]{background:#3fd07a; box-shadow:inset -3px -3px 0 #1e9e57}
+body.retro .dbtns button[data-diff="hard"][aria-checked="true"]{background:#c8102e; color:#fbf7ec; box-shadow:inset -3px -3px 0 #6d0a1a}
+body.retro .diff small{font-size:18px; color:#d9c9a3}
+body.retro .receipt-wrap{background:#0b0d0c; border:3px solid #9c7a2e; box-shadow:4px 4px 0 #030504}
+body.retro .rhead{font-family:var(--display); font-size:8px; letter-spacing:.06em; color:#ffe08a; margin-bottom:8px}
 body.retro .receipt{font-size:20px}
-body.retro .receipt li{border-bottom:2px dotted #333c57}
+body.retro .receipt li{border-bottom:2px dotted #14261c}
 body.retro .receipt li .rs{font-size:20px}
-body.retro .receipt li .rs .r{color:#ef7d57}
+body.retro .receipt li .rs .r{color:#e4572e}
 body.retro .receipt li .rs .h{color:#ff5470}
-body.retro .receipt li b{font-weight:400; color:#ffcd75}
-body.retro .receipt li.mult b{color:#73eff7}
+body.retro .receipt li b{font-weight:400; color:#f5c542}
+body.retro .receipt li.mult b{color:#ffe08a}
 body.retro .receipt li.tot span{font-family:var(--display); font-size:9px; font-weight:400}
 body.retro .receipt li.tot b{font-size:24px}
-body.retro .receipt li.tot b.sc{color:#a7f070}
+body.retro .receipt li.tot b.sc{color:#3fd07a}
 
 .sb-spins b{color:#fff}
 .sb-spins.low b{color:#ff6f86; animation:lowp .6s steps(1) infinite}
 @keyframes lowp{50%{opacity:.45}}
 .final{font-family:var(--display); font-size:clamp(40px,10vw,64px); color:var(--gold-hi); text-align:center; line-height:1.2; margin:4px 0 8px; text-shadow:0 0 18px rgba(255,210,120,.5)}
-body.retro .final{font-size:clamp(28px,7vw,44px); color:#ffcd75; text-shadow:4px 4px 0 #b13e53}
+body.retro .final{font-size:clamp(28px,7vw,44px); color:#f5c542; text-shadow:4px 4px 0 #c8102e}
 #newGameBtn.confirm{border-color:#ff6f86; color:#ff6f86}
-body.retro .sb-spins b{color:#73eff7; text-shadow:0 0 8px rgba(115,239,247,.5)}
-body.retro .sb-spins.low b{color:#ef7d57}
+body.retro .sb-spins b{color:#ffe08a; text-shadow:0 0 8px rgba(255,224,138,.5)}
+body.retro .sb-spins.low b{color:#e4572e}
 .boosts .heartm{flex:1 1 100%}
 
 /* face-down card (retro): pixel card back */
-.card.px.back{background:#29366f;
-  background-image:repeating-conic-gradient(#3b5dc9 0 25%, #29366f 0 50%);
+.card.px.back{background:#0d4a2b;
+  background-image:repeating-conic-gradient(#1f8a4c 0 25%, #0d4a2b 0 50%);
   background-size:8px 8px;
-  box-shadow:inset 0 0 0 5px #f4f4f4, inset 0 0 0 8px #1a1c2c, 0 0 0 3px #1a1c2c, 4px 4px 0 3px rgba(13,14,22,.6)}
-.card.px.back i{width:34%; aspect-ratio:1; background:#b13e53; transform:rotate(45deg); box-shadow:0 0 0 4px #1a1c2c, 0 0 0 7px #ffcd75}
+  box-shadow:inset 0 0 0 5px #fbf7ec, inset 0 0 0 8px #0b0d0c, 0 0 0 3px #0b0d0c, 4px 4px 0 3px rgba(3,5,4,.6)}
+.card.px.back i{width:34%; aspect-ratio:1; background:#c8102e; transform:rotate(45deg); box-shadow:0 0 0 4px #0b0d0c, 0 0 0 7px #f5c542}
 body.retro .card.px.back.dim{opacity:.55}
 
 /* ---------- Pull lever + swipe-to-spin ---------- */
@@ -582,12 +582,12 @@ body.retro .card.px.back.dim{opacity:.55}
 .lever.ready .lever-knob{animation:knobHint 1.8s ease-in-out infinite}
 @keyframes knobHint{0%,70%,100%{filter:none}80%{filter:brightness(1.35)}}
 .lever.off{opacity:.55; cursor:not-allowed}
-body.retro .lever-slot{background:#0d0e16; box-shadow:0 0 0 3px #566c86}
-body.retro .lever-hub{background:#ffcd75; box-shadow:inset -3px -3px 0 #ef7d57, 0 0 0 3px #1a1c2c}
-body.retro .lever-rod{background:#94b0c2; box-shadow:inset -3px 0 0 #566c86, 0 0 0 2px #1a1c2c}
-body.retro .lever-knob{background:#b13e53; box-shadow:inset -5px -5px 0 #5d275d, inset 5px 5px 0 #ef7d57, 0 0 0 3px #1a1c2c, 4px 4px 0 3px rgba(13,14,22,.6)}
+body.retro .lever-slot{background:#030504; box-shadow:0 0 0 3px #9c7a2e}
+body.retro .lever-hub{background:#f5c542; box-shadow:inset -3px -3px 0 #e4572e, 0 0 0 3px #0b0d0c}
+body.retro .lever-rod{background:#d9c9a3; box-shadow:inset -3px 0 0 #9c7a2e, 0 0 0 2px #0b0d0c}
+body.retro .lever-knob{background:#c8102e; box-shadow:inset -5px -5px 0 #6d0a1a, inset 5px 5px 0 #e4572e, 0 0 0 3px #0b0d0c, 4px 4px 0 3px rgba(3,5,4,.6)}
 body.retro .lever.snap .lever-knob, body.retro .lever.snap .lever-rod{transition-timing-function:steps(5)}
-body.retro .lever-lbl{font-family:var(--display); font-size:7px; font-weight:400; letter-spacing:.08em; color:#94b0c2}
+body.retro .lever-lbl{font-family:var(--display); font-size:7px; font-weight:400; letter-spacing:.08em; color:#d9c9a3}
 #reels{touch-action:none; cursor:grab}
 #reels.dragging{cursor:grabbing}
 .coach{position:absolute; inset:0; z-index:9; display:grid; place-content:center; justify-items:center; gap:10px; text-align:center; pointer-events:none;
@@ -595,9 +595,9 @@ body.retro .lever-lbl{font-family:var(--display); font-size:7px; font-weight:400
 .coach p{margin:0; font-weight:700; font-size:15px; letter-spacing:.06em; color:#fff; text-shadow:0 2px 6px #000; line-height:1.4}
 .coach .hand{width:34px; height:34px; border-radius:50%; background:#fff; box-shadow:0 0 0 6px rgba(255,255,255,.25); animation:swipeHint 1.6s ease-in-out infinite}
 @keyframes swipeHint{0%{transform:translateY(-40px); opacity:0}20%{opacity:1}70%{transform:translateY(40px); opacity:1}100%{transform:translateY(46px); opacity:0}}
-body.retro .coach{background:rgba(26,28,44,.72)}
-body.retro .coach p{font-family:var(--display); font-size:9px; font-weight:400; line-height:1.9; color:#ffcd75}
-body.retro .coach .hand{width:24px; height:24px; background:#f4f4f4; box-shadow:0 0 0 4px #1a1c2c, 0 0 0 7px #73eff7; animation-timing-function:steps(6)}
+body.retro .coach{background:rgba(11,13,12,.72)}
+body.retro .coach p{font-family:var(--display); font-size:9px; font-weight:400; line-height:1.9; color:#f5c542}
+body.retro .coach .hand{width:24px; height:24px; background:#fbf7ec; box-shadow:0 0 0 4px #0b0d0c, 0 0 0 7px #ffe08a; animation-timing-function:steps(6)}
 @media (max-width:520px){ .lever{flex-basis:38px} .lever-knob{width:34px; height:34px; margin:-17px 0 0 -17px} .machine-row{gap:6px} }
 
 /* ---------- King, Queen & Joker dance ---------- */
@@ -605,12 +605,12 @@ body.retro .coach .hand{width:24px; height:24px; background:#f4f4f4; box-shadow:
   background:radial-gradient(circle at 50% 45%, rgba(93,39,93,.9), rgba(10,4,12,.96) 70%)}
 .dance-in{display:flex; flex-direction:column; align-items:center; gap:10px; text-align:center}
 .dance .dt{font-family:var(--display); font-size:clamp(26px,7vw,54px); color:var(--gold-hi); line-height:1.1;
-  text-shadow:4px 4px 0 #b13e53, 8px 8px 0 #5d275d, 0 0 30px rgba(255,205,117,.6); animation:dtIn .6s steps(6) both, dtFlash .5s .6s steps(1) infinite}
-.dance .dscore{font-family:var(--display); font-size:clamp(30px,8vw,60px); color:#a7f070; text-shadow:4px 4px 0 #257179}
+  text-shadow:4px 4px 0 #c8102e, 8px 8px 0 #6d0a1a, 0 0 30px rgba(245,197,66,.6); animation:dtIn .6s steps(6) both, dtFlash .5s .6s steps(1) infinite}
+.dance .dscore{font-family:var(--display); font-size:clamp(30px,8vw,60px); color:#3fd07a; text-shadow:4px 4px 0 #0f5c38}
 .dancers{display:flex; gap:clamp(8px,4vw,40px); align-items:flex-end; justify-content:center; margin:8px 0 4px}
 .dancer{margin:0; width:clamp(78px,22vw,150px); animation:hop .5s var(--d) steps(4) infinite alternate; transform-origin:50% 100%}
 .dancer svg{width:100%; height:auto; display:block; image-rendering:pixelated; filter:drop-shadow(0 6px 0 rgba(0,0,0,.45))}
-.dancer figcaption{font-family:var(--display); font-size:10px; color:#ffcd75; margin-top:8px; letter-spacing:.06em}
+.dancer figcaption{font-family:var(--display); font-size:10px; color:#f5c542; margin-top:8px; letter-spacing:.06em}
 .dancer .fa{animation:frameA .5s var(--d) steps(1) infinite}
 .dancer .fb{animation:frameB .5s var(--d) steps(1) infinite}
 @keyframes frameA{0%{opacity:1}50%{opacity:0}}
@@ -622,8 +622,8 @@ body.retro .coach .hand{width:24px; height:24px; background:#f4f4f4; box-shadow:
 @keyframes jester{0%{transform:translateY(0) rotate(0)}25%{transform:translateY(-30px) rotate(-12deg)}50%{transform:translateY(0) rotate(0) scaleX(-1)}75%{transform:translateY(-30px) rotate(12deg) scaleX(-1)}100%{transform:translateY(0) rotate(0)}}
 @keyframes dtIn{from{transform:scale(.2); opacity:0}}
 @keyframes dtFlash{50%{color:#fff}}
-.dance .dprev{font-family:var(--ui); font-size:18px; color:#94b0c2}
-.dance .dhint{font-family:var(--display); font-size:8px; color:#566c86; letter-spacing:.1em; margin-top:6px}
+.dance .dprev{font-family:var(--ui); font-size:18px; color:#d9c9a3}
+.dance .dhint{font-family:var(--display); font-size:8px; color:#9c7a2e; letter-spacing:.1em; margin-top:6px}
 body:not(.retro) .dance .dt, body:not(.retro) .dance .dscore{font-family:var(--display)}
 body:not(.retro) .dance .dprev{font-size:15px}
 /* =====================================================================
@@ -752,9 +752,9 @@ body.term .empty{color:#2f6b4c}
 @media (max-width:520px){ body.term .sb b{font-size:34px} body.term .sb-score b{font-size:42px} body.term .termbar{font-size:17px} .looks .ghost{padding:6px 8px} }
 
 .boosts{flex-wrap:nowrap}
-.chip.luck{flex:0 0 auto; color:#a7f070; border-color:#38b764; animation:luckIn .5s ease both;
-  background-image:linear-gradient(90deg, rgba(56,183,100,.45) var(--fill,0%), transparent var(--fill,0%)); transition:background .5s}
-.chip.luck.cold{color:#73eff7; border-color:#41a6f6; background-image:linear-gradient(90deg, rgba(65,166,246,.45) var(--fill,0%), transparent var(--fill,0%))}
+.chip.luck{flex:0 0 auto; color:#3fd07a; border-color:#1e9e57; animation:luckIn .5s ease both;
+  background-image:linear-gradient(90deg, rgba(30,158,87,.45) var(--fill,0%), transparent var(--fill,0%)); transition:background .5s}
+.chip.luck.cold{color:#ffe08a; border-color:#e8b83a; background-image:linear-gradient(90deg, rgba(232,184,58,.45) var(--fill,0%), transparent var(--fill,0%))}
 body.term .chip.luck.cold{color:#c8ffdc; border-color:#8ff0b4}
 body.term .chip.luck, body.term .chip.luck.cold{background-image:linear-gradient(90deg, rgba(143,240,180,.25) var(--fill,0%), transparent var(--fill,0%))}
 @keyframes luckIn{from{transform:scale(.6); opacity:0}}
@@ -768,6 +768,68 @@ body.term .chip.luck{font-family:var(--ui); font-size:17px; background:#06120c; 
   background-image:repeating-linear-gradient(45deg, rgba(255,230,160,.18) 0 3px, transparent 3px 9px), repeating-linear-gradient(-45deg, rgba(255,230,160,.18) 0 3px, transparent 3px 9px)}
 .card.cback::before{inset:7%; border:2px solid rgba(255,230,160,.55); border-radius:6px}
 .card.cback i{position:absolute; left:50%; top:50%; width:30%; aspect-ratio:1; transform:translate(-50%,-50%) rotate(45deg); border:2px solid rgba(255,230,160,.7); background:rgba(90,8,24,.6)}
+
+/* STOP mode */
+.spin.stopmode{background:radial-gradient(circle at 50% 35%, #ffd36b 0%, #e39a12 45%, #7a4a06 100%); color:#2a1204; text-shadow:0 1px 0 rgba(255,255,255,.4)}
+body.retro .spin.stopmode{background:#f5c542; color:#0b0d0c; text-shadow:none; box-shadow: inset -6px -6px 0 #e4572e, inset 6px 6px 0 #fff4d6, 0 0 0 4px #0b0d0c, 0 8px 0 4px #0b0d0c}
+body.term .spin.stopmode{background:#8ff0b4; color:#06120c; text-shadow:none}
+.spin.stopmode small{opacity:.9}
+.reel.tap-stop{cursor:pointer}
+.reel.tap-stop::after{content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; box-shadow:inset 0 0 0 2px rgba(255,238,176,.25); animation:tapcue 1s ease-in-out infinite}
+@keyframes tapcue{50%{box-shadow:inset 0 0 0 2px rgba(255,238,176,.6)}}
+body.retro .reel.tap-stop::after{animation-timing-function:steps(1)}
+body.term .reel.tap-stop::after{box-shadow:inset 0 0 0 2px rgba(143,240,180,.35)}
+
+/* visible shuffle before each spin: flip to the card back, riffle face-down, flip back */
+.reels{--back:#8c1230; --back-img:repeating-linear-gradient(45deg, rgba(255,230,160,.22) 0 3px, transparent 3px 9px), repeating-linear-gradient(-45deg, rgba(255,230,160,.22) 0 3px, transparent 3px 9px)}
+body.retro .reels{--back:#0d4a2b; --back-img:repeating-conic-gradient(#1f8a4c 0 25%, #0d4a2b 0 50%) 0 0/8px 8px}
+body.term .reels{--back:#06120c; --back-img:repeating-linear-gradient(45deg, #0d2519 0 3px, #06120c 3px 7px)}
+.reels.shuffling .card{animation:shuf .56s ease-in-out both}
+.reels.shuffling .card::after{content:""; position:absolute; inset:0; border-radius:inherit; background:var(--back); background-image:var(--back-img); animation:shufBack .56s linear both; pointer-events:none}
+@keyframes shuf{
+  0%{transform:scaleX(1)} 18%{transform:scaleX(0)}
+  30%{transform:scaleX(1) translateY(-4px)}
+  45%{transform:translateX(var(--sx,0)) translateY(-8px) rotate(-3deg)}
+  60%{transform:translateX(calc(var(--sx,0) * -1)) translateY(2px) rotate(3deg)}
+  72%{transform:scaleX(1)} 84%{transform:scaleX(0)} 100%{transform:scaleX(1)}
+}
+@keyframes shufBack{0%,17.9%{opacity:0} 18%,83.9%{opacity:1} 84%,100%{opacity:0}}
+body.retro .reels.shuffling .card{animation-timing-function:steps(3)}
+/* 2 + 1 suit-mix grid in the Points panel */
+.pt tr.mixrow td{padding:6px 0 10px; border-bottom:0}
+.mixgrid{width:100%; table-layout:fixed; border-collapse:separate; border-spacing:3px; font-variant-numeric:tabular-nums}
+.mixgrid th:first-child{width:30%}
+.pt tr.mixrow td{width:auto !important}
+.mixgrid th{font-weight:600; font-size:12px; color:var(--muted); padding:4px 2px; text-align:center}
+.mixgrid th:first-child{text-align:left; font-size:11px; letter-spacing:.04em}
+.mixgrid tr th:first-child{font-size:15px}
+.mixgrid tr:first-child th:first-child{font-size:11px}
+.mixgrid th .r{color:#ff6f86}
+.mixgrid td{text-align:center; font-weight:700; color:var(--gold); background:rgba(0,0,0,.25); border-radius:6px; padding:5px 2px}
+.mixgrid td.na{color:var(--faint); background:transparent; font-weight:400}
+.mixgrid td.hit{background:var(--gold); color:#1a0a0a}
+body.retro .mixgrid th, body.retro .mixgrid td{font-family:var(--ui); font-size:19px}
+body.retro .mixgrid tr:first-child th:first-child{font-size:15px}
+body.term .mixgrid td{background:#081810; color:#8ff0b4}
+body.term .mixgrid td.hit{background:#8ff0b4; color:#06120c}
+
+/* 16-bit look: casino table colours */
+body.retro{background:#0a3d24;
+  background-image:radial-gradient(ellipse at 50% 30%, #17703f 0%, #0c4e2d 42%, #06291a 100%),
+    repeating-conic-gradient(rgba(0,0,0,.05) 0 25%, transparent 0 50%) 0 0/4px 4px}
+body.retro .cabinet{background:#111412;
+  box-shadow:0 0 0 6px #0b0d0c, 0 0 0 11px #c8102e, 0 0 0 16px #0b0d0c, 0 0 0 19px #f5c542, 0 30px 60px rgba(0,0,0,.6),
+    inset 0 0 80px rgba(245,197,66,.07), inset 0 0 0 4px #6d0a1a}
+body.retro .reels-frame{background:#0b0d0c; box-shadow:0 0 0 4px #f5c542, 0 0 0 7px #0b0d0c, 6px 6px 0 7px #030504}
+body.retro .brand h1{color:#f5c542; -webkit-text-fill-color:#f5c542; text-shadow:3px 3px 0 #c8102e, 6px 6px 0 #6d0a1a, 0 0 14px rgba(245,197,66,.5)}
+body.retro .panel{background:#0e1410; border-color:#9c7a2e}
+body.retro .tabs button[aria-selected="true"], body.retro .pt tr.hit td{background:#c8102e; color:#fbf7ec}
+body.retro .sb-score{border-color:#f5c542}
+body.retro .spin{background:#c8102e}
+body.retro .bulb{background:#3a2a0c}
+@keyframes chase-px{0%,18%{background:#ffe08a; box-shadow:0 0 8px #f5c542}19%,100%{background:#3a2a0c; box-shadow:none}}
+
+@media (prefers-reduced-motion: reduce){ .reels.shuffling .card{animation:none} }
 
 @media (prefers-reduced-motion: reduce){ .dancer, .dancer .fa, .dancer .fb, .dance .dt{animation:none !important} .dancer .fb{opacity:0} }
 
@@ -839,7 +901,7 @@ body.term .chip.luck{font-family:var(--ui); font-size:17px; background:#06120c; 
                 <div class="banner" id="banner" hidden></div>
                 <div class="coach" id="coach" hidden>
                   <div class="hand" aria-hidden="true"></div>
-                  <p>Swipe down on the cards<br>or pull the lever</p>
+                  <p>Swipe down or pull the lever to spin<br>Tap the reels to stop them</p>
                 </div>
               </div>
             </div>
@@ -866,7 +928,7 @@ body.term .chip.luck{font-family:var(--ui); font-size:17px; background:#06120c; 
           <div class="betgrp">
             <button class="autobtn" id="newGameBtn" type="button">New game</button>
           </div>
-          <div class="spinwrap"><button class="spin ready" id="spinBtn" type="button">SPIN<small id="spinSub">10 left</small></button></div>
+          <div class="spinwrap"><button class="spin ready" id="spinBtn" type="button"><span id="spinLbl">SPIN</span><small id="spinSub">10 left</small></button></div>
           <div class="autogrp" aria-hidden="true"></div>
         </div>
         <div class="receipt-wrap" id="receiptWrap" hidden>
@@ -923,10 +985,12 @@ body.term .chip.luck{font-family:var(--ui); font-size:17px; background:#06120c; 
   <div class="dialog">
     <h3 id="howTitle">How to play</h3>
     <ul>
-      <li>Every game gives you <b>10 spins</b>. <b>Pull the lever</b>, <b>swipe down on the cards</b>, press SPIN or hit the spacebar. A harder pull or faster swipe spins the reels longer — the result is always random.</li>
+      <li>Every game gives you <b>10 spins</b>. <b>Pull the lever</b>, <b>swipe down on the cards</b>, press SPIN or hit the spacebar to start.</li>
+      <li><b>Every spin is freshly shuffled.</b> Each reel is its own deck, shuffled fairly with secure random numbers before every spin, so no run can be predicted.</li>
+      <li><b>You decide when to stop — luck decides the cards.</b> The reels keep spinning until you <b>tap the reels</b>, press <b>STOP</b>, hit the spacebar or pull the lever again. Each reel then coasts a random distance and settles, so every spin is a fresh lucky draw.</li>
       <li><b>3 of the same in any line</b> (across, down or corner to corner): KKK = <b>1,000</b> (jackpot) · QQQ = 400 · ♥♥♥ = 250 · JJJ = 250 · ♦♦♦ = 180 · ♣♣♣ = 120 · ♠♠♠ = 80.</li>
       <li><b>Royal Line:</b> J, Q and K in one line, any order = <b>200</b>.</li>
-      <li><b>2 suits from the left</b> — the first two reels match on a row across or on the Down / Up diagonal: ♥♥ = 40 · ♦♦ = 30 · ♣♣ = 20 · ♠♠ = 10. Then watch reel 3: if it matches too, it becomes a 3! J, Q and K only score as a set of 3.</li>
+      <li><b>2 + 1 suits</b> — two cards of one suit and one of another, in any order, on any of the 8 lines. Each mix has its own score, from ♥♥ + ♦ = 25 down to ♠♠ + ♣ = 5 (see the grid in Points). J, Q and K only score as a set of 3.</li>
       <li>Every spin is a <b>lucky draw</b> — the odds reshuffle each time, so any suit can come in a streak. All four suits are equally likely; J, Q and K are rarer, the King rarest. <b>Face-down cards</b> (▒) never match.</li>
       <li><b>♥ meter:</b> it fills with the points you score. Reach <b>200, 500, 900, 1,400, 2,000…</b> points in a game and each one gives you <b>3 extra spins</b>. Keep scoring to keep going!</li>
       <li><b>Bigger high score, more spins:</b> every 400 points your high score is above 500 adds 1 spin to each game (up to +5).</li>
@@ -1008,7 +1072,29 @@ const RETRO_WEIGHTS = { H: .13, D: .13, C: .13, S: .13, J: .07, Q: .06, K: .05, 
 // Lottery draw: every spin reshuffles the odds at random around those averages, so one spin may be
 // heart-heavy and the next full of Kings. Simulated: every suit's 3-match ~1 in 31 spins, Royal Line
 // ~1 in 97, KKK ~1 in 406; ~29% of spins score; a 10-spin game beats 1,000 about 1 time in 11.
-function luckyWeights(base = RETRO_WEIGHTS, rng = Math.random, faceDown = base.X) {
+/* Unpredictable randomness: the browser's cryptographic generator (not a seedable pattern). */
+const RNG = (() => {
+  const c = (typeof crypto !== 'undefined' && crypto.getRandomValues) ? crypto : null;
+  if (!c) return Math.random;
+  const buf = new Uint32Array(64); let i = 64;
+  return () => { if (i >= 64) { c.getRandomValues(buf); i = 0; } return buf[i++] / 4294967296; };
+})();
+/* Fisher–Yates shuffle: every order of the deck is equally likely. */
+function shuffle(arr, rng = RNG) {
+  for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; }
+  return arr;
+}
+/* Build a reel as a real deck: N cards in the proportions of this spin's odds, then shuffled. */
+function shuffledDeck(weights, N, rng = RNG) {
+  const keys = Object.keys(weights), raw = keys.map(k => weights[k] * N);
+  const counts = raw.map(Math.floor);
+  let left = N - counts.reduce((a, b) => a + b, 0);
+  raw.map((x, i) => [x - Math.floor(x) + rng() * 1e-6, i]).sort((a, b) => b[0] - a[0]).forEach(([, i]) => { if (left > 0) { counts[i]++; left--; } });
+  const deck = [];
+  keys.forEach((k, i) => { for (let n = 0; n < counts[i]; n++) deck.push({ r: k === 'X' ? 0 : FACE_R[k] || 2 + Math.floor(rng() * 13), s: k }); });
+  return shuffle(deck, rng);
+}
+function luckyWeights(base = RETRO_WEIGHTS, rng = RNG, faceDown = base.X) {
   const gamma3 = () => -Math.log(rng() * rng() * rng() || 1e-9);
   const w = {}; let sum = 0;
   for (const k in base) if (k !== 'X') { w[k] = base[k] * gamma3(); sum += w[k]; }
@@ -1018,12 +1104,12 @@ function luckyWeights(base = RETRO_WEIGHTS, rng = Math.random, faceDown = base.X
   return w;
 }
 const FACE_R = { J: 11, Q: 12, K: 13 };
-function randomCard(rng = Math.random, weights) {
+function randomCard(rng = RNG, weights) {
   let s = SUIT_ORDER[Math.floor(rng() * 4)];
   if (weights) { const x = rng(); let acc = 0; s = 'X'; for (const k of Object.keys(weights)) { acc += weights[k]; if (x < acc) { s = k; break; } } }
   return { r: s === 'X' ? 0 : FACE_R[s] || 2 + Math.floor(rng() * 13), s };
 }
-function randomGrid(rng = Math.random, weights) { return Array.from({ length: 9 }, () => randomCard(rng, weights)); }
+function randomGrid(rng = RNG, weights) { return Array.from({ length: 9 }, () => randomCard(rng, weights)); }
 
 /** Evaluate one 3-card line. Order-independent, so direction never matters. */
 function evaluateLine(cards) {
@@ -1108,18 +1194,22 @@ function runSelfTests(log = console.log) {
     ['Retro: ♥♥♥ → Three Hearts, 250 points (ranks ignored)', () => { const r = evaluateGridRetro(G('2H KH 7H 3C 9S 4D 5S 6C 8C'), 10); return r.lineWins[0].key === 'rH' && r.lineWins[0].payout === 250; }],
     ['Retro: ♠♠♠ pays less than ♥♥♥', () => evaluateLineRetro(L('2S 3S 4S')).multiplier < evaluateLineRetro(L('9H 9H 9H')).multiplier],
     ['Retro: ♥♦♥ on its own → no win (Red Mix removed)', () => evaluateLineRetro(L('2H 5D 9H')).multiplier === 0],
-    ['Retro: ♥♥♣ on top row → Two Hearts, 40 points, 2 cards lit', () => { const r = evaluateGridRetro(G('2H 5H 9C 3D 7S 4C 8D 6S 10H'), 10); const w = r.lineWins.find(x => x.line === 1); return w && w.key === 'rH2' && w.payout === 40 && w.positions.join() === '0,1'; }],
-    ['Retro: ♣♠♠ (pair not from the left) → no win', () => { const r = evaluateGridRetro(G('2H 5D 9C 3D 7H 4C 8C 6S 10S'), 10); return !r.lineWins.some(x => x.line === 3); }],
+    ['2+1: ♥ ♥ ♠ on the top row → 2 Hearts + 1 Spade, 20 points', () => { const r = evaluateGridRetro(G('2H 5H 9S 3D 7X 4C 8D 6X 10C'), 10); const w = r.lineWins.find(x => x.line === 1); return w && w.key === 'mHS' && w.payout === 20; }],
+    ['2+1: ♠ ♥ ♠ (any order) → 2 Spades + 1 Heart, 10 points', () => { const r = evaluateGridRetro(G('2S 5H 9S 3X 7X 4X 8X 6X 10X'), 10); const w = r.lineWins.find(x => x.line === 1); return w && w.key === 'mSH' && w.payout === 10; }],
+    ['2+1: counts in a column too — ♣ ♥ ♣ down the left → 2 Clubs + 1 Heart, 15 points', () => { const r = evaluateGridRetro(G('2C 5X 9X 3H 7X 4X 8C 6X 10X'), 10); const w = r.lineWins.find(x => x.line === 4); return w && w.key === 'mCH' && w.payout === 15; }],
+    ['2+1: two suits + a face card or face-down card → no score', () => evaluateGridRetro(G('2H 5H 13K 3X 7X 4X 8X 6X 10X'), 10).lineWins.length === 0],
+    ['2+1: ♣ ♠ ♠ on the bottom row (any order) → 2 Spades + 1 Club, 5 points', () => { const r = evaluateGridRetro(G('2H 5D 9C 3D 7H 4C 8C 6S 10S'), 10); const w = r.lineWins.find(x => x.line === 3); return w && w.key === 'mSC' && w.payout === 5; }],
     ['Retro: K K K → Three Kings, 1,000 points, jackpot', () => { const r = evaluateGridRetro(G('13K 13K 13K 2C 3D 4S 5H 6C 7D'), 10); return r.lineWins.some(w => w.key === 'rK' && w.payout === 1000) && r.jackpot; }],
     ['Retro: K J Q (any order) → Royal Line, 200 points', () => evaluateLineRetro(L('13K 11J 12Q')).key === 'rRoyal' && evaluateLineRetro(L('13K 11J 12Q')).multiplier * 10 === 200],
     ['Retro: Q Q ♣ on a row → no win (J, Q, K only count as 3)', () => { const r = evaluateGridRetro(G('12Q 12Q 2C 3D 4S 5H 6C 7D 8S'), 10); return !r.lineWins.some(x => x.line === 1); }],
     ['Lucky draw: odds always add up to 100%, face-down share fixed', () => { const w = luckyWeights(); const t = Object.values(w).reduce((a, b) => a + b, 0); return Math.abs(t - 1) < 1e-9 && w.X === RETRO_WEIGHTS.X; }],
     ['Warm-up: fewer face-down cards when asked', () => { const w = luckyWeights(RETRO_WEIGHTS, Math.random, .22); return Math.abs(w.X - .22) < 1e-9 && Math.abs(Object.values(w).reduce((a, b) => a + b, 0) - 1) < 1e-9; }],
     ['♥ meter goals: 200, 500, 900, 1,400, 2,000', () => [0, 1, 2, 3, 4].map(meterGoal).join() === '200,500,900,1400,2000' && metersPassed(950) === 3],
+    ['Shuffled deck: 48 cards, right proportions, order differs each time', () => { const w = luckyWeights(); const a = shuffledDeck(w, 48), b = shuffledDeck(w, 48); const cnt = k => a.filter(c => c.s === k).length; return a.length === 48 && Math.abs(cnt('X') - 48 * w.X) <= 1 && a.map(c => c.s).join('') !== b.map(c => c.s).join(''); }],
+    ['Secure random numbers stay in [0, 1)', () => { for (let i = 0; i < 1000; i++) { const x = RNG(); if (!(x >= 0 && x < 1)) return false; } return true; }],
     ['Retro: face-down cards never match', () => { const X = { r: 0, s: 'X' }; const g = [X, X, X, X, X, X, X, X, X]; const r = evaluateGridRetro(g, 10); return r.totalWin === 0; }],
-    ['Retro: ♦♦ on the Up diagonal (bottom-left → centre) → Two Diamonds, 30 points', () => { const r = evaluateGridRetro(G('2C 5S 9H 3S 7D 4C 8D 6C 10S'), 10); const w = r.lineWins.find(x => x.line === 8); return w && w.key === 'rD2' && w.payout === 30 && w.positions.join() === '6,4'; }],
-    ['Retro: ♣♣ on the Down diagonal (top-left → centre) → Two Clubs', () => { const r = evaluateGridRetro(G('2C 5S 9H 3S 7C 4D 8H 6D 10S'), 10); const w = r.lineWins.find(x => x.line === 7); return w && w.key === 'rC2'; }],
-    ['Retro: two of a kind in a column does not count', () => { const r = evaluateGridRetro(G('2H 5D 9C 3H 7S 4D 8C 6S 10H'), 10); return !r.lineWins.some(x => x.line === 4); }],
+    ['2+1: ♦ ♦ ♥ on the Up diagonal → 2 Diamonds + 1 Heart, 20 points', () => { const r = evaluateGridRetro(G('2X 5X 9H 3X 7D 4X 8D 6X 10X'), 10); const w = r.lineWins.find(x => x.line === 8); return w && w.key === 'mDH' && w.payout === 20; }],
+    ['2+1: ♥ ♥ ♣ down the left column → 2 Hearts + 1 Club, 22 points', () => { const r = evaluateGridRetro(G('2H 5D 9C 3H 7S 4D 8C 6S 10H'), 10); const w = r.lineWins.find(x => x.line === 4); return w && w.key === 'mHC' && w.payout === 22; }],
     ['Retro: straight 7♣ 8♦ 9♠ → no win', () => evaluateLineRetro(L('7C 8D 9S')).multiplier === 0],
     ['Retro: all-hearts screen → 8 lines of Three Hearts (no jackpot)', () => { const r = evaluateGridRetro(G('2H 5H 9H JH 3H 7H KH 4H 10H')); return !r.jackpot && r.lineWins.length === 8 && r.lineWins.every(w => w.key === 'rH'); }],
   ];
@@ -1140,10 +1230,16 @@ const RETRO_PAYTABLE = [
   { key: 'rC',   name: 'Three Clubs',    eg: '♣ ♣ ♣', mult: 12 },
   { key: 'rS',   name: 'Three Spades',   eg: '♠ ♠ ♠', mult: 8 },
   // Two of a kind (suits only — J, Q, K score only as a set of 3): reels 1 + 2 on a row or diagonal, read from the left
-  { key: 'rH2',  name: 'Two Hearts',     eg: '♥ ♥ ?', mult: 4,   pair: true },
-  { key: 'rD2',  name: 'Two Diamonds',   eg: '♦ ♦ ?', mult: 3,   pair: true },
-  { key: 'rC2',  name: 'Two Clubs',      eg: '♣ ♣ ?', mult: 2,   pair: true },
-  { key: 'rS2',  name: 'Two Spades',     eg: '♠ ♠ ?', mult: 1,   pair: true },
+  // "2 + 1" suit mixes: two of one suit + one of another, anywhere in any line (all 8 lines, any order).
+  // Each of the 12 mixes has its own score: the pair's suit sets the base, the odd card adds a little.
+  ...(() => {
+    const NAME = { H: 'Hearts', D: 'Diamonds', C: 'Clubs', S: 'Spades' };
+    const PTS = { H: { D: 25, C: 22, S: 20 }, D: { H: 20, C: 18, S: 15 }, C: { H: 15, D: 12, S: 10 }, S: { H: 10, D: 8, C: 5 } };
+    const out = [];
+    for (const a of SUIT_ORDER) for (const b of SUIT_ORDER) if (a !== b)
+      out.push({ key: 'm' + a + b, name: `2 ${NAME[a]} + 1 ${NAME[b].slice(0, -1)}`, eg: `${SUIT_SYM[a]} ${SUIT_SYM[a]} ${SUIT_SYM[b]}`, mult: PTS[a][b] / 10, mix: true, pair: a, kick: b });
+    return out;
+  })(),
 ];
 // Points = multiplier × 10: suits 250 / 180 / 120 / 80 (flattened so every 3-match is worth having),
 // pairs 40 / 30 / 20 / 10. Simulated 100k games (with cold-streak luck): typical game 160 / 530 / 1,300
@@ -1174,12 +1270,16 @@ function evaluateGridRetro(grid, lineBet = 1) {
       lineIndex: i, line: pl.n, dir: pl.dir, positions: pl.pos,
       key: res.key, name: res.name, multiplier: res.multiplier, payout: res.multiplier * lineBet,
     });
-    else if (pl.dir === 'h' || pl.dir === 'd') {
-      // two of a kind: reels 1 and 2 on a row or a diagonal (Down / Up), read from the left
-      const pos = SUIT_ORDER.includes(cards[0].s) && cards[0].s === cards[1].s ? [pl.pos[0], pl.pos[1]] : null;
-      if (pos) {
-        const k = 'r' + grid[pos[0]].s + '2';
-        lineWins.push({ lineIndex: i, line: pl.n, dir: pl.dir, positions: pos, key: k, name: RPT[k].name, multiplier: RPT[k].mult, payout: RPT[k].mult * lineBet });
+    else {
+      // "2 + 1" suit mix: exactly two cards of one suit and one of another suit, in any order, on any line
+      const su = cards.map(c => c.s);
+      if (su.every(x => SUIT_ORDER.includes(x))) {
+        const pair = su.find(x => su.filter(y => y === x).length === 2);
+        const kick = pair && su.find(x => x !== pair);
+        if (pair && kick) {
+          const k = 'm' + pair + kick;
+          lineWins.push({ lineIndex: i, line: pl.n, dir: pl.dir, positions: pl.pos, key: k, name: RPT[k].name, multiplier: RPT[k].mult, payout: RPT[k].mult * lineBet });
+        }
       }
     }
   });
@@ -1254,8 +1354,8 @@ const isTerm = () => isRetro() && S.theme === 'term';
 const highKey = () => 'royal';     // one high score for all looks
 let spinWeights = RETRO_WEIGHTS;
 // Every look (16-bit, Terminal, Classic) plays the same rules — only the cards' style changes.
-const drawGrid = () => { spinWeights = luckyWeights(RETRO_WEIGHTS, Math.random, RETRO_WEIGHTS.X - warmUp()); return randomGrid(Math.random, spinWeights); };
-const drawCard = () => randomCard(Math.random, spinWeights);
+const prepareOdds = () => { spinWeights = luckyWeights(RETRO_WEIGHTS, RNG, RETRO_WEIGHTS.X - warmUp()); };
+const drawCard = () => randomCard(RNG, spinWeights);
 const highScore = () => Math.max(S.highs[highKey()] || 0, MIN_HIGH);
 const inProgress = () => S.score > 0 || S.spinsLeft < (S.startSpins || SPINS_PER_GAME);
 
@@ -1315,13 +1415,13 @@ const SPRITE_MAP = {
   J: ['.....g.....','....gdg....','.....g.....','...........','.....XXXX..','.......XX..','.......XX..','.......XX..','..XX...XX..','..XX...XX..','...XXXXX...'],
 };
 const SPRITE_COL = {
-  H: { X: '#b13e53', d: '#5d275d', o: '#f4f4f4' },
-  D: { X: '#ef7d57', d: '#b13e53', o: '#ffcd75' },
-  C: { X: '#257179', d: '#1a1c2c', o: '#73eff7' },
-  S: { X: '#333c57', d: '#1a1c2c', o: '#94b0c2' },
-  K: { X: '#5d275d', d: '#b13e53', o: '#f4f4f4', g: '#ef7d57' },
-  Q: { X: '#b13e53', d: '#5d275d', o: '#f4f4f4', g: '#ef7d57' },
-  J: { X: '#3b5dc9', d: '#29366f', o: '#f4f4f4', g: '#38b764' },
+  H: { X: '#c8102e', d: '#6d0a1a', o: '#fbf7ec' },
+  D: { X: '#e4572e', d: '#c8102e', o: '#f5c542' },
+  C: { X: '#0f5c38', d: '#0b0d0c', o: '#ffe08a' },
+  S: { X: '#14261c', d: '#0b0d0c', o: '#d9c9a3' },
+  K: { X: '#6d0a1a', d: '#c8102e', o: '#fbf7ec', g: '#e4572e' },
+  Q: { X: '#c8102e', d: '#6d0a1a', o: '#fbf7ec', g: '#e4572e' },
+  J: { X: '#1d4f9c', d: '#0f2d5c', o: '#fbf7ec', g: '#1e9e57' },
 };
 const SPRITES = Object.fromEntries(Object.entries(SPRITE_MAP).map(([k, rows]) => {
   let r = '';
@@ -1368,70 +1468,128 @@ function collectCards() {
 }
 
 /* Reel spin: strip = [spare, final×3, fillers…, previous×3]; slide from previous to final with a small overshoot. */
-/* Reel physics: small wind-up → launch → long cruise at full speed → gradual slow-down → tiny bounce.
-   Strip = [spare, final×3, many fillers…, previous×3]; it slides down from "previous" to "final". */
-function animateReels(grid, near, power = 1) {
-  return new Promise(resolve => {
-    const H = slotH();
-    let done = 0;
-    const retroNow = isRetro();
-    const V = H / 38;                          // cruise speed: about 26 cards per second
-    let lastTick = 0;
-    reelEls.forEach((reel, c) => {
-      const strip = stripEls[c];
-      const finals = [grid[c], grid[c + 3], grid[c + 6]];
-      const prev = [currentGrid[c], currentGrid[c + 3], currentGrid[c + 6]];
-      const slow = near && c === 2;
-      const tWind = RM ? 0 : 140, tAcc = RM ? 60 : 220;
-      const tCruise = RM ? 150 : (1100 + c * 520) * power;       // each reel spins longer than the one before
-      const tDec = RM ? 250 : (slow ? 2300 : 1150);              // the slow-down you can see
-      const tBounce = RM ? 0 : 200;
-      // distance covered: accel (v·t/2) + cruise (v·t) + cubic ease-out decel (v·t/3)
-      const want = V * (tAcc / 2 + tCruise + tDec / 3);
-      const fill = Math.max(4, Math.round(want / H) - 3);
-      const cards = [drawCard(), ...finals, ...Array.from({ length: fill }, () => drawCard()), ...prev];
-      strip.innerHTML = cards.map(cardHTML).join('');
-      const startY = -(cards.length - 3) * H, endY = -H, D = endY - startY;
-      const v = D / (tAcc / 2 + tCruise + tDec / 3);             // exact speed so the reel lands on the final cards
-      const wind = RM ? 0 : H * .14, over = RM ? 0 : H * .16;
-      strip.style.transform = `translateY(${startY}px)`;
-      reel.classList.add('running');
-      const t0 = performance.now(), T = tWind + tAcc + tCruise + tDec + tBounce;
-      let lastCard = 0;
-      function pos(t) {
-        if (t < tWind) { const u = t / tWind; return startY - wind * Math.sin(u * Math.PI / 2) * (1 - u * .2); }   // pull back
-        t -= tWind;
-        if (t < tAcc) { const u = t / tAcc; return startY - wind * .8 * (1 - u) + v * tAcc * u * u / 2; }
-        t -= tAcc; const yA = startY + v * tAcc / 2;
-        if (t < tCruise) return yA + v * t;
-        t -= tCruise; const yC = yA + v * tCruise;
-        if (t < tDec) { const u = t / tDec; return yC + (v * tDec / 3) * (1 - Math.pow(1 - u, 3)) + over * Math.pow(u, 6); }
-        t -= tDec; const u = Math.min(1, t / Math.max(1, tBounce));
-        return endY + over * Math.cos(u * Math.PI / 2);                                                            // settle back
-      }
-      function frame(now) {
-        const t = now - t0;
-        let y = pos(Math.min(t, T));
-        if (retroNow) y = Math.round(y / 3) * 3;
-        strip.style.transform = `translateY(${y}px)`;
-        const inDec = t > tWind + tAcc + tCruise;
-        strip.classList.toggle('blur', !RM && t > tWind + tAcc * .5 && (!inDec || (t - tWind - tAcc - tCruise) < tDec * .35));
-        // a click each time a card passes the window — it naturally slows down with the reel
-        const cardIdx = Math.floor((y - startY) / H);
-        if (cardIdx !== lastCard) { lastCard = cardIdx; if (now - lastTick > 45) { lastTick = now; Sound.tick(); } }
-        if (t < T) requestAnimationFrame(frame);
-        else {
-          strip.classList.remove('blur');
-          strip.innerHTML = finals.map(cardHTML).join('');
-          strip.style.transform = 'translateY(0)';
-          reel.classList.remove('running');
-          Sound.thunk(); buzz(18);
-          if (++done === 3) { collectCards(); resolve(); }
-        }
-      }
-      requestAnimationFrame(frame);
-    });
+/* Reels decided by luck.
+   Every spin draws three brand-new looping strips of REEL_LEN cards from this spin's lucky-draw odds
+   (nothing is carried over from the last spin: the old cards only show while the reels start, then
+   scroll away for good). The reels spin until the player taps; each reel then coasts a RANDOM distance
+   (about 5-11 cards) before settling, so the same tap never gives the same result. Luck picks the cards. */
+const REEL_LEN = 48;
+let reelRun = null;
+const mod = (a, n) => ((a % n) + n) % n;
+/* Visible shuffle: the cards flip face-down and riffle before every spin. */
+function shuffleFx() {
+  return new Promise(res => {
+    const reels = $('reels');
+    $('winNum').className = 'wnum zero'; $('winNum').textContent = 'Shuffling…';
+    reels.classList.remove('shuffling'); void reels.offsetWidth; reels.classList.add('shuffling');
+    cardEls.forEach((el, i) => el && el.style.setProperty('--sx', ((i % 3) - 1) * 14 + 'px'));
+    for (let i = 0; i < 9; i++) setTimeout(() => Sound.tick(), 40 + i * 45);            // riffle sound
+    buzz([6, 30, 6, 30, 6]);
+    setTimeout(() => { reels.classList.remove('shuffling'); $('winNum').textContent = 'Tap the reels or press STOP'; res(); }, RM ? 120 : 560);
   });
+}
+function startReels(power = 1) {
+  return new Promise(resolve => {
+    const H = slotH(), N = REEL_LEN, NH = N * H;
+    const V = (H / 60) * Math.max(.85, Math.min(1.25, power));   // cruise ≈ 16 cards per second
+    const run = { H, N, NH, V, reels: [], done: 0, resolve, lastTick: 0, last: performance.now(), retro: isRetro() };
+    reelEls.forEach((reel, c) => {
+      const prev = [currentGrid[c], currentGrid[c + 3], currentGrid[c + 6]];
+      const A = shuffledDeck(spinWeights, N);                    // a freshly shuffled deck every spin
+      const el = stripEls[c];
+      // The loop is drawn twice so it wraps seamlessly. The first 3 slots of each copy start out showing
+      // the previous cards (so the reel starts from what you see) and are swapped for A's cards off-screen.
+      const view = [...A, ...A]; for (let i = 0; i < 3; i++) { view[i] = prev[i]; view[N + i] = prev[i]; }
+      el.innerHTML = view.map(cardHTML).join('');
+      el.style.transform = 'translateY(0)';
+      reel.classList.add('running');
+      run.reels.push({ c, A, el, reel, t0: performance.now() + c * 90, v: 0, pos: 0, state: 'wind', stopAt: null, lock: null, landed: false, lastIdx: 0, swapped: false });
+    });
+    reelRun = run;
+    // Save the strips now: a reload mid-spin can't give the spin back (it's resolved at a random stop).
+    S.pendingStrips = run.reels.map(r => r.A.map(x => ({ r: x.r, s: x.s }))); save();
+    requestAnimationFrame(reelTick);
+  });
+}
+function reelTick(now) {
+  const run = reelRun; if (!run) return;
+  const dt = Math.min(50, now - run.last); run.last = now;
+  const { H, V } = run, wind = RM ? 0 : H * .14, tWind = RM ? 0 : 130, tAcc = RM ? 60 : 260;
+  run.reels.forEach(r => {
+    if (r.landed) return;
+    const t = now - r.t0;
+    if (r.state === 'wind') {                                     // small pull-back before launch
+      if (t <= 0) r.pos = 0;
+      else if (t < tWind) r.pos = -wind * Math.sin((t / tWind) * Math.PI / 2);
+      else { r.state = 'run'; r.pos = -wind; r.v = 0; }
+    }
+    if (r.state === 'run') {
+      r.v = Math.min(V, r.v + V * dt / tAcc);
+      r.pos += r.v * dt;
+      if (r.stopAt != null && now >= r.stopAt && r.v >= V * .999) beginSlowStop(run, r, now);
+    }
+    let speed = r.v;
+    if (r.state === 'lock') {
+      const L = r.lock, t2 = now - L.s0;
+      if (t2 < L.T) { const u = t2 / L.T; r.pos = L.pos0 + L.D * (1 - Math.pow(1 - u, 3)); speed = (3 * L.D / L.T) * (1 - u) * (1 - u); }
+      else if (t2 < L.T + L.tb) { const b = (t2 - L.T) / L.tb; r.pos = L.pos0 + L.D + L.over * Math.sin(b * Math.PI); speed = 0; }
+      else { landReel(run, r); return; }
+    }
+    r.el.classList.toggle('blur', !RM && speed > V * .55);
+    if (!r.swapped && r.pos > 4 * H) {                            // old cards are off-screen now: replace them
+      r.swapped = true;
+      const kids = r.el.children;
+      for (let i = 0; i < 3; i++) [i, run.N + i].forEach(j => { if (kids[j]) kids[j].outerHTML = cardHTML(r.A[i]); });
+    }
+    let ty = -mod(-r.pos, run.NH);
+    if (run.retro) ty = Math.round(ty / 3) * 3;
+    r.el.style.transform = `translateY(${ty}px)`;
+    const idx = Math.floor(r.pos / H);
+    if (idx !== r.lastIdx) { r.lastIdx = idx; if (now - run.lastTick > 55) { run.lastTick = now; Sound.tick(); } }
+  });
+  if (reelRun === run && run.done < 3) requestAnimationFrame(reelTick);
+}
+/* Slow stop: the reel coasts a RANDOM distance (a 0.9-2.0 s slow-down, about 5-11 cards; luck decides),
+   stretched by less than one card so it finishes exactly on a card edge, then settles with a small bounce. */
+function beginSlowStop(run, r, now) {
+  const v = r.v, Tn = RM ? 250 : 900 + RNG() * 1100;
+  const D0 = v * Tn / 3;
+  const off = mod(-r.pos, run.NH);
+  const D = D0 + mod(off - D0, run.H);                         // land on a card edge
+  const k = Math.round(mod(off - D, run.NH) / run.H) % run.N;   // top card once settled
+  r.lock = { s0: now, pos0: r.pos, D, T: 3 * D / v, tb: RM ? 0 : 200, over: RM ? 0 : run.H * .07 };
+  r.finals = [r.A[k], r.A[(k + 1) % run.N], r.A[(k + 2) % run.N]];
+  r.state = 'lock';
+}
+function landReel(run, r) {
+  r.landed = true;
+  r.el.innerHTML = r.finals.map(cardHTML).join('');
+  r.el.style.transform = 'translateY(0)';
+  r.reel.classList.remove('running');
+  Sound.thunk(); buzz(18);
+  renderHUD();
+  if (++run.done === 3) {
+    const grid = new Array(9);
+    run.reels.forEach(x => x.finals.forEach((card, row) => { grid[row * 3 + x.c] = card; }));
+    reelRun = null; collectCards(); run.resolve(grid);
+  }
+}
+/* Stop control: one tap stops all three reels, each starting its slow-down 280 ms after the one to its left. */
+function reelFree(r) { return r && !r.landed && r.state !== 'lock' && r.stopAt == null; }
+function stopAll() {
+  const run = reelRun; if (!run || !run.reels.some(reelFree)) return;
+  const now = performance.now();
+  run.reels.forEach((r, i) => { if (reelFree(r)) r.stopAt = now + i * 280 + RNG() * 120; });
+  buzz([10, 20, 10]); renderHUD();
+}
+function stopNext() { stopAll(); }
+function stopReel() { stopAll(); }
+function nextStopIndex() { const run = reelRun; if (!run) return -1; const r = run.reels.find(reelFree); return r ? r.c : -1; }
+/* Resolve a spin interrupted by a reload: stop each saved strip at a random card. */
+function resolveStrips(strips) {
+  const grid = new Array(9);
+  strips.forEach((A, c) => { const k = Math.floor(RNG() * A.length); for (let row = 0; row < 3; row++) grid[row * 3 + c] = A[(k + row) % A.length]; });
+  return grid;
 }
 
 /* Near-miss: first two reels already line up a same rank, or two connected hearts, on a line that runs through reel 3. */
@@ -1455,7 +1613,7 @@ function clearWinDisplay() {
   document.querySelectorAll('.mk.lit').forEach(m => m.classList.remove('lit'));
   $('frame').classList.remove('bonus');
   $('lineTicker').textContent = '';
-  document.querySelectorAll('.pt tr.hit').forEach(r => r.classList.remove('hit'));
+  document.querySelectorAll('.pt .hit').forEach(r => r.classList.remove('hit'));
 }
 function showLines(wins, focus, flip) {
   const svg = $('wlSvg'), labels = $('labels');
@@ -1469,7 +1627,7 @@ function showLines(wins, focus, flip) {
   const retro = isRetro();
   if (retro) {
     // Retro: no lines drawn — the winning cards blink; the ticker names the line.
-    const RC = isTerm() ? { h: '#c8ffdc', v: '#c8ffdc', d: '#c8ffdc' } : { h: '#ffcd75', v: '#73eff7', d: '#a7f070' };
+    const RC = isTerm() ? { h: '#c8ffdc', v: '#c8ffdc', d: '#c8ffdc' } : { h: '#f5c542', v: '#ffe08a', d: '#3fd07a' };
     shown.forEach(w => {
       w.positions.forEach(p => {
         winPos.add(p);
@@ -1480,7 +1638,7 @@ function showLines(wins, focus, flip) {
     });
     const t = $('lineTicker');
     if (focus != null) { const w = wins[focus]; t.style.setProperty('--tc', RC[w.dir]); t.textContent = `LINE ${w.line} · ${w.name.toUpperCase()} +${fmt(w.payout)}`; }
-    else { t.style.setProperty('--tc', '#ffcd75'); t.textContent = shown.length > 1 ? `${shown.length} LINES WIN` : shown.length ? `LINE ${shown[0].line} · ${shown[0].name.toUpperCase()} +${fmt(shown[0].payout)}` : ''; }
+    else { t.style.setProperty('--tc', '#f5c542'); t.textContent = shown.length > 1 ? `${shown.length} LINES WIN` : shown.length ? `LINE ${shown[0].line} · ${shown[0].name.toUpperCase()} +${fmt(shown[0].payout)}` : ''; }
     cardEls.forEach((el, i) => { if (!winPos.has(i)) el.classList.add('dim'); });
     if (flip) setTimeout(() => cardEls.forEach(el => el.classList.remove('flip')), 600);
     return;
@@ -1538,7 +1696,7 @@ let parts = [], fxRunning = false;
 function sizeFx() { const d = Math.min(2, window.devicePixelRatio || 1); fx.width = innerWidth * d; fx.height = innerHeight * d; fctx.setTransform(d, 0, 0, d, 0, 0); }
 function spawn(kind, n) {
   if (RM) n = Math.ceil(n / 4);
-  const cols = isTerm() ? ['#8ff0b4', '#c8ffdc', '#4fbf82'] : isRetro() ? ['#b13e53', '#ffcd75', '#73eff7', '#a7f070', '#f4f4f4', '#3b5dc9', '#ef7d57'] : ['#ff3b62', '#ffe27a', '#3ee3f0', '#ff52bb', '#fff6dc', '#b36bff'];
+  const cols = isTerm() ? ['#8ff0b4', '#c8ffdc', '#4fbf82'] : isRetro() ? ['#c8102e', '#f5c542', '#ffe08a', '#3fd07a', '#fbf7ec', '#1f8a4c', '#e4572e'] : ['#ff3b62', '#ffe27a', '#3ee3f0', '#ff52bb', '#fff6dc', '#b36bff'];
   for (let i = 0; i < n; i++) {
     parts.push(kind === 'coin'
       ? { k: 'coin', x: Math.random() * innerWidth, y: -20 - Math.random() * innerHeight * .6, vx: (Math.random() - .5) * 1.5, vy: 2 + Math.random() * 3, r: 7 + Math.random() * 6, a: Math.random() * 6, va: .1 + Math.random() * .15, life: 1 }
@@ -1560,9 +1718,9 @@ function fxLoop() {
       if (p.k === 'coin') {
         const w = Math.max(4, Math.round(Math.abs(Math.cos(p.a)) * 12 / 4) * 4);
         const tm = document.body.classList.contains('term');
-        fctx.fillStyle = tm ? '#07130d' : '#1a1c2c'; fctx.fillRect(px - w / 2 - 2, py - 8, w + 4, 16);
-        fctx.fillStyle = tm ? '#c8ffdc' : '#ffcd75'; fctx.fillRect(px - w / 2, py - 6, w, 12);
-        fctx.fillStyle = tm ? '#4fbf82' : '#ef7d57'; fctx.fillRect(px - w / 2, py + 2, w, 4);
+        fctx.fillStyle = tm ? '#07130d' : '#0b0d0c'; fctx.fillRect(px - w / 2 - 2, py - 8, w + 4, 16);
+        fctx.fillStyle = tm ? '#c8ffdc' : '#f5c542'; fctx.fillRect(px - w / 2, py - 6, w, 12);
+        fctx.fillStyle = tm ? '#4fbf82' : '#e4572e'; fctx.fillRect(px - w / 2, py + 2, w, 4);
       } else { fctx.fillStyle = p.c; fctx.fillRect(px, py, 8, 8); }
       fctx.restore(); return;
     }
@@ -1647,12 +1805,16 @@ function renderHUD() {
   $('termStat').textContent = `Score: ${fmt(S.score)} · Spins: ${S.spinsLeft} · High: ${fmt(highScore())}`;
   $('sbSpins').classList.toggle('low', S.spinsLeft > 0 && S.spinsLeft <= 5);
   $('mHigh').textContent = fmt(highScore());
-  $('spinSub').textContent = S.spinsLeft === 1 ? 'last spin!' : `${S.spinsLeft} left`;
+  const nx = nextStopIndex();
+  $('spinLbl').textContent = phase === 'spinning' ? 'STOP' : 'SPIN';
+  $('spinSub').textContent = phase === 'spinning' ? (nx >= 0 ? 'all reels' : 'stopping…') : (S.spinsLeft === 1 ? 'last spin!' : `${S.spinsLeft} left`);
+  $('spinBtn').classList.toggle('stopmode', phase === 'spinning');
+  reelEls.forEach((r, i) => r.classList.toggle('tap-stop', !!(reelRun && reelFree(reelRun.reels[i]))));
   const mi = S.meterIdx || 0, lo = mi ? meterGoal(mi - 1) : 0, hi = meterGoal(mi);
   $('heartFill').style.width = Math.max(0, Math.min(100, (S.score - lo) / (hi - lo) * 100)) + '%';
   $('heartText').textContent = `${fmt(S.score)} / ${fmt(hi)}`;
   $('heartLbl').textContent = `♥ meter · +${HEART_SPINS} spins at ${fmt(hi)}`;
-  $('spinBtn').disabled = phase === 'spinning';
+  $('spinBtn').disabled = false;
   $('spinBtn').classList.toggle('ready', phase === 'idle');
   $('newGameBtn').disabled = phase !== 'idle';
   $('lever').classList.toggle('off', phase === 'spinning');
@@ -1664,12 +1826,21 @@ function renderPaytable() {
   const retro = isRetro();
   const PTab = RETRO_PAYTABLE, BTab = RETRO_BONUSES;
   const pts = m => fmt(m * POINTS);
-  const twos = PTab.filter(p => p.pair);
+  const mixes = PTab.filter(p => p.mix);
   let h = `<tr class="sec"><td colspan="3">3 in a line · points</td></tr>`;
-  h += PTab.filter(p => !p.pair).map(p => `<tr data-key="${p.key}"><td>${p.name}</td><td class="eg">${eg(p.eg)}</td><td class="m">${pts(p.mult)}</td></tr>`).join('');
-  if (twos.length) {
-    h += `<tr class="sec"><td colspan="3">2 suits from the left · rows &amp; diagonals · points</td></tr>`;
-    h += twos.map(p => `<tr data-key="${p.key}"><td>${p.name}</td><td class="eg">${eg(p.eg)}</td><td class="m">${pts(p.mult)}</td></tr>`).join('');
+  h += PTab.filter(p => !p.mix).map(p => `<tr data-key="${p.key}"><td>${p.name}</td><td class="eg">${eg(p.eg)}</td><td class="m">${pts(p.mult)}</td></tr>`).join('');
+  if (mixes.length) {
+    // 2 + 1 grid: rows = the pair's suit, columns = the odd card's suit
+    const sym = k => `<span class="${k === 'H' || k === 'D' ? 'r' : ''}">${SUIT_SYM[k]}</span>`;
+    let m = `<table class="mixgrid"><tr><th>2 ↓ +1 →</th>${SUIT_ORDER.map(k => `<th>${sym(k)}</th>`).join('')}</tr>`;
+    SUIT_ORDER.forEach(a => {
+      m += `<tr><th>${sym(a)}${sym(a)}</th>` + SUIT_ORDER.map(b => {
+        const e = mixes.find(x => x.pair === a && x.kick === b);
+        return e ? `<td data-key="${e.key}" title="${e.name}">${pts(e.mult)}</td>` : `<td class="na">—</td>`;
+      }).join('') + `</tr>`;
+    });
+    m += `</table>`;
+    h += `<tr class="sec"><td colspan="3">2 + 1 suits · any line, any order · points</td></tr><tr class="mixrow"><td colspan="3">${m}</td></tr>`;
   }
   h += `<tr class="sec"><td colspan="3">Whole-screen bonus · points</td></tr>`;
   h += BTab.map(b => `<tr data-key="${b.key}"><td colspan="2">${b.name}<small class="bd">${eg(b.desc)}</small></td><td class="m">${pts(b.mult)}</td></tr>`).join('');
@@ -1677,10 +1848,10 @@ function renderPaytable() {
   const c = [15, 50, 85];
   $('linemap').innerHTML = PAYLINES.map(pl => {
     const ptsl = pl.pos.map(p => `${c[p % 3]},${c[Math.floor(p / 3)]}`).join(' ');
-    const col = (isTerm() ? { h: '#8ff0b4', v: '#8ff0b4', d: '#8ff0b4' } : retro ? { h: '#ffcd75', v: '#73eff7', d: '#a7f070' } : { h: '#e6b24c', v: '#3ee3f0', d: '#ff52bb' })[pl.dir];
+    const col = (isTerm() ? { h: '#8ff0b4', v: '#8ff0b4', d: '#8ff0b4' } : retro ? { h: '#f5c542', v: '#ffe08a', d: '#3fd07a' } : { h: '#e6b24c', v: '#3ee3f0', d: '#ff52bb' })[pl.dir];
     let dots = '';
     for (let i = 0; i < 9; i++) dots += retro
-      ? `<rect x="${c[i % 3] - 11}" y="${c[Math.floor(i / 3)] - 11}" width="22" height="22" fill="${pl.pos.includes(i) ? col : (isTerm() ? '#123424' : '#333c57')}"/>`
+      ? `<rect x="${c[i % 3] - 11}" y="${c[Math.floor(i / 3)] - 11}" width="22" height="22" fill="${pl.pos.includes(i) ? col : (isTerm() ? '#123424' : '#14261c')}"/>`
       : `<circle cx="${c[i % 3]}" cy="${c[Math.floor(i / 3)]}" r="6" fill="${pl.pos.includes(i) ? col : '#3a1a24'}"/>`;
     if (retro) return `<figure><svg viewBox="0 0 100 100" shape-rendering="crispEdges">${dots}</svg>${pl.n} · ${pl.name.split(' ')[0]}</figure>`;
     return `<figure><svg viewBox="0 0 100 100">${dots}<polyline points="${ptsl}" fill="none" stroke="${col}" stroke-width="5" stroke-linecap="round" opacity=".75"/></svg>${pl.n} · ${pl.name.split(' ')[0]}</figure>`;
@@ -1688,7 +1859,7 @@ function renderPaytable() {
 }
 function highlightPaytable(res) {
   const keys = new Set([...res.lineWins.map(w => w.key), ...res.bonuses.map(b => b.key)]);
-  keys.forEach(k => { const r = document.querySelector(`.pt tr[data-key="${k}"]`); if (r) r.classList.add('hit'); });
+  keys.forEach(k => { const r = document.querySelector(`.pt [data-key="${k}"]`); if (r) r.classList.add('hit'); });
 }
 function renderHistory() {
   if (!S.history.length) { $('history').innerHTML = `<li class="empty">Your last 5 spins will appear here.</li>`; return; }
@@ -1718,7 +1889,7 @@ function symHTML(cards) {
 function renderReceipt(res, grid, total) {
   const wrap = $('receiptWrap'), ul = $('receipt');
   wrap.hidden = false;
-  if (!total) { ul.innerHTML = `<li class="none">No match this time. Look for 3 of a kind or J-Q-K in any line, or the first 2 reels showing the same suit on a row or diagonal.</li>`; return; }
+  if (!total) { ul.innerHTML = `<li class="none">No match this time. Look for 3 of a kind, J-Q-K, or two cards of one suit plus one of another in any line.</li>`; return; }
   const rows = [];
   const lines = [...res.lineWins].sort((a, b) => b.payout - a.payout);
   lines.slice(0, 5).forEach(w => rows.push(`<li><span>Line ${w.line} · ${PAYLINES[w.lineIndex].name}</span><span class="rs">${symHTML(w.positions.map(p => grid[p]))}</span><b>+${fmt(w.payout)}</b></li>`));
@@ -1772,10 +1943,9 @@ const Lever = (() => {
     const p = pull;
     el.classList.add('snap'); setPull(0); lastStep = 0;
     setTimeout(() => el.classList.remove('snap'), 480);
-    if (p >= .55) { Sound.thunk(); buzz([10, 30, 20]); gestureSpin(.8 + p * .45); }
+    if (p >= .55) { Sound.thunk(); buzz([10, 30, 20]); if (phase === 'spinning') stopAll(); else gestureSpin(.8 + p * .45); }
   }
   function autoPull() {           // tap or click without dragging: the lever pulls itself
-    if (phase === 'spinning') return;
     let t0 = performance.now();
     (function f(now) { const t = Math.min(1, (now - t0) / 260); setPull(t); if (t < 1) requestAnimationFrame(f); else release(); })(t0);
   }
@@ -1784,7 +1954,7 @@ const Lever = (() => {
     draw(0);
     let moved = false;
     el.addEventListener('pointerdown', e => {
-      if (phase === 'spinning') return;
+      if (phase === 'spinning' && (!reelRun || nextStopIndex() < 0)) return;
       dragging = true; moved = false; startY = e.clientY; el.setPointerCapture(e.pointerId); el.classList.remove('snap');
     });
     el.addEventListener('pointermove', e => {
@@ -1804,7 +1974,8 @@ function initSwipe() {
   let active = false, y0 = 0, yPrev = 0, tPrev = 0, vel = 0, pullDown = 0;
   const nudge = px => stripEls.forEach((st, i) => { st.style.transform = `translateY(${px * (1 - i * .12)}px)`; });
   box.addEventListener('pointerdown', e => {
-    if (phase === 'spinning' || e.button > 0) return;
+    if (e.button > 0) return;
+    if (phase === 'spinning') { stopAll(); return; }              // tap anywhere on the reels: stop them all
     active = true; y0 = yPrev = e.clientY; tPrev = performance.now(); vel = 0; pullDown = 0;
     box.setPointerCapture(e.pointerId); box.classList.add('dragging');
   });
@@ -1835,7 +2006,7 @@ function initSwipe() {
 }
 
 /* ---------- High-score celebration: the King, Queen and Joker dance ---------- */
-const DANCER_COL = { y: '#ffcd75', r: '#b13e53', s: '#f3c8a0', k: '#1a1c2c', w: '#f4f4f4', o: '#ef7d57', b: '#3b5dc9', g: '#38b764', p: '#5d275d' };
+const DANCER_COL = { y: '#f5c542', r: '#c8102e', s: '#f3c8a0', k: '#0b0d0c', w: '#fbf7ec', o: '#e4572e', b: '#1f8a4c', g: '#1e9e57', p: '#6d0a1a' };
 const DANCERS = {
   king: {
     head: ['...y..y..y...', '...yyyyyyy...', '...yryyyry...', '...sssssss...', '...sksssks...', '...sssssss...'],
@@ -1907,7 +2078,7 @@ function commitSpin(grid) {
   const best = [...res.lineWins].sort((a, b) => b.payout - a.payout)[0];
   S.history.unshift({ m: 'royal', g: grid, w: winPos, win: total, label: res.bonuses[0]?.name || best?.name || 'No match' });
   S.history = S.history.slice(0, 5);
-  S.pending = null;
+  S.pending = null; S.pendingStrips = null;
   save();
   return { res, total, won, hearts, extra };
 }
@@ -1918,16 +2089,17 @@ async function spin(opts = {}) {
   if (S.spinsLeft <= 0) { gameOver(); return; }
 
   phase = 'spinning'; clearWinDisplay(); hideBanner(); lastResult = null; cancelConfirm();
-  $('winNum').className = 'wnum zero'; $('winNum').textContent = 'Spinning…'; $('winSub').textContent = '';
-  $('receipt').innerHTML = '<li class="none">Spinning…</li>';
-  // The spin is used up and its cards are drawn *now*, and saved before the reels move —
+  $('winNum').className = 'wnum zero'; $('winNum').textContent = 'Tap the reels or press STOP'; $('winSub').textContent = '';
+  $('receipt').innerHTML = '<li class="none">Tap when you feel lucky. The reels slow down and settle — luck picks where each one lands.</li>';
+  // The spin is used up now (and the reel strips are saved as the reels start) —
   // so reloading mid-spin can't give the spin back or redraw the cards.
   S.spinsLeft--; S.totalSpins++;
-  const grid = drawGrid();
-  S.pending = grid; save();
-  renderHUD();
+  prepareOdds();
   hideCoach();
-  await animateReels(grid, detectNearMiss(grid), opts.power || 1);
+  await shuffleFx();                                              // the cards are visibly shuffled first
+  const reelsDone = startReels(opts.power || 1);
+  renderHUD();
+  const grid = await reelsDone;
   currentGrid = grid;
 
   // --- points: every winning line adds its points, nothing else ---
@@ -1990,7 +2162,7 @@ async function gameOver() {
   $('overModal').hidden = false; $('restartBtn').focus();
 }
 function newGame(msg) {
-  S.score = 0; S.cold = 0; S.ended = null; S.pending = null; S.startSpins = S.spinsLeft = spinsForGame(); S.hearts = 0; S.meterIdx = 0; passedHigh = false;
+  S.score = 0; S.cold = 0; S.ended = null; S.pending = null; S.pendingStrips = null; S.startSpins = S.spinsLeft = spinsForGame(); S.hearts = 0; S.meterIdx = 0; passedHigh = false;
   $('overModal').hidden = true;
   clearWinDisplay(); hideBanner(); lastResult = null;
   $('winNum').className = 'wnum zero'; $('winNum').textContent = 'Match 3 suits on a line to win'; $('winSub').textContent = ''; $('receiptWrap').hidden = true;
@@ -2026,7 +2198,7 @@ function buildBulbs() {
 
 /* ---------- Wire up ---------- */
 function bind() {
-  $('spinBtn').addEventListener('click', () => spin());
+  $('spinBtn').addEventListener('click', () => { if (phase === 'spinning') stopNext(); else spin(); });
   $('newGameBtn').addEventListener('click', () => { if (phase === 'idle') confirmThen('new', 'This', () => newGame()); });
   $('mega').addEventListener('click', () => celebrateSkip && celebrateSkip());
   document.querySelectorAll('.looks button').forEach(b => b.addEventListener('click', () => setLook(b.dataset.look)));
@@ -2046,7 +2218,7 @@ function bind() {
       if (!$('overModal').hidden) { newGame(); return; }
       if (!userToggledSound) { userToggledSound = true; setMute(false); }
       $('spinBtn').classList.add('pressed'); setTimeout(() => $('spinBtn').classList.remove('pressed'), 120);
-      spin();
+      if (phase === 'spinning') stopNext(); else spin();
     } else if (e.key === 'Escape') { $('howModal').hidden = true; }
   });
   document.addEventListener('keyup', e => { if (e.code === 'Space') e.preventDefault(); });
@@ -2096,7 +2268,8 @@ function setMode(mode, announce) {
 function boot() {
   load(); applyModeClass();
   let resumed = null;
-  if (S.pending && S.pending.length === 9) { const r = commitSpin(S.pending); currentGrid = S.history[0].g; resumed = r.total; }
+  if (S.pendingStrips && S.pendingStrips.length === 3) { const r = commitSpin(resolveStrips(S.pendingStrips)); currentGrid = S.history[0].g; resumed = r.total; }
+  else if (S.pending && S.pending.length === 9) { const r = commitSpin(S.pending); currentGrid = S.history[0].g; resumed = r.total; }
   if (S.history[0] && S.history[0].g.every(c => SUIT_SYM[c.s])) currentGrid = S.history[0].g;
   sizeSlots(); renderReelsStatic(currentGrid); renderPaytable(); buildBulbs(); sizeFx(); bind(); renderAll();
   Lever.init(); initSwipe(); showCoachOnce();
