@@ -873,6 +873,19 @@ body.retro .reels.jiggle .card{animation-timing-function:steps(2)}
   .bulb,.card.win,.card.win.flip,.reels-frame.bonus,.spin.ready,.reel.tension,body.retro .crt,body.retro .app{animation:none !important}
   .card.win{transform:scale(1.06); box-shadow:0 0 0 3px var(--glow), 0 0 20px var(--glow)}
 }
+
+/* Phone layout for the controls: SPIN and "Take your call" side by side, New game centred below */
+@media (max-width:520px){
+  .controls{grid-template-columns:auto auto; grid-template-areas:"spin auto" "bet bet"; justify-content:center; align-items:center; column-gap:22px; row-gap:14px}
+  .spinwrap{grid-area:spin; justify-self:center}
+  .autogrp{grid-area:auto; justify-self:center; align-self:center}
+  .betgrp{grid-area:bet; justify-self:center}
+  .instant{width:66px; height:66px}
+  .instant .dome{inset:8px}
+}
+
+.hornlbl{white-space:nowrap; text-align:center}
+@media (max-width:520px){ body.term .hornlbl{font-size:13px !important; letter-spacing:.02em} .hornlbl{letter-spacing:.1em} }
 </style>
 </head>
 <body>
