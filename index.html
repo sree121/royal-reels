@@ -990,7 +990,7 @@ body.retro .bulb{background:#3a2a0c}
       <li><b>You decide when to stop — luck decides the cards.</b> The reels keep spinning until you <b>tap the reels</b>, press <b>STOP</b>, hit the spacebar or pull the lever again. Each reel then coasts a random distance and settles, so every spin is a fresh lucky draw.</li>
       <li><b>3 of the same in any line</b> (across, down or corner to corner): KKK = <b>1,000</b> (jackpot) · QQQ = 400 · ♥♥♥ = 250 · JJJ = 250 · ♦♦♦ = 180 · ♣♣♣ = 120 · ♠♠♠ = 80.</li>
       <li><b>Royal Line:</b> J, Q and K in one line, any order = <b>200</b>.</li>
-      <li><b>2 + 1 suits</b> — two cards of one suit and one of another, in any order, on any of the 8 lines. Each mix has its own score, from ♥♥ + ♦ = 25 down to ♠♠ + ♣ = 5 (see the grid in Points). J, Q and K only score as a set of 3.</li>
+      <li><b>2 + 1 suits</b> — two cards of one suit <b>side by side</b> plus one of another suit, on any of the 8 lines (♥ ♥ ♠ and ♠ ♥ ♥ score, ♥ ♠ ♥ doesn't). Each mix has its own score, from ♥♥ + ♦ = 25 down to ♠♠ + ♣ = 5 (see the grid in Points). J, Q and K only score as a set of 3.</li>
       <li>Every spin is a <b>lucky draw</b> — the odds reshuffle each time, so any suit can come in a streak. All four suits are equally likely; J, Q and K are rarer, the King rarest. <b>Face-down cards</b> (▒) never match.</li>
       <li><b>♥ meter:</b> it fills with the points you score. Reach <b>200, 500, 900, 1,400, 2,000…</b> points in a game and each one gives you <b>3 extra spins</b>. Keep scoring to keep going!</li>
       <li><b>Bigger high score, more spins:</b> every 400 points your high score is above 500 adds 1 spin to each game (up to +5).</li>
@@ -1195,10 +1195,11 @@ function runSelfTests(log = console.log) {
     ['Retro: ♠♠♠ pays less than ♥♥♥', () => evaluateLineRetro(L('2S 3S 4S')).multiplier < evaluateLineRetro(L('9H 9H 9H')).multiplier],
     ['Retro: ♥♦♥ on its own → no win (Red Mix removed)', () => evaluateLineRetro(L('2H 5D 9H')).multiplier === 0],
     ['2+1: ♥ ♥ ♠ on the top row → 2 Hearts + 1 Spade, 20 points', () => { const r = evaluateGridRetro(G('2H 5H 9S 3D 7X 4C 8D 6X 10C'), 10); const w = r.lineWins.find(x => x.line === 1); return w && w.key === 'mHS' && w.payout === 20; }],
-    ['2+1: ♠ ♥ ♠ (any order) → 2 Spades + 1 Heart, 10 points', () => { const r = evaluateGridRetro(G('2S 5H 9S 3X 7X 4X 8X 6X 10X'), 10); const w = r.lineWins.find(x => x.line === 1); return w && w.key === 'mSH' && w.payout === 10; }],
-    ['2+1: counts in a column too — ♣ ♥ ♣ down the left → 2 Clubs + 1 Heart, 15 points', () => { const r = evaluateGridRetro(G('2C 5X 9X 3H 7X 4X 8C 6X 10X'), 10); const w = r.lineWins.find(x => x.line === 4); return w && w.key === 'mCH' && w.payout === 15; }],
+    ['2+1: ♥ ♠ ♠ (pair at the end) → 2 Spades + 1 Heart, 10 points', () => { const r = evaluateGridRetro(G('2H 5S 9S 3X 7X 4X 8X 6X 10X'), 10); const w = r.lineWins.find(x => x.line === 1); return w && w.key === 'mSH' && w.payout === 10; }],
+    ['2+1: ♠ ♥ ♠ (pair split) → no score', () => !evaluateGridRetro(G('2S 5H 9S 3X 7X 4X 8X 6X 10X'), 10).lineWins.some(x => x.line === 1)],
+    ['2+1: counts in a column too — ♣ ♣ ♥ down the left → 2 Clubs + 1 Heart, 15 points', () => { const r = evaluateGridRetro(G('2C 5X 9X 3C 7X 4X 8H 6X 10X'), 10); const w = r.lineWins.find(x => x.line === 4); return w && w.key === 'mCH' && w.payout === 15; }],
     ['2+1: two suits + a face card or face-down card → no score', () => evaluateGridRetro(G('2H 5H 13K 3X 7X 4X 8X 6X 10X'), 10).lineWins.length === 0],
-    ['2+1: ♣ ♠ ♠ on the bottom row (any order) → 2 Spades + 1 Club, 5 points', () => { const r = evaluateGridRetro(G('2H 5D 9C 3D 7H 4C 8C 6S 10S'), 10); const w = r.lineWins.find(x => x.line === 3); return w && w.key === 'mSC' && w.payout === 5; }],
+    ['2+1: ♣ ♠ ♠ on the bottom row → 2 Spades + 1 Club, 5 points', () => { const r = evaluateGridRetro(G('2H 5D 9C 3D 7H 4C 8C 6S 10S'), 10); const w = r.lineWins.find(x => x.line === 3); return w && w.key === 'mSC' && w.payout === 5; }],
     ['Retro: K K K → Three Kings, 1,000 points, jackpot', () => { const r = evaluateGridRetro(G('13K 13K 13K 2C 3D 4S 5H 6C 7D'), 10); return r.lineWins.some(w => w.key === 'rK' && w.payout === 1000) && r.jackpot; }],
     ['Retro: K J Q (any order) → Royal Line, 200 points', () => evaluateLineRetro(L('13K 11J 12Q')).key === 'rRoyal' && evaluateLineRetro(L('13K 11J 12Q')).multiplier * 10 === 200],
     ['Retro: Q Q ♣ on a row → no win (J, Q, K only count as 3)', () => { const r = evaluateGridRetro(G('12Q 12Q 2C 3D 4S 5H 6C 7D 8S'), 10); return !r.lineWins.some(x => x.line === 1); }],
@@ -1230,7 +1231,7 @@ const RETRO_PAYTABLE = [
   { key: 'rC',   name: 'Three Clubs',    eg: '♣ ♣ ♣', mult: 12 },
   { key: 'rS',   name: 'Three Spades',   eg: '♠ ♠ ♠', mult: 8 },
   // Two of a kind (suits only — J, Q, K score only as a set of 3): reels 1 + 2 on a row or diagonal, read from the left
-  // "2 + 1" suit mixes: two of one suit + one of another, anywhere in any line (all 8 lines, any order).
+  // "2 + 1" suit mixes: two of one suit side by side + one of another, on any of the 8 lines.
   // Each of the 12 mixes has its own score: the pair's suit sets the base, the odd card adds a little.
   ...(() => {
     const NAME = { H: 'Hearts', D: 'Diamonds', C: 'Clubs', S: 'Spades' };
@@ -1271,10 +1272,11 @@ function evaluateGridRetro(grid, lineBet = 1) {
       key: res.key, name: res.name, multiplier: res.multiplier, payout: res.multiplier * lineBet,
     });
     else {
-      // "2 + 1" suit mix: exactly two cards of one suit and one of another suit, in any order, on any line
+      // "2 + 1" suit mix: two cards of one suit SIDE BY SIDE (in sequence) plus one of another suit, on any line.
+      // ♥ ♥ ♠ and ♠ ♥ ♥ score; ♥ ♠ ♥ (pair split by the odd card) does not.
       const su = cards.map(c => c.s);
       if (su.every(x => SUIT_ORDER.includes(x))) {
-        const pair = su.find(x => su.filter(y => y === x).length === 2);
+        const pair = su[0] === su[1] && su[2] !== su[0] ? su[0] : su[1] === su[2] && su[0] !== su[1] ? su[1] : null;
         const kick = pair && su.find(x => x !== pair);
         if (pair && kick) {
           const k = 'm' + pair + kick;
@@ -1840,7 +1842,7 @@ function renderPaytable() {
       }).join('') + `</tr>`;
     });
     m += `</table>`;
-    h += `<tr class="sec"><td colspan="3">2 + 1 suits · any line, any order · points</td></tr><tr class="mixrow"><td colspan="3">${m}</td></tr>`;
+    h += `<tr class="sec"><td colspan="3">2 + 1 suits · pair side by side · any line · points</td></tr><tr class="mixrow"><td colspan="3">${m}</td></tr>`;
   }
   h += `<tr class="sec"><td colspan="3">Whole-screen bonus · points</td></tr>`;
   h += BTab.map(b => `<tr data-key="${b.key}"><td colspan="2">${b.name}<small class="bd">${eg(b.desc)}</small></td><td class="m">${pts(b.mult)}</td></tr>`).join('');
@@ -1889,7 +1891,7 @@ function symHTML(cards) {
 function renderReceipt(res, grid, total) {
   const wrap = $('receiptWrap'), ul = $('receipt');
   wrap.hidden = false;
-  if (!total) { ul.innerHTML = `<li class="none">No match this time. Look for 3 of a kind, J-Q-K, or two cards of one suit plus one of another in any line.</li>`; return; }
+  if (!total) { ul.innerHTML = `<li class="none">No match this time. Look for 3 of a kind, J-Q-K, or two same-suit cards side by side plus one other suit in any line.</li>`; return; }
   const rows = [];
   const lines = [...res.lineWins].sort((a, b) => b.payout - a.payout);
   lines.slice(0, 5).forEach(w => rows.push(`<li><span>Line ${w.line} · ${PAYLINES[w.lineIndex].name}</span><span class="rs">${symHTML(w.positions.map(p => grid[p]))}</span><b>+${fmt(w.payout)}</b></li>`));
