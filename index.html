@@ -752,9 +752,22 @@ body.term .empty{color:#2f6b4c}
 @media (max-width:520px){ body.term .sb b{font-size:34px} body.term .sb-score b{font-size:42px} body.term .termbar{font-size:17px} .looks .ghost{padding:6px 8px} }
 
 .boosts{flex-wrap:nowrap}
-.chip.luck{flex:0 0 auto; color:#a7f070; border-color:#38b764; animation:luckIn .5s ease both}
+.chip.luck{flex:0 0 auto; color:#a7f070; border-color:#38b764; animation:luckIn .5s ease both;
+  background-image:linear-gradient(90deg, rgba(56,183,100,.45) var(--fill,0%), transparent var(--fill,0%)); transition:background .5s}
+.chip.luck.cold{color:#73eff7; border-color:#41a6f6; background-image:linear-gradient(90deg, rgba(65,166,246,.45) var(--fill,0%), transparent var(--fill,0%))}
+body.term .chip.luck.cold{color:#c8ffdc; border-color:#8ff0b4}
+body.term .chip.luck, body.term .chip.luck.cold{background-image:linear-gradient(90deg, rgba(143,240,180,.25) var(--fill,0%), transparent var(--fill,0%))}
 @keyframes luckIn{from{transform:scale(.6); opacity:0}}
 body.term .chip.luck{font-family:var(--ui); font-size:17px; background:#06120c; color:#c8ffdc; border:2px solid #4f9f73; box-shadow:none}
+
+/* Classic look: face cards and the card back */
+.card.face.fK{color:#6b1f6e} .card.face.fQ{color:var(--red)} .card.face.fJ{color:#1d4f8f}
+.card.face .pip b{font-size:calc(var(--sh) * .40)}
+.card.face .pip b small{font-size:.42em; margin-top:.05em}
+.card.cback{background:#8c1230; box-shadow:0 2px 0 rgba(0,0,0,.25), 0 6px 14px rgba(0,0,0,.35);
+  background-image:repeating-linear-gradient(45deg, rgba(255,230,160,.18) 0 3px, transparent 3px 9px), repeating-linear-gradient(-45deg, rgba(255,230,160,.18) 0 3px, transparent 3px 9px)}
+.card.cback::before{inset:7%; border:2px solid rgba(255,230,160,.55); border-radius:6px}
+.card.cback i{position:absolute; left:50%; top:50%; width:30%; aspect-ratio:1; transform:translate(-50%,-50%) rotate(45deg); border:2px solid rgba(255,230,160,.7); background:rgba(90,8,24,.6)}
 
 @media (prefers-reduced-motion: reduce){ .dancer, .dancer .fa, .dancer .fb, .dance .dt{animation:none !important} .dancer .fb{opacity:0} }
 
@@ -800,7 +813,7 @@ body.term .chip.luck{font-family:var(--ui); font-size:17px; background:#06120c; 
           <div class="heartm" title="Every ♥ that lands fills the meter. When it's full you get 3 extra spins.">
             <span class="hl">♥ meter · +3 spins</span><div class="heartbar"><i id="heartFill"></i></div><small id="heartText">0 / 8</small>
           </div>
-          <span class="chip luck" id="chipLuck" title="The machine warms up as your score grows: face-down cards get rarer." hidden>Luck +0%</span>
+          <span class="chip luck" id="chipLuck" title="Luck makes face-down cards rarer. It builds with every miss (resets when you win) and as your score grows." hidden>Luck +0%</span>
         </div>
 
         <div class="stage">
@@ -855,13 +868,7 @@ body.term .chip.luck{font-family:var(--ui); font-size:17px; background:#06120c; 
             <button class="autobtn" id="newGameBtn" type="button">New game</button>
           </div>
           <div class="spinwrap"><button class="spin ready" id="spinBtn" type="button">SPIN<small id="spinSub">10 left</small></button></div>
-          <div class="autogrp">
-            <span class="lbl" style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)">Auto spin</span>
-            <div class="autos">
-              <button class="autobtn" id="auto10" type="button">×10</button>
-              <button class="autobtn" id="auto25" type="button">×25</button>
-            </div>
-          </div>
+          <div class="autogrp" aria-hidden="true"></div>
         </div>
         <div class="receipt-wrap" id="receiptWrap" hidden>
           <div class="rhead">Points this spin</div>
@@ -918,16 +925,16 @@ body.term .chip.luck{font-family:var(--ui); font-size:17px; background:#06120c; 
     <h3 id="howTitle">How to play</h3>
     <ul>
       <li>Every game gives you <b>10 spins</b>. <b>Pull the lever</b>, <b>swipe down on the cards</b>, press SPIN or hit the spacebar. A harder pull or faster swipe spins the reels longer — the result is always random.</li>
-      <li><b>3 of the same in any line</b> (across, down or corner to corner): KKK = <b>1,000</b> (jackpot) · QQQ = 400 · ♥♥♥ = 300 · JJJ = 250 · ♦♦♦ = 150 · ♣♣♣ = 80 · ♠♠♠ = 50.</li>
+      <li><b>3 of the same in any line</b> (across, down or corner to corner): KKK = <b>1,000</b> (jackpot) · QQQ = 400 · ♥♥♥ = 250 · JJJ = 250 · ♦♦♦ = 180 · ♣♣♣ = 120 · ♠♠♠ = 80.</li>
       <li><b>Royal Line:</b> J, Q and K in one line, any order = <b>200</b>.</li>
-      <li><b>2 suits from the left</b> — the first two reels match on a row across: ♥♥ = 25 · ♦♦ = 15 · ♣♣ = 10 · ♠♠ = 5. Then watch reel 3: if it matches too, it becomes a 3! J, Q and K only score as a set of 3.</li>
+      <li><b>2 suits from the left</b> — the first two reels match on a row across: ♥♥ = 40 · ♦♦ = 30 · ♣♣ = 20 · ♠♠ = 10. Then watch reel 3: if it matches too, it becomes a 3! J, Q and K only score as a set of 3.</li>
       <li>Every spin is a <b>lucky draw</b> — the odds reshuffle each time, so any suit can come in a streak. All four suits are equally likely; J, Q and K are rarer, the King rarest. <b>Face-down cards</b> (▒) never match.</li>
       <li><b>♥ meter:</b> every heart fills it. At 8 you get <b>3 extra spins</b>.</li>
-      <li><b>Bigger high score, more spins:</b> every 400 points your high score is above 1,000 adds 1 spin to each game (up to +10).</li>
-      <li><b>Luck warms up:</b> the more you score in a game, the fewer face-down cards appear (up to +10% luck).</li>
-      <li>When your spins run out, your final score is checked against the <b>high score (at least 1,000)</b>. Beat it and the King, Queen and Joker come out to dance!</li>
+      <li><b>Bigger high score, more spins:</b> every 400 points your high score is above 500 adds 1 spin to each game (up to +5).</li>
+      <li><b>Luck:</b> every miss in a row makes face-down cards 3% rarer, and a win resets it. Scoring also warms up your luck a little. Watch the Luck chip fill up.</li>
+      <li>When your spins run out, your final score is checked against the <b>high score (at least 500)</b>. Beat it and the King, Queen and Joker come out to dance!</li>
     </ul>
-    <p style="color:var(--muted);font-size:13px">Classic mode (button at the top) also counts card numbers: straights, three of a kind and more.</p>
+    <p style="color:var(--muted);font-size:13px">16-bit, Terminal and Classic are three looks for the same game — switch any time without losing your spins.</p>
     <div class="row"><button class="btn" id="howClose" type="button">Let's spin</button></div>
   </div>
 </div>
@@ -1100,10 +1107,10 @@ function runSelfTests(log = console.log) {
       return r.lineWins.length === 3 && r.comboMultiplier === 1 && r.totalWin === r.lineWins.reduce((a, w) => a + w.payout, 0);
     }],
     ['Four Corners bonus', () => evaluateGrid(G('7C 2H 7D 9S 4C JD 7H 3S 7S')).bonuses.some(b => b.key === 'corners')],
-    ['Retro: ♥♥♥ → Three Hearts, 300 points (ranks ignored)', () => { const r = evaluateGridRetro(G('2H KH 7H 3C 9S 4D 5S 6C 8C'), 10); return r.lineWins[0].key === 'rH' && r.lineWins[0].payout === 300; }],
+    ['Retro: ♥♥♥ → Three Hearts, 250 points (ranks ignored)', () => { const r = evaluateGridRetro(G('2H KH 7H 3C 9S 4D 5S 6C 8C'), 10); return r.lineWins[0].key === 'rH' && r.lineWins[0].payout === 250; }],
     ['Retro: ♠♠♠ pays less than ♥♥♥', () => evaluateLineRetro(L('2S 3S 4S')).multiplier < evaluateLineRetro(L('9H 9H 9H')).multiplier],
     ['Retro: ♥♦♥ on its own → no win (Red Mix removed)', () => evaluateLineRetro(L('2H 5D 9H')).multiplier === 0],
-    ['Retro: ♥♥♣ on top row → Two Hearts, 25 points, 2 cards lit', () => { const r = evaluateGridRetro(G('2H 5H 9C 3D 7S 4C 8D 6S 10H'), 10); const w = r.lineWins.find(x => x.line === 1); return w && w.key === 'rH2' && w.payout === 25 && w.positions.join() === '0,1'; }],
+    ['Retro: ♥♥♣ on top row → Two Hearts, 40 points, 2 cards lit', () => { const r = evaluateGridRetro(G('2H 5H 9C 3D 7S 4C 8D 6S 10H'), 10); const w = r.lineWins.find(x => x.line === 1); return w && w.key === 'rH2' && w.payout === 40 && w.positions.join() === '0,1'; }],
     ['Retro: ♣♠♠ (pair not from the left) → no win', () => { const r = evaluateGridRetro(G('2H 5D 9C 3D 7H 4C 8C 6S 10S'), 10); return !r.lineWins.some(x => x.line === 3); }],
     ['Retro: K K K → Three Kings, 1,000 points, jackpot', () => { const r = evaluateGridRetro(G('13K 13K 13K 2C 3D 4S 5H 6C 7D'), 10); return r.lineWins.some(w => w.key === 'rK' && w.payout === 1000) && r.jackpot; }],
     ['Retro: K J Q (any order) → Royal Line, 200 points', () => evaluateLineRetro(L('13K 11J 12Q')).key === 'rRoyal' && evaluateLineRetro(L('13K 11J 12Q')).multiplier * 10 === 200],
@@ -1113,7 +1120,7 @@ function runSelfTests(log = console.log) {
     ['Retro: face-down cards never match', () => { const X = { r: 0, s: 'X' }; const g = [X, X, X, X, X, X, X, X, X]; const r = evaluateGridRetro(g, 10); return r.totalWin === 0; }],
     ['Retro: two of a kind in a column does not count', () => { const r = evaluateGridRetro(G('2H 5D 9C 3H 7S 4D 8C 6S 10H'), 10); return !r.lineWins.some(x => x.line === 4); }],
     ['Retro: straight 7♣ 8♦ 9♠ → no win', () => evaluateLineRetro(L('7C 8D 9S')).multiplier === 0],
-    ['Retro: all-hearts screen → Heart Screen jackpot', () => { const r = evaluateGridRetro(G('2H 5H 9H JH 3H 7H KH 4H 10H')); return r.jackpot && r.lineWins.length === 8; }],
+    ['Retro: all-hearts screen → 8 lines of Three Hearts (no jackpot)', () => { const r = evaluateGridRetro(G('2H 5H 9H JH 3H 7H KH 4H 10H')); return !r.jackpot && r.lineWins.length === 8 && r.lineWins.every(w => w.key === 'rH'); }],
   ];
   let pass = 0;
   tests.forEach(([name, fn]) => { let ok = false; try { ok = !!fn(); } catch (e) { ok = false; } if (ok) pass++; log(`${ok ? 'PASS' : 'FAIL'}  ${name}`); });
@@ -1125,23 +1132,22 @@ function runSelfTests(log = console.log) {
 const RETRO_PAYTABLE = [
   { key: 'rK',   name: 'Three Kings',    eg: 'K K K', mult: 100, jackpot: true },
   { key: 'rQ',   name: 'Three Queens',   eg: 'Q Q Q', mult: 40 },
-  { key: 'rH',   name: 'Three Hearts',   eg: '♥ ♥ ♥', mult: 30 },
+  { key: 'rH',   name: 'Three Hearts',   eg: '♥ ♥ ♥', mult: 25 },
   { key: 'rJ',   name: 'Three Jacks',    eg: 'J J J', mult: 25 },
   { key: 'rRoyal', name: 'Royal Line',   eg: 'J Q K any order', mult: 20 },
-  { key: 'rD',   name: 'Three Diamonds', eg: '♦ ♦ ♦', mult: 15 },
-  { key: 'rC',   name: 'Three Clubs',    eg: '♣ ♣ ♣', mult: 8 },
-  { key: 'rS',   name: 'Three Spades',   eg: '♠ ♠ ♠', mult: 5 },
+  { key: 'rD',   name: 'Three Diamonds', eg: '♦ ♦ ♦', mult: 18 },
+  { key: 'rC',   name: 'Three Clubs',    eg: '♣ ♣ ♣', mult: 12 },
+  { key: 'rS',   name: 'Three Spades',   eg: '♠ ♠ ♠', mult: 8 },
   // Two of a kind (suits only — J, Q, K score only as a set of 3): reels 1 + 2 on a row across, read from the left
-  { key: 'rH2',  name: 'Two Hearts',     eg: '♥ ♥ ?', mult: 2.5, pair: true },
-  { key: 'rD2',  name: 'Two Diamonds',   eg: '♦ ♦ ?', mult: 1.5, pair: true },
-  { key: 'rC2',  name: 'Two Clubs',      eg: '♣ ♣ ?', mult: 1,   pair: true },
-  { key: 'rS2',  name: 'Two Spades',     eg: '♠ ♠ ?', mult: .5,  pair: true },
+  { key: 'rH2',  name: 'Two Hearts',     eg: '♥ ♥ ?', mult: 4,   pair: true },
+  { key: 'rD2',  name: 'Two Diamonds',   eg: '♦ ♦ ?', mult: 3,   pair: true },
+  { key: 'rC2',  name: 'Two Clubs',      eg: '♣ ♣ ?', mult: 2,   pair: true },
+  { key: 'rS2',  name: 'Two Spades',     eg: '♠ ♠ ?', mult: 1,   pair: true },
 ];
-// Points = multiplier × 10. Simulated over 500k spins: ~41% of spins score, ~830 points per 30-spin game.
-// How rare each 3-match is (spins): KKK 1 in ~570 · QQQ ~250 · ♥♥♥ ~120 · JJJ ~130 · Royal ~43 · ♦♦♦ ~45 · ♣♣♣ ~25 · ♠♠♠ ~12.
+// Points = multiplier × 10: suits 250 / 180 / 120 / 80 (flattened so every 3-match is worth having),
+// pairs 40 / 30 / 20 / 10. Simulated 100k games (with cold-streak luck): typical game 160 / 530 / 1,300
+// (10th / 50th / 90th percentile); ♥♥♥ earns ~24% of all points, pairs ~14%.
 const RETRO_BONUSES = [
-  { key: 'rHeartHouse', name: 'Heart Screen',       desc: 'All 9 are ♥',                 mult: 2000, jackpot: true },
-  { key: 'rSuitGrid',   name: 'One-Suit Screen',    desc: 'All 9 the same symbol',       mult: 500 },
   { key: 'rColorGrid',  name: 'All Red / All Black', desc: 'All 9 are ♥♦, or all ♣♠',    mult: 40 },
   { key: 'rCross',      name: 'Cross',              desc: 'Middle row + column, same symbol', mult: 25 },
   { key: 'rCorners',    name: 'Four Corners',       desc: 'Corners show the same symbol', mult: 10 },
@@ -1179,9 +1185,7 @@ function evaluateGridRetro(grid, lineBet = 1) {
   const bonuses = [];
   const suits = grid.map(c => c.s);
   const add = k => bonuses.push({ key: k, name: RBN[k].name, multiplier: RBN[k].mult, payout: RBN[k].mult * lineBet });
-  if (suits.every(s => s === 'H')) add('rHeartHouse');
-  else if (suits[0] !== 'X' && suits.every(s => s === suits[0])) add('rSuitGrid');
-  else if (suits.every(isRed) || suits.every(s => s === 'C' || s === 'S')) add('rColorGrid');
+  if (suits.every(isRed) || suits.every(s => s === 'C' || s === 'S')) add('rColorGrid');
   const cs = [1, 3, 4, 5, 7].map(p => suits[p]);
   if (cs[0] !== 'X' && cs.every(x => x === cs[0])) add('rCross');
   const co = [0, 2, 6, 8].map(p => suits[p]);
@@ -1189,7 +1193,7 @@ function evaluateGridRetro(grid, lineBet = 1) {
   const rule = COMBO_RULES.find(c => lineWins.length >= c.lines);
   const comboMultiplier = rule ? rule.mult : 1;
   const baseWin = lineWins.reduce((a, w) => a + w.payout, 0) + bonuses.reduce((a, b) => a + b.payout, 0);
-  const jackpot = bonuses.some(b => b.key === 'rHeartHouse') || lineWins.some(w => w.key === 'rK');
+  const jackpot = lineWins.some(w => w.key === 'rK');
   return { lineWins, bonuses, comboMultiplier, baseWin, totalWin: baseWin * comboMultiplier, jackpot };
 }
 /*LOGIC-END*/
@@ -1200,18 +1204,22 @@ function evaluateGridRetro(grid, lineBet = 1) {
 const LINES = PAYLINES.length;
 const POINTS = 10;              // points per paytable unit: ♥♥♥ (×12) = 120 points
 const SPINS_PER_GAME = 10, HEART_SPINS = 3;
-// A higher high score is harder to beat, so it earns a few more spins per game: +1 per 400 points above 1,000 (max +10).
-const bonusSpins = () => Math.min(10, Math.floor(Math.max(0, highScore() - MIN_HIGH) / 400));
+// A higher high score is harder to beat, so it earns a few more spins per game: +1 per 400 points above 500 (max +5).
+const bonusSpins = () => Math.min(5, Math.floor(Math.max(0, highScore() - MIN_HIGH) / 400));
 const spinsForGame = () => SPINS_PER_GAME + bonusSpins();
 // Warm-up: as your score grows during a game, face-down cards get a little rarer (−1% per 150 points, max −10%).
-const warmUp = () => isRetro() ? Math.min(.10, Math.floor(S.score / 150) * .01) : 0;
-const MIN_HIGH = 1000;          // the high score to beat is never below 1,000
+const scoreWarm = () => Math.min(.10, Math.floor(S.score / 150) * .01);
+// Cold-streak luck: every spin that misses makes face-down cards 3% rarer (max 18%); any win resets it.
+const coldLuck = () => Math.min(.18, (S.cold || 0) * .03);
+const LUCK_MAX = .28;
+const warmUp = () => Math.min(RETRO_WEIGHTS.X - .02, scoreWarm() + coldLuck());
+const MIN_HIGH = 500;           // the high score to beat is never below 500
 const SAVE_KEY = 'royal-reels-v1';
 const HEART_TARGET = 8;         // ~0.9 hearts per spin → most games earn 2–3 bonus spins (avg ~12.5 spins)
 
 function freshState() {
   return {
-    v: 4, mode: 'retro', theme: 'pixel',
+    v: 5, mode: 'retro', theme: 'pixel', cold: 0, pending: null, ended: null,
     score: 0, spinsLeft: SPINS_PER_GAME, startSpins: SPINS_PER_GAME, hearts: 0, highs: {},
     history: [], combos: {}, totalSpins: 0, wins: 0, biggest: 0, games: 0,
   };
@@ -1222,10 +1230,16 @@ function load() {
     const raw = localStorage.getItem(SAVE_KEY);
     if (!raw) return;
     const d = JSON.parse(raw);
-    if (d.v === 4) { S = Object.assign(freshState(), d); if (S.spinsLeft > 20 + HEART_SPINS * 4) { S.score = 0; S.spinsLeft = SPINS_PER_GAME; S.hearts = 0; } }
-    else {   // older rules: keep look + history, start the new rules (and high scores) fresh
+    if (d.v === 5) S = Object.assign(freshState(), d);
+    else if (d.v === 4) {
+      // Keep the look, the 16-bit/Terminal high score and stats. Classic used different (broken) rules,
+      // so its old high score is dropped and the current game starts fresh under the shared rules.
+      S = Object.assign(freshState(), { mode: d.mode || 'retro', theme: d.theme || 'pixel', combos: d.combos || {},
+        totalSpins: d.totalSpins || 0, wins: d.wins || 0, biggest: d.biggest || 0, games: d.games || 0,
+        highs: d.highs && d.highs.retro ? { royal: d.highs.retro } : {} });
+      S.startSpins = S.spinsLeft = spinsForGame();
+    } else {
       S.mode = d.v >= 2 ? (d.mode || 'retro') : 'retro';
-      S.history = (d.history || []).slice(0, 5);
     }
   } catch (e) {}
 }
@@ -1233,10 +1247,11 @@ function save() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(S)); } cat
 const isRetro = () => S.mode === 'retro';
 const isTerm = () => isRetro() && S.theme === 'term';
 const heartTarget = () => HEART_TARGET;
-const highKey = () => S.mode;
+const highKey = () => 'royal';     // one high score for all looks
 let spinWeights = RETRO_WEIGHTS;
-const drawGrid = () => { if (!isRetro()) return randomGrid(); spinWeights = luckyWeights(RETRO_WEIGHTS, Math.random, RETRO_WEIGHTS.X - warmUp()); return randomGrid(Math.random, spinWeights); };
-const drawCard = () => isRetro() ? randomCard(Math.random, spinWeights) : randomCard();
+// Every look (16-bit, Terminal, Classic) plays the same rules — only the cards' style changes.
+const drawGrid = () => { spinWeights = luckyWeights(RETRO_WEIGHTS, Math.random, RETRO_WEIGHTS.X - warmUp()); return randomGrid(Math.random, spinWeights); };
+const drawCard = () => randomCard(Math.random, spinWeights);
 const highScore = () => Math.max(S.highs[highKey()] || 0, MIN_HIGH);
 const inProgress = () => S.score > 0 || S.spinsLeft < (S.startSpins || SPINS_PER_GAME);
 
@@ -1282,7 +1297,7 @@ const cabinet = $('cabinet');
 let currentGrid = randomGrid();
 let cardEls = new Array(9);
 let phase = 'idle';          // idle | spinning | celebrate
-let cycleTimer = null, celebrateSkip = null, auto = { left: 0, btn: null };
+let cycleTimer = null, celebrateSkip = null;
 let lastResult = null;
 
 /* 16-bit pixel sprites: X = body, d = shade, o = highlight */
@@ -1319,12 +1334,18 @@ function cardHTML(c) {
   if (isRetro()) return c.s === 'X'
     ? `<div class="slot"><div class="card px back" aria-label="face-down card"><i></i></div></div>`
     : `<div class="slot"><div class="card px s${c.s}">${SPRITES[c.s]}</div></div>`;
-  const lab = RANK_LABEL[c.r], sym = SUIT_SYM[c.s];
-  const face = c.r >= 11 && c.r <= 13;
-  const center = face ? `<b>${lab}<small>${sym}</small></b>` : sym;
-  return `<div class="slot"><div class="card ${isRed(c.s) ? 'red' : 'blk'} ${c.r === 14 ? 'ace' : ''}">`
-    + `<span class="corner tl">${lab}<i>${sym}</i></span><span class="pip">${center}</span>`
-    + `<span class="corner br">${lab}<i>${sym}</i></span></div></div>`;
+  // Classic look: ivory playing cards. Only the symbol matters, so suit cards show the suit, not a number.
+  if (c.s === 'X') return `<div class="slot"><div class="card cback" aria-label="face-down card"><i></i></div></div>`;
+  if (FACE_R[c.s]) {
+    const crown = { K: '♚', Q: '♛', J: '⚜' }[c.s];
+    return `<div class="slot"><div class="card face f${c.s}">`
+      + `<span class="corner tl">${c.s}<i>${crown}</i></span><span class="pip"><b>${c.s}<small>${crown}</small></b></span>`
+      + `<span class="corner br">${c.s}<i>${crown}</i></span></div></div>`;
+  }
+  const sym = SUIT_SYM[c.s];
+  return `<div class="slot"><div class="card ${isRed(c.s) ? 'red' : 'blk'} ace">`
+    + `<span class="corner tl">${sym}</span><span class="pip">${sym}</span>`
+    + `<span class="corner br">${sym}</span></div></div>`;
 }
 function slotH() { return reelEls[0].clientHeight / 3; }
 function sizeSlots() { document.documentElement.style.setProperty('--sh', slotH() + 'px'); }
@@ -1412,7 +1433,7 @@ function animateReels(grid, near, power = 1) {
 /* Near-miss: first two reels already line up a same rank, or two connected hearts, on a line that runs through reel 3. */
 function detectNearMiss(g) {
   const pairs = [[0, 1], [3, 4], [6, 7], [0, 4], [6, 4]];
-  if (isRetro()) return pairs.some(([a, b]) => g[a].s === g[b].s && ['H', 'K', 'Q', 'J'].includes(g[a].s));
+  return pairs.some(([a, b]) => g[a].s === g[b].s && ['H', 'K', 'Q', 'J'].includes(g[a].s));
   return pairs.some(([a, b]) => g[a].r === g[b].r || (g[a].s === 'H' && g[b].s === 'H' && Math.abs(g[a].r - g[b].r) <= 2 && g[a].r !== g[b].r));
 }
 
@@ -1478,7 +1499,7 @@ function showLines(wins, focus, flip) {
     lab.className = 'llabel' + (focus != null ? ' big' : '');
     lab.style.setProperty('--c', DIR_COLOR[w.dir]);
     lab.style.left = lp.x + 'px'; lab.style.top = lp.y + 'px';
-    lab.innerHTML = `${w.name} ×${w.multiplier} · <em>+${fmt(w.payout)}</em>`;
+    lab.innerHTML = `${w.name} · <em>+${fmt(w.payout)}</em>`;
     labels.appendChild(lab);
   });
   cardEls.forEach((el, i) => { if (!winPos.has(i)) el.classList.add('dim'); });
@@ -1617,8 +1638,12 @@ function renderHUD() {
   if (!scoreAnimating) $('mScore').textContent = fmt(S.score);
   $('mSpinsLeft').textContent = S.spinsLeft;
   const warm = Math.round(warmUp() * 100);
-  $('chipLuck').hidden = warm <= 0; $('chipLuck').textContent = `Luck +${warm}%`;
-  $('mHighTag').textContent = bonusSpins() ? `+${bonusSpins()} spin${bonusSpins() > 1 ? 's' : ''} per game` : (isRetro() ? 'Retro mode' : 'Classic mode');
+  const chip = $('chipLuck');
+  chip.hidden = warm <= 0;
+  chip.textContent = S.cold > 0 ? `Luck +${warm}% · cold streak ${S.cold}` : `Luck +${warm}%`;
+  chip.style.setProperty('--fill', Math.min(100, warm / (LUCK_MAX * 100) * 100) + '%');
+  chip.classList.toggle('cold', S.cold > 0);
+  $('mHighTag').textContent = bonusSpins() ? `+${bonusSpins()} spin${bonusSpins() > 1 ? 's' : ''} per game` : 'to beat';
   $('termStat').textContent = `Score: ${fmt(S.score)} · Spins: ${S.spinsLeft} · High: ${fmt(highScore())}`;
   $('sbSpins').classList.toggle('low', S.spinsLeft > 0 && S.spinsLeft <= 5);
   $('mHigh').textContent = fmt(highScore());
@@ -1635,7 +1660,7 @@ function renderHUD() {
 function renderPaytable() {
   const eg = t => t.replace(/([♥♦])/g, '<span class="r">$1</span>');
   const retro = isRetro();
-  const PTab = retro ? RETRO_PAYTABLE : PAYTABLE, BTab = retro ? RETRO_BONUSES : BONUSES;
+  const PTab = RETRO_PAYTABLE, BTab = RETRO_BONUSES;
   const pts = m => fmt(m * POINTS);
   const twos = PTab.filter(p => p.pair);
   let h = `<tr class="sec"><td colspan="3">3 in a line · points</td></tr>`;
@@ -1666,7 +1691,7 @@ function highlightPaytable(res) {
 function renderHistory() {
   if (!S.history.length) { $('history').innerHTML = `<li class="empty">Your last 5 spins will appear here.</li>`; return; }
   $('history').innerHTML = S.history.map(h => {
-    const cells = h.g.map((c, i) => `<span class="mc ${isRed(c.s) ? 'red' : ''} ${h.w.includes(i) ? 'w' : ''}">${h.m === 'retro' ? '' : RANK_LABEL[c.r]}${SUIT_SYM[c.s]}</span>`).join('');
+    const cells = h.g.map((c, i) => `<span class="mc ${isRed(c.s) ? 'red' : ''} ${h.w.includes(i) ? 'w' : ''}">${h.m === 'classic-old' ? RANK_LABEL[c.r] : ''}${SUIT_SYM[c.s]}</span>`).join('');
     return `<li><div class="mini">${cells}</div><div class="hw ${h.win ? '' : 'zero'}">${h.win ? '+' + fmt(h.win) : '—'}<small>${h.label}</small></div></li>`;
   }).join('');
 }
@@ -1685,7 +1710,7 @@ let scoreAnimating = false;
 function symHTML(cards) {
   return cards.map(c => {
     const cls = c.s === 'H' ? 'r h' : c.s === 'D' ? 'r' : '';
-    return `<span class="${cls}">${isRetro() ? '' : RANK_LABEL[c.r]}${SUIT_SYM[c.s]}</span>`;
+    return `<span class="${cls}">${SUIT_SYM[c.s]}</span>`;
   }).join(' ');
 }
 function renderReceipt(res, grid, total) {
@@ -1723,7 +1748,6 @@ function hideCoach() { if ($('coach').hidden) return; $('coach').hidden = true; 
 function gestureSpin(power) {
   if (phase === 'celebrate') { celebrateSkip && celebrateSkip(); return; }
   if (phase !== 'idle' || !$('overModal').hidden || !$('howModal').hidden) return;
-  if (auto.left > 0) stopAuto();
   Sound.init(); spin({ power });
 }
 
@@ -1864,6 +1888,27 @@ let danceSkip = null;
    GAME FLOW
    ===================================================================== */
 let passedHigh = false;
+/* Apply a spin's result to the saved game (score, luck, ♥ meter, stats, history) and clear the pending spin. */
+function commitSpin(grid) {
+  const res = evaluateGridRetro(grid, POINTS);
+  const total = res.totalWin, won = total > 0;
+  S.score += total;
+  S.cold = won ? 0 : (S.cold || 0) + 1;
+  if (won) { S.wins++; S.biggest = Math.max(S.biggest, total); }
+  res.lineWins.forEach(w => S.combos[w.key] = (S.combos[w.key] || 0) + 1);
+  res.bonuses.forEach(b => S.combos[b.key] = (S.combos[b.key] || 0) + 1);
+  const hearts = grid.filter(c => c.s === 'H').length;
+  S.hearts += hearts;
+  let extra = false;
+  if (S.hearts >= heartTarget()) { S.hearts -= heartTarget(); S.spinsLeft += HEART_SPINS; extra = true; }
+  const winPos = [...new Set(res.lineWins.flatMap(w => w.positions))];
+  const best = [...res.lineWins].sort((a, b) => b.payout - a.payout)[0];
+  S.history.unshift({ m: 'royal', g: grid, w: winPos, win: total, label: res.bonuses[0]?.name || best?.name || 'No match' });
+  S.history = S.history.slice(0, 5);
+  S.pending = null;
+  save();
+  return { res, total, won, hearts, extra };
+}
 async function spin(opts = {}) {
   if (phase === 'celebrate') { if (celebrateSkip) celebrateSkip(); return; }
   if (phase !== 'idle') return;
@@ -1873,41 +1918,27 @@ async function spin(opts = {}) {
   phase = 'spinning'; clearWinDisplay(); hideBanner(); lastResult = null; cancelConfirm();
   $('winNum').className = 'wnum zero'; $('winNum').textContent = 'Spinning…'; $('winSub').textContent = '';
   $('receipt').innerHTML = '<li class="none">Spinning…</li>';
+  // The spin is used up and its cards are drawn *now*, and saved before the reels move —
+  // so reloading mid-spin can't give the spin back or redraw the cards.
   S.spinsLeft--; S.totalSpins++;
-  renderHUD();
-
   const grid = drawGrid();
+  S.pending = grid; save();
+  renderHUD();
   hideCoach();
   await animateReels(grid, detectNearMiss(grid), opts.power || 1);
   currentGrid = grid;
 
   // --- points: every winning line adds its points, nothing else ---
-  const res = isRetro() ? evaluateGridRetro(grid, POINTS) : evaluateGrid(grid, POINTS);
-  lastResult = res;
-  const total = res.totalWin, won = total > 0;
   const oldScore = S.score, oldHigh = highScore();
-  S.score += total;
-  if (won) { S.wins++; S.biggest = Math.max(S.biggest, total); }
-  res.lineWins.forEach(w => S.combos[w.key] = (S.combos[w.key] || 0) + 1);
-  res.bonuses.forEach(b => S.combos[b.key] = (S.combos[b.key] || 0) + 1);
-  const tier = !won ? 'none' : (res.jackpot || total >= 1000) ? 'mega' : total >= 200 ? 'big' : 'small';
+  const { res, total, won, hearts, extra } = commitSpin(grid);
+  lastResult = res;
+  const tier = !won ? 'none' : (res.jackpot || total >= 1000) ? 'mega' : total >= 400 ? 'big' : 'small';
   const newlyPassed = won && !passedHigh && S.score > oldHigh;
   if (newlyPassed) passedHigh = true;
-
-  // ♥ meter → extra spins
-  const hearts = grid.filter(c => c.s === 'H').length;
-  S.hearts += hearts;
-  let extra = false;
-  if (S.hearts >= heartTarget()) { S.hearts -= heartTarget(); S.spinsLeft += HEART_SPINS; extra = true; }
 
   $('winSub').innerHTML = won ? 'points' : '';
   renderReceipt(res, grid, total);
   highlightPaytable(res);
-  const winPos = [...new Set(res.lineWins.flatMap(w => w.positions))];
-  const best = [...res.lineWins].sort((a, b) => b.payout - a.payout)[0];
-  S.history.unshift({ m: S.mode, g: grid, w: winPos, win: total, label: res.bonuses[0]?.name || best?.name || 'No match' });
-  S.history = S.history.slice(0, 5);
-  save();
   renderHistory(); renderStats();
 
   if (won) {
@@ -1924,34 +1955,35 @@ async function spin(opts = {}) {
   if (extra) { banner(`+${HEART_SPINS} SPINS`, '♥ meter full', 'freeb', 2200); spawn('conf', 70); Sound.fanfare(false); toast(`♥ meter full! <b>+${HEART_SPINS} extra spins</b>`, 'pink'); }
   renderHUD();
 
-  if (S.spinsLeft <= 0) { stopAuto(); setTimeout(gameOver, won ? 900 : 500); return; }
-  if (auto.left > 0) {
-    if (tier === 'big' || tier === 'mega') { toast('Auto spin stopped on a big win', 'cyan'); stopAuto(); return; }
-    auto.left--; updateAutoBtns();
-    if (auto.left > 0) setTimeout(() => { if (auto.left > 0) spin(); }, won ? 900 : 450);
-    else stopAuto();
-  }
+  if (S.spinsLeft <= 0) setTimeout(gameOver, won ? 900 : 500);
 }
 
 let gameEnding = false;
 async function gameOver() {
   if (phase !== 'idle' || !$('overModal').hidden || gameEnding) return;
   gameEnding = true;
-  const prev = highScore(), isHigh = S.score > prev;
-  if (isHigh) S.highs[highKey()] = S.score;
-  S.games++;
-  save(); renderStats(); renderHUD();
-  $('finalScore').textContent = fmt(S.score);
-  $('finalMsg').innerHTML = isHigh
-    ? `You beat the high score of ${fmt(prev)}!`
-    : `High score to beat: ${fmt(prev)} — you needed ${fmt(prev - S.score + 5)} more.`;
-  $('overTitle').textContent = isHigh ? 'New high score!' : 'Game over';
-  if (isHigh) await royalDance(S.score, prev);
+  let dance = false;
+  if (!S.ended) {                  // decide the result once, and save it with the game
+    const prev = highScore(), isHigh = S.score > prev;
+    if (isHigh) S.highs[highKey()] = S.score;
+    S.games++;
+    S.ended = { score: S.score, prev, isHigh };
+    save();
+    dance = isHigh;
+  }
+  renderStats(); renderHUD();
+  const e = S.ended;
+  $('finalScore').textContent = fmt(e.score);
+  $('finalMsg').innerHTML = e.isHigh
+    ? `You beat the high score of ${fmt(e.prev)}!`
+    : `High score to beat: ${fmt(e.prev)} — you needed ${fmt(e.prev - e.score + 5)} more.`;
+  $('overTitle').textContent = e.isHigh ? 'New high score!' : 'Game over';
+  if (dance) await royalDance(e.score, e.prev);
   gameEnding = false;
   $('overModal').hidden = false; $('restartBtn').focus();
 }
 function newGame(msg) {
-  S.score = 0; S.startSpins = S.spinsLeft = spinsForGame(); S.hearts = 0; passedHigh = false;
+  S.score = 0; S.cold = 0; S.ended = null; S.pending = null; S.startSpins = S.spinsLeft = spinsForGame(); S.hearts = 0; passedHigh = false;
   $('overModal').hidden = true;
   clearWinDisplay(); hideBanner(); lastResult = null;
   $('winNum').className = 'wnum zero'; $('winNum').textContent = 'Match 3 suits on a line to win'; $('winSub').textContent = ''; $('receiptWrap').hidden = true;
@@ -1973,20 +2005,6 @@ function cancelConfirm() {
   clearTimeout(pendingConfirm.t); pendingConfirm = null;
   $('newGameBtn').classList.remove('confirm'); $('newGameBtn').textContent = 'New game';
 }
-function startAuto(n, btn) {
-  if (auto.left > 0) { stopAuto(); return; }
-  auto.left = n; auto.btn = btn; updateAutoBtns(); renderHUD();
-  if (phase === 'idle') spin();
-}
-function stopAuto() { auto.left = 0; auto.btn = null; updateAutoBtns(); renderHUD(); }
-function updateAutoBtns() {
-  [['auto10', 10], ['auto25', 25]].forEach(([id, n]) => {
-    const b = $(id), active = auto.btn === id && auto.left > 0;
-    b.classList.toggle('active', active);
-    b.textContent = active ? `Stop · ${auto.left}` : `×${n}`;
-    b.disabled = auto.left > 0 && !active;
-  });
-}
 
 /* ---------- Bulbs ---------- */
 function buildBulbs() {
@@ -2001,10 +2019,8 @@ function buildBulbs() {
 
 /* ---------- Wire up ---------- */
 function bind() {
-  $('spinBtn').addEventListener('click', () => { if (auto.left > 0 && phase === 'idle') { stopAuto(); return; } spin(); });
-  $('newGameBtn').addEventListener('click', () => { if (phase === 'idle') confirmThen('new', 'This', () => { stopAuto(); newGame(); }); });
-  $('auto10').addEventListener('click', () => startAuto(10, 'auto10'));
-  $('auto25').addEventListener('click', () => startAuto(25, 'auto25'));
+  $('spinBtn').addEventListener('click', () => spin());
+  $('newGameBtn').addEventListener('click', () => { if (phase === 'idle') confirmThen('new', 'This', () => newGame()); });
   $('mega').addEventListener('click', () => celebrateSkip && celebrateSkip());
   document.querySelectorAll('.looks button').forEach(b => b.addEventListener('click', () => setLook(b.dataset.look)));
   $('howBtn').addEventListener('click', () => { $('howModal').hidden = false; $('howClose').focus(); });
@@ -2023,7 +2039,6 @@ function bind() {
       if (!$('overModal').hidden) { newGame(); return; }
       if (!userToggledSound) { userToggledSound = true; setMute(false); }
       $('spinBtn').classList.add('pressed'); setTimeout(() => $('spinBtn').classList.remove('pressed'), 120);
-      if (auto.left > 0 && phase === 'idle') { stopAuto(); return; }
       spin();
     } else if (e.key === 'Escape') { $('howModal').hidden = true; }
   });
@@ -2050,26 +2065,22 @@ function applyModeClass() {
 }
 function setLook(look) {
   if (phase !== 'idle' || look === currentLook()) return;
-  if (look === 'classic' || !isRetro()) {                      // rules change → new game
-    if (look !== 'classic') S.theme = look;
-    confirmThen('mode', look === 'classic' ? 'Switching to Classic' : 'Switching to Retro rules', () => setMode(look === 'classic' ? 'classic' : 'retro', true));
-    return;
-  }
-  S.theme = look; save();                                        // 16-bit ⇄ Terminal: same game, new look
+  // Same rules in every look, so switching is purely visual and never restarts the game.
+  if (look === 'classic') S.mode = 'classic';
+  else { S.mode = 'retro'; S.theme = look; }
+  save();
   const app = document.querySelector('.app');
   app.style.animation = 'none'; void app.offsetWidth; app.style.animation = '';
   clearTimeout(cycleTimer);
   applyModeClass(); renderReelsStatic(currentGrid); renderPaytable(); renderHUD();
   if (lastResult && lastResult.lineWins.length) { showLines(lastResult.lineWins, null, false); startCycle(lastResult.lineWins); }
-  toast(look === 'term' ? '> TERMINAL MODE. Same game, green phosphor screen.' : '16-bit mode.', 'cyan');
+  toast(look === 'term' ? '> TERMINAL look. Same game, green phosphor screen.' : look === 'classic' ? 'Classic look. Same game, casino cards.' : '16-bit look.', 'cyan');
 }
 function setMode(mode, announce) {
-  if (auto.left > 0) stopAuto();
   S.mode = mode;
   const app = document.querySelector('.app');
   app.style.animation = 'none'; void app.offsetWidth; app.style.animation = '';
   applyModeClass();
-  if (!isRetro() && currentGrid.some(c => c.s === 'X')) currentGrid = randomGrid();
   sizeSlots(); renderReelsStatic(currentGrid); renderPaytable();
   newGame(announce ? (isRetro() ? 'Retro rules: suits, J, Q and K. Three Kings = 1,000!' : 'Classic mode: card numbers count too.') : undefined);
   if (announce && isRetro()) Sound.coin();
@@ -2077,12 +2088,14 @@ function setMode(mode, announce) {
 
 function boot() {
   load(); applyModeClass();
-  if (S.history[0]) currentGrid = S.history[0].g;
-  sizeSlots(); renderReelsStatic(currentGrid); renderPaytable(); buildBulbs(); sizeFx(); bind(); renderAll(); updateAutoBtns();
+  let resumed = null;
+  if (S.pending && S.pending.length === 9) { const r = commitSpin(S.pending); currentGrid = S.history[0].g; resumed = r.total; }
+  if (S.history[0] && S.history[0].g.every(c => SUIT_SYM[c.s])) currentGrid = S.history[0].g;
+  sizeSlots(); renderReelsStatic(currentGrid); renderPaytable(); buildBulbs(); sizeFx(); bind(); renderAll();
   Lever.init(); initSwipe(); showCoachOnce();
   runSelfTests();
-  setTimeout(() => toast(inProgress() ? `Welcome back · ${S.spinsLeft} spins left in this game` : `${S.spinsLeft} spins. Three Kings = 1,000 point jackpot!`), 600);
-  if (S.spinsLeft <= 0) setTimeout(gameOver, 300);
+  setTimeout(() => toast(resumed != null ? `Your last spin finished while you were away: <b>+${fmt(resumed)}</b>` : inProgress() ? `Welcome back · ${S.spinsLeft} spins left in this game` : `${S.spinsLeft} spins. Three Kings = 1,000 point jackpot!`), 600);
+  if (S.spinsLeft <= 0 || S.ended) setTimeout(gameOver, 300);
 }
 boot();
 </script>
