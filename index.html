@@ -1053,11 +1053,11 @@ body.term .resetbtn.armed{background:#8ff0b4; color:#06120c; border-color:#8ff0b
       <li>Every game gives you <b>10 spins</b>. <b>Pull the lever</b>, <b>swipe down on the cards</b>, press SPIN or hit the spacebar to start.</li>
       <li><b>Take your call (red button):</b> tap it — or hold it — to rev up the shuffle and the reels, up to ×3. Keep tapping to keep them fast; stop and they slow back down. Tap between spins to charge up the next one. It never changes your chances.</li>
       <li><b>Every spin is freshly shuffled.</b> Each reel is its own deck, shuffled fairly with secure random numbers before every spin, so no run can be predicted.</li>
-      <li><b>You decide when to stop — luck decides the cards.</b> The reels keep spinning until you <b>tap the reels</b>, press <b>STOP</b>, hit the spacebar or pull the lever again. Each reel then coasts a random distance and settles, so every spin is a fresh lucky draw.</li>
+      <li><b>Your tap and your spin decide the cards.</b> The reels keep spinning until you <b>tap the reels</b>, press <b>STOP</b>, hit the spacebar or pull the lever again. Each reel then slows down and settles — the faster you made it spin (harder pull, faster swipe, revving with Take your call), the further it slides. No hidden tricks.</li>
       <li><b>3 of the same in any line</b> (across, down or corner to corner): KKK = <b>1,000</b> (jackpot) · QQQ = 400 · ♥♥♥ = 250 · JJJ = 250 · ♦♦♦ = 180 · ♣♣♣ = 120 · ♠♠♠ = 80.</li>
       <li><b>Royal Line:</b> J, Q, K <b>in order</b> along a line (J → Q → K, or K → Q → J) = <b>200</b>.</li>
       <li><b>2 + 1 suits</b> — two cards of one suit <b>side by side</b> plus one of another suit, on any of the 8 lines (♥ ♥ ♠ and ♠ ♥ ♥ score, ♥ ♠ ♥ doesn't). Each mix has its own score, from ♥♥ + ♦ = 25 down to ♠♠ + ♣ = 5 (see the grid in Points). J, Q and K only score as a set of 3.</li>
-      <li>Every spin is a <b>lucky draw</b> — the odds reshuffle each time, so any suit can come in a streak. All four suits are equally likely; J, Q and K are rarer, the King rarest. <b>Face-down cards</b> (▒) never match.</li>
+      <li>The odds are the same on every spin: all four suits are equally likely; J, Q and K are rarer, the King rarest; 1 card in 10 is <b>face-down</b> (▒) and never matches.</li>
       <li><b>♥ meter:</b> it fills with the points you score. Reach <b>200, 500, 900, 1,400, 2,000…</b> points in a game and each one gives you <b>3 extra spins</b>. Keep scoring to keep going!</li>
       <li><b>Bigger high score, more spins:</b> every 400 points your high score is above 500 adds 1 spin to each game (up to +5).</li>
       <li>When your spins run out, your final score is checked against the <b>high score (at least 500)</b>. Beat it and the King, Queen and Joker come out to dance!</li>
@@ -1136,9 +1136,9 @@ const isRed = s => s === 'H' || s === 'D';
 // Reels: the 4 suits are equally likely; J, Q, K are rarer (the King rarest); 10% land face-down (X).
 // (Same proportions as before for the other cards, scaled up to fill the remaining 90%.)
 const RETRO_WEIGHTS = { H: .1671, D: .1671, C: .1671, S: .1671, J: .09, Q: .0772, K: .0645, X: .10 };
-// Lottery draw: every spin reshuffles the odds at random around those averages, so one spin may be
-// heart-heavy and the next full of Kings. Simulated (shuffled-deck reels, random stops): ~68% of spins
-// score; a typical 10-spin game ≈ 760 points; ~65% of first games beat 500.
+// These odds are FIXED — the same on every spin, for every player. No hidden adjustments of any kind:
+// the only chance element is the fair shuffle of each reel's deck; the rest is the player's tap timing
+// and how fast they make the reels spin.
 /* Unpredictable randomness: the browser's cryptographic generator (not a seedable pattern). */
 const RNG = (() => {
   const c = (typeof crypto !== 'undefined' && crypto.getRandomValues) ? crypto : null;
@@ -1160,15 +1160,6 @@ function shuffledDeck(weights, N, rng = RNG) {
   const deck = [];
   keys.forEach((k, i) => { for (let n = 0; n < counts[i]; n++) deck.push({ r: k === 'X' ? 0 : FACE_R[k] || 2 + Math.floor(rng() * 13), s: k }); });
   return shuffle(deck, rng);
-}
-function luckyWeights(base = RETRO_WEIGHTS, rng = RNG, faceDown = base.X) {
-  const gamma3 = () => -Math.log(rng() * rng() * rng() || 1e-9);
-  const w = {}; let sum = 0;
-  for (const k in base) if (k !== 'X') { w[k] = base[k] * gamma3(); sum += w[k]; }
-  const scale = (1 - faceDown) / sum;
-  for (const k in w) w[k] *= scale;
-  w.X = faceDown;
-  return w;
 }
 const FACE_R = { J: 11, Q: 12, K: 13 };
 function randomCard(rng = RNG, weights) {
@@ -1272,10 +1263,9 @@ function runSelfTests(log = console.log) {
     ['Royal Line: K Q J (same run, other way) → Royal Line', () => evaluateLineRetro(L('13K 12Q 11J')).key === 'rRoyal'],
     ['Royal Line: K J Q (out of order) → no score', () => evaluateLineRetro(L('13K 11J 12Q')).multiplier === 0 && evaluateLineRetro(L('12Q 11J 13K')).multiplier === 0],
     ['Retro: Q Q ♣ on a row → no win (J, Q, K only count as 3)', () => { const r = evaluateGridRetro(G('12Q 12Q 2C 3D 4S 5H 6C 7D 8S'), 10); return !r.lineWins.some(x => x.line === 1); }],
-    ['Lucky draw: odds always add up to 100%, face-down share fixed', () => { const w = luckyWeights(); const t = Object.values(w).reduce((a, b) => a + b, 0); return Math.abs(t - 1) < 1e-9 && w.X === RETRO_WEIGHTS.X; }],
-    ['Warm-up: fewer face-down cards when asked', () => { const w = luckyWeights(RETRO_WEIGHTS, Math.random, .22); return Math.abs(w.X - .22) < 1e-9 && Math.abs(Object.values(w).reduce((a, b) => a + b, 0) - 1) < 1e-9; }],
+    ['Fixed odds add up to 100%', () => Math.abs(Object.values(RETRO_WEIGHTS).reduce((a, b) => a + b, 0) - 1) < .001],
     ['♥ meter goals: 200, 500, 900, 1,400, 2,000', () => [0, 1, 2, 3, 4].map(meterGoal).join() === '200,500,900,1400,2000' && metersPassed(950) === 3],
-    ['Shuffled deck: 48 cards, right proportions, order differs each time', () => { const w = luckyWeights(); const a = shuffledDeck(w, 48), b = shuffledDeck(w, 48); const cnt = k => a.filter(c => c.s === k).length; return a.length === 48 && Math.abs(cnt('X') - 48 * w.X) <= 1 && a.map(c => c.s).join('') !== b.map(c => c.s).join(''); }],
+    ['Shuffled deck: 48 cards, right proportions, order differs each time', () => { const w = RETRO_WEIGHTS; const a = shuffledDeck(w, 48), b = shuffledDeck(w, 48); const cnt = k => a.filter(c => c.s === k).length; return a.length === 48 && Math.abs(cnt('X') - 48 * w.X) <= 1 && a.map(c => c.s).join('') !== b.map(c => c.s).join(''); }],
     ['Secure random numbers stay in [0, 1)', () => { for (let i = 0; i < 1000; i++) { const x = RNG(); if (!(x >= 0 && x < 1)) return false; } return true; }],
     ['Retro: face-down cards never match', () => { const X = { r: 0, s: 'X' }; const g = [X, X, X, X, X, X, X, X, X]; const r = evaluateGridRetro(g, 10); return r.totalWin === 0; }],
     ['2+1: ♦ ♦ ♥ on the Up diagonal → 2 Diamonds + 1 Heart, 20 points', () => { const r = evaluateGridRetro(G('2X 5X 9H 3X 7D 4X 8D 6X 10X'), 10); const w = r.lineWins.find(x => x.line === 8); return w && w.key === 'mDH' && w.payout === 20; }],
@@ -1379,12 +1369,6 @@ const SPINS_PER_GAME = 10, HEART_SPINS = 3;
 // A higher high score is harder to beat, so it earns a few more spins per game: +1 per 400 points above 500 (max +5).
 const bonusSpins = () => Math.min(5, Math.floor(Math.max(0, highScore() - MIN_HIGH) / 400));
 const spinsForGame = () => SPINS_PER_GAME + bonusSpins();
-// Warm-up: as your score grows during a game, face-down cards get a little rarer (−1% per 150 points, max −10%).
-const scoreWarm = () => Math.min(.10, Math.floor(S.score / 150) * .01);
-// Background luck (never shown to the player). Cold-streak luck: every spin that misses makes face-down cards 3% rarer (max 18%); any win resets it.
-const coldLuck = () => Math.min(.18, (S.cold || 0) * .03);
-const LUCK_MAX = .28;
-const warmUp = () => Math.min(RETRO_WEIGHTS.X - .02, scoreWarm() + coldLuck());
 // "Take your call" — the player revs the machine by hand. Every press adds a burst of boost (0…1),
 // holding keeps pumping, and the boost fades on its own, so speed stays up only while you keep pressing.
 // Speed multiplier = 1 + 2 × boost (×1 … ×3). Only how fast things move — never which cards you get.
@@ -1431,7 +1415,7 @@ const isTerm = () => isRetro() && S.theme === 'term';
 const highKey = () => 'royal';     // one high score for all looks
 let spinWeights = RETRO_WEIGHTS;
 // Every look (16-bit, Terminal, Classic) plays the same rules — only the cards' style changes.
-const prepareOdds = () => { spinWeights = luckyWeights(RETRO_WEIGHTS, RNG, RETRO_WEIGHTS.X - warmUp()); };
+const prepareOdds = () => { spinWeights = RETRO_WEIGHTS; };    // fixed odds, every spin
 const drawCard = () => randomCard(RNG, spinWeights);
 const highScore = () => Math.max(S.highs[highKey()] || 0, MIN_HIGH);
 const inProgress = () => S.score > 0 || S.spinsLeft < (S.startSpins || SPINS_PER_GAME);
@@ -1546,11 +1530,12 @@ function collectCards() {
 }
 
 /* Reel spin: strip = [spare, final×3, fillers…, previous×3]; slide from previous to final with a small overshoot. */
-/* Reels decided by luck.
-   Every spin draws three brand-new looping strips of REEL_LEN cards from this spin's lucky-draw odds
-   (nothing is carried over from the last spin: the old cards only show while the reels start, then
-   scroll away for good). The reels spin until the player taps; each reel then coasts a RANDOM distance
-   (about 5-11 cards) before settling, so the same tap never gives the same result. Luck picks the cards. */
+/* Reels: fair shuffle + the player's own hands, nothing else.
+   Every spin shuffles three brand-new 48-card decks (fixed odds, secure random shuffle) into looping
+   strips; nothing carries over from the last spin. The reels spin until the player taps. Each reel then
+   slows down along the same physical curve: how far it slides depends only on how fast it was spinning
+   (lever pull, swipe, "Take your call" revving). So the cards are decided by the shuffle, WHEN you tap,
+   and HOW you spun — no hidden rules, no random nudges after the tap. */
 const REEL_LEN = 48;
 let reelRun = null;
 const mod = (a, n) => ((a % n) + n) % n;
@@ -1655,10 +1640,10 @@ function reelTick(now) {
   });
   if (reelRun === run && run.done < 3) requestAnimationFrame(reelTick);
 }
-/* Slow stop: the reel coasts a RANDOM distance (a 0.9-2.0 s slow-down, about 5-11 cards; luck decides),
-   stretched by less than one card so it finishes exactly on a card edge, then settles with a small bounce. */
+/* Slow stop: a fixed physical slow-down — the faster the reel was spinning, the further it slides
+   (at ×1 about 7 cards). It finishes exactly on a card edge, then settles with a small bounce. */
 function beginSlowStop(run, r, now) {
-  const v = r.v, Tn = RM ? 250 : (900 + RNG() * 1100) * SPD().coast;
+  const v = r.v, Tn = RM ? 250 : 1300 * SPD().coast;
   const D0 = v * Tn / 3;
   const off = mod(-r.pos, run.NH);
   const D = D0 + mod(off - D0, run.H);                         // land on a card edge
@@ -1685,7 +1670,7 @@ function reelFree(r) { return r && !r.landed && r.state !== 'lock' && r.stopAt =
 function stopAll() {
   const run = reelRun; if (!run || !run.reels.some(reelFree)) return;
   const now = performance.now();
-  run.reels.forEach((r, i) => { if (reelFree(r)) r.stopAt = now + (i * 280 + RNG() * 120) * SPD().coast; });
+  run.reels.forEach((r, i) => { if (reelFree(r)) r.stopAt = now + i * 280 * SPD().coast; });
   buzz([10, 20, 10]); renderHUD();
 }
 function stopNext() { stopAll(); }
@@ -2174,7 +2159,6 @@ function commitSpin(grid) {
   const res = evaluateGridRetro(grid, POINTS);
   const total = res.totalWin, won = total > 0;
   S.score += total;
-  S.cold = won ? 0 : (S.cold || 0) + 1;
   if (won) { S.wins++; S.biggest = Math.max(S.biggest, total); }
   res.lineWins.forEach(w => S.combos[w.key] = (S.combos[w.key] || 0) + 1);
   res.bonuses.forEach(b => S.combos[b.key] = (S.combos[b.key] || 0) + 1);
@@ -2198,7 +2182,7 @@ async function spin(opts = {}) {
 
   phase = 'spinning'; clearWinDisplay(); hideBanner(); lastResult = null; cancelConfirm();
   $('winNum').className = 'wnum zero'; $('winNum').textContent = 'Tap the reels or press STOP'; $('winSub').textContent = '';
-  $('receipt').innerHTML = '<li class="none">Tap when you feel lucky. The reels slow down and settle — luck picks where each one lands.</li>';
+  $('receipt').innerHTML = '<li class="none">Tap when you\'re ready. Where the reels land depends on when you tap and how fast they\'re spinning.</li>';
   // The spin is used up now (and the reel strips are saved as the reels start) —
   // so reloading mid-spin can't give the spin back or redraw the cards.
   S.spinsLeft--; S.totalSpins++;
