@@ -886,6 +886,15 @@ body.retro .reels.jiggle .card{animation-timing-function:steps(2)}
 
 .hornlbl{white-space:nowrap; text-align:center}
 @media (max-width:520px){ body.term .hornlbl{font-size:13px !important; letter-spacing:.02em} .hornlbl{letter-spacing:.1em} }
+
+.betgrp{gap:8px}
+.resetbtn{font-size:12px; opacity:.85}
+.resetbtn:hover{opacity:1; border-color:#ff6f86; color:#ff9aa8}
+.resetbtn.armed{opacity:1; background:#c8102e; border-color:#c8102e; color:#fff; animation:armp .6s ease-in-out infinite alternate}
+@keyframes armp{to{filter:brightness(1.2)}}
+.resetbtn:disabled{opacity:.4; cursor:not-allowed}
+body.retro .resetbtn.armed{background:#c8102e; color:#fbf7ec}
+body.term .resetbtn.armed{background:#8ff0b4; color:#06120c; border-color:#8ff0b4; text-shadow:none}
 </style>
 </head>
 <body>
@@ -976,6 +985,7 @@ body.retro .reels.jiggle .card{animation-timing-function:steps(2)}
         <div class="controls">
           <div class="betgrp">
             <button class="autobtn" id="newGameBtn" type="button">New game</button>
+            <button class="autobtn resetbtn" id="resetBtn" type="button" title="Clears your high score, stats and spin history, and starts a new game">Reset scores</button>
           </div>
           <div class="spinwrap"><button class="spin ready" id="spinBtn" type="button"><span id="spinLbl">SPIN</span><small id="spinSub">10 left</small></button></div>
           <div class="autogrp">
@@ -1913,6 +1923,7 @@ function renderHUD() {
   $('spinBtn').disabled = false;
   $('spinBtn').classList.toggle('ready', phase === 'idle');
   $('newGameBtn').disabled = phase !== 'idle';
+  $('resetBtn').disabled = phase !== 'idle';
   $('lever').classList.toggle('off', phase === 'spinning');
   $('lever').classList.toggle('ready', phase === 'idle');
   cabinet.classList.toggle('spinning', phase === 'spinning');
@@ -2257,6 +2268,15 @@ async function gameOver() {
   gameEnding = false;
   $('overModal').hidden = false; $('restartBtn').focus();
 }
+function resetAll() {
+  const keep = { mode: S.mode, theme: S.theme };
+  S = Object.assign(freshState(), keep);
+  passedHigh = false; lastResult = null;
+  currentGrid = randomGrid();
+  applyModeClass(); renderReelsStatic(currentGrid); renderPaytable();
+  newGame(`Scores reset. Fresh game · ${S.spinsLeft} spins · beat <b>${fmt(highScore())}</b>!`);
+  renderAll();
+}
 function newGame(msg) {
   S.score = 0; S.cold = 0; S.ended = null; S.pending = null; S.pendingStrips = null; S.startSpins = S.spinsLeft = spinsForGame(); S.hearts = 0; S.meterIdx = 0; passedHigh = false;
   $('overModal').hidden = true;
@@ -2302,6 +2322,15 @@ function bind() {
   hb.addEventListener('pointerdown', e => { e.preventDefault(); Sound.init(); pumpBoost(); clearInterval(pumpT); pumpT = setInterval(pumpBoost, 170); hb.setPointerCapture(e.pointerId); });
   hb.addEventListener('pointerup', release); hb.addEventListener('pointercancel', release); hb.addEventListener('lostpointercapture', release);
   hb.addEventListener('click', e => { if (e.detail === 0) pumpBoost(); });
+  // Reset everything (high score, stats, history) — asks for a second tap, right on the button
+  let resetArm = null;
+  const resetBtn = $('resetBtn');
+  const disarm = () => { clearTimeout(resetArm); resetArm = null; resetBtn.classList.remove('armed'); resetBtn.textContent = 'Reset scores'; };
+  resetBtn.addEventListener('click', () => {
+    if (phase !== 'idle') return;
+    if (!resetArm) { resetBtn.classList.add('armed'); resetBtn.textContent = 'Tap again to reset'; resetArm = setTimeout(disarm, 4000); return; }
+    disarm(); resetAll();
+  });
   $('newGameBtn').addEventListener('click', () => { if (phase === 'idle') confirmThen('new', 'This', () => newGame()); });
   $('mega').addEventListener('click', () => celebrateSkip && celebrateSkip());
   document.querySelectorAll('.looks button').forEach(b => b.addEventListener('click', () => setLook(b.dataset.look)));
