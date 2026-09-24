@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Royal Reels — a retro card slot game. Match suits, land Three Kings, beat the high score.">
+<meta name="description" content="Royal Reels — a retro card slot game and a roulette table. Match suits, land Three Kings, or play European, French and American roulette.">
 <meta name="theme-color" content="#0a3d24">
 <title>Royal Reels</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -136,7 +136,7 @@ button:focus-visible{outline:2px solid var(--gold-hi); outline-offset:2px}
 .reels{position:relative; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--rg,10px)}
 .reel{position:relative; overflow:visible; aspect-ratio:5/18; border-radius:12px; container-type:size; --sh:calc(100cqh / 3);
   background:radial-gradient(120% 60% at 50% 50%, var(--felt-hi), var(--felt)); box-shadow: inset 0 8px 18px rgba(0,0,0,.6), inset 0 -8px 18px rgba(0,0,0,.6)}
-.reel.running{overflow:hidden}
+.reel.running, .reel.primed{overflow:hidden}
 .reel.tension{box-shadow: inset 0 0 0 2px var(--magenta), 0 0 26px rgba(255,82,187,.7); animation:tense .35s ease-in-out infinite alternate}
 @keyframes tense{from{filter:brightness(1)}to{filter:brightness(1.35)}}
 .payline-glow{position:absolute; left:-6px; right:-6px; top:50%; height:0; border-top:2px dashed rgba(255,238,176,.18); pointer-events:none; z-index:0}
@@ -588,7 +588,7 @@ body.retro .lever-rod{background:#d9c9a3; box-shadow:inset -3px 0 0 #9c7a2e, 0 0
 body.retro .lever-knob{background:#c8102e; box-shadow:inset -5px -5px 0 #6d0a1a, inset 5px 5px 0 #e4572e, 0 0 0 3px #0b0d0c, 4px 4px 0 3px rgba(3,5,4,.6)}
 body.retro .lever.snap .lever-knob, body.retro .lever.snap .lever-rod{transition-timing-function:steps(5)}
 body.retro .lever-lbl{font-family:var(--display); font-size:7px; font-weight:400; letter-spacing:.08em; color:#d9c9a3}
-#reels{touch-action:none; cursor:grab}
+#reels{touch-action:none; cursor:grab; user-select:none; -webkit-user-select:none; -webkit-touch-callout:none}
 #reels.dragging{cursor:grabbing}
 .coach{position:absolute; inset:0; z-index:9; display:grid; place-content:center; justify-items:center; gap:10px; text-align:center; pointer-events:none;
   background:rgba(10,3,6,.55)}
@@ -885,6 +885,62 @@ body.retro .reels.jiggle .card{animation-timing-function:steps(2)}
 }
 
 .hornlbl{white-space:nowrap; text-align:center}
+/* ---------- Crank handle ---------- */
+.spinwrap{display:flex; flex-direction:column; align-items:center; gap:4px}
+.crank{position:relative; width:108px; height:108px; border-radius:50%; touch-action:none; cursor:grab; user-select:none; -webkit-user-select:none; outline:none; --crank:0}
+.crank.grab{cursor:grabbing}
+.crank:focus-visible{box-shadow:0 0 0 3px var(--cyan)}
+.crank-plate{position:absolute; inset:0; border-radius:50%;
+  background:repeating-conic-gradient(from 0deg, rgba(0,0,0,.28) 0 5deg, transparent 5deg 15deg), radial-gradient(circle at 40% 32%, #ffe79a 0%, #e0a92e 38%, #8a5a10 80%, #4b2f06 100%);
+  box-shadow:0 0 0 3px #3a0a14, 0 0 0 5px var(--gold-lo, #8a5a10), 0 10px 22px rgba(0,0,0,.55), inset 0 -6px 12px rgba(0,0,0,.35), inset 0 4px 10px rgba(255,255,255,.35), 0 0 calc(var(--crank) * 26px) rgba(255,200,80,calc(var(--crank) * .8))}
+.crank-plate::after{content:""; position:absolute; inset:18%; border-radius:50%; background:radial-gradient(circle at 45% 35%, #b31630, #6d0718); box-shadow:inset 0 3px 6px rgba(0,0,0,.5), 0 0 0 2px rgba(255,230,160,.5)}
+.crank-arm{position:absolute; left:50%; top:50%; width:12px; height:46%; transform-origin:50% 0; border-radius:6px;
+  background:linear-gradient(90deg, #8a5a10, #ffe79a 45%, #b07a18); box-shadow:0 3px 6px rgba(0,0,0,.5); pointer-events:none}
+.crank-knob{position:absolute; left:50%; bottom:-14px; width:30px; height:30px; margin-left:-15px; border-radius:50%;
+  background:radial-gradient(circle at 38% 32%, #ff7a8a, #c3122f 55%, #5a0613); box-shadow:0 0 0 2px #3a0a14, 0 4px 8px rgba(0,0,0,.6), inset 0 2px 4px rgba(255,255,255,.4)}
+.crank-hub{position:absolute; left:50%; top:50%; width:22px; height:22px; margin:-11px 0 0 -11px; border-radius:50%;
+  background:radial-gradient(circle at 40% 35%, #fff4c8, #d19a2a 60%, #5a3a08); box-shadow:0 2px 4px rgba(0,0,0,.6); pointer-events:none}
+.crank.ready .crank-knob{animation:knobcue 1.6s ease-in-out infinite}
+@keyframes knobcue{50%{box-shadow:0 0 0 2px #3a0a14, 0 0 16px 4px rgba(255,120,140,.75), inset 0 2px 4px rgba(255,255,255,.4)}}
+.crank-lbl{white-space:nowrap; margin-top:10px}
+.crank-sub{font-size:10.5px; letter-spacing:.14em; font-weight:700; opacity:.75; text-transform:uppercase; white-space:nowrap}
+#reels.braking{outline:3px solid rgba(255,110,80,.85) !important; outline-offset:3px; filter:saturate(.8) brightness(.92)}
+body.retro .crank, body.retro .crank-plate, body.retro .crank-plate::after, body.retro .crank-knob, body.retro .crank-hub{border-radius:50% !important}
+body.retro .crank-plate{background:repeating-conic-gradient(from 0deg, #0b0d0c 0 6deg, #f5c542 6deg 18deg); box-shadow:0 0 0 4px #0b0d0c, 0 8px 0 4px #0b0d0c}
+body.retro .crank-plate::after{background:#c8102e; box-shadow:inset -5px -5px 0 #6d0a1a, inset 5px 5px 0 #e4572e, 0 0 0 3px #0b0d0c}
+body.retro .crank-arm{background:#fbf7ec; box-shadow:0 0 0 3px #0b0d0c}
+body.retro .crank-knob{background:#fbf7ec; box-shadow:inset -4px -4px 0 #c8a24a, 0 0 0 3px #0b0d0c}
+body.retro .crank-hub{background:#0b0d0c; box-shadow:0 0 0 3px #f5c542}
+body.retro .crank-sub{font-family:var(--ui); font-size:15px; letter-spacing:.04em; font-weight:400}
+body.term .crank-plate{background:repeating-conic-gradient(from 0deg, #1c4a33 0 5deg, #06120c 5deg 15deg); box-shadow:0 0 0 2px #8ff0b4, 0 0 12px var(--tg)}
+body.term .crank-plate::after{background:#06120c; box-shadow:0 0 0 2px #4f9f73}
+body.term .crank-arm{background:#8ff0b4; box-shadow:0 0 6px var(--tg)}
+body.term .crank-knob{background:#06120c; box-shadow:0 0 0 2px #8ff0b4, 0 0 10px var(--tg)}
+body.term .crank-hub{background:#8ff0b4; box-shadow:none}
+body.term #reels.braking{outline-color:#8ff0b4 !important}
+body.term .crank-lbl, body.term .crank-sub{font-family:var(--ui) !important; font-size:17px !important; letter-spacing:.06em; color:#4f9f73; text-transform:none}
+body.term .crank-lbl{color:#8ff0b4}
+@media (max-width:520px){ body.term .crank-lbl, body.term .crank-sub, body.term .autogrp .lbl{font-size:14px !important; letter-spacing:0} body.term .controls{column-gap:14px} }
+@media (max-width:520px){ body.term .heartm .hl{font-size:14px !important; letter-spacing:0} body.term .heartm small{font-size:15px} body.term .heartm{gap:5px} }
+.crank.braking .crank-plate{box-shadow:0 0 0 3px #3a0a14, 0 0 0 5px #ff6b50, 0 0 22px rgba(255,110,80,.8), inset 0 -6px 12px rgba(0,0,0,.35)}
+.crank.braking{transform:scale(.96)}
+.crank::before{content:""; position:absolute; inset:-10px; border-radius:50%; pointer-events:none;
+  background:conic-gradient(var(--ringc,#ffd36b) calc(var(--charge,0) * 360deg), rgba(255,255,255,.07) 0);
+  -webkit-mask:radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px)); mask:radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px))}
+.crank.full{--ringc:#ff5a6e}
+.crank.full::before{filter:drop-shadow(0 0 6px #ff5a6e); animation:ringFull .5s ease-in-out infinite}
+@keyframes ringFull{50%{opacity:.55}}
+body.retro .crank::before{border-radius:50% !important; --ringc:#f5c542}
+body.retro .crank.full{--ringc:#e4572e}
+body.term .crank::before{--ringc:#8ff0b4}
+body.term .crank.full{--ringc:#c8ffdc}
+.crank-plate{transform:rotate(calc(var(--tension,0) * 9deg + var(--wob,0) * 4deg)) scale(calc(1 - var(--tension,0) * .05))}
+.crank.cue{animation:crankCue .6s ease-in-out 2}
+@keyframes crankCue{50%{transform:scale(1.12); filter:brightness(1.3)}}
+body.retro .crank.braking .crank-plate{box-shadow:0 0 0 4px #0b0d0c, 0 0 0 7px #e4572e}
+body.term .crank.braking .crank-plate{box-shadow:0 0 0 2px #c8ffdc, 0 0 20px rgba(143,240,180,.7)}
+@media (max-width:520px){ .crank{width:96px; height:96px} .crank-knob{width:26px; height:26px; margin-left:-13px; bottom:-12px} }
+
 @media (max-width:520px){ body.term .hornlbl{font-size:13px !important; letter-spacing:.02em} .hornlbl{letter-spacing:.1em} }
 
 .betgrp{gap:8px}
@@ -895,15 +951,207 @@ body.retro .reels.jiggle .card{animation-timing-function:steps(2)}
 .resetbtn:disabled{opacity:.4; cursor:not-allowed}
 body.retro .resetbtn.armed{background:#c8102e; color:#fbf7ec}
 body.term .resetbtn.armed{background:#8ff0b4; color:#06120c; border-color:#8ff0b4; text-shadow:none}
+
+/* =================== Game switch =================== */
+.games{display:flex; gap:6px}
+.games .ghost[aria-pressed="true"]{background:var(--cab-hi)}
+
+/* =================== ROYAL ROULETTE =================== */
+.rl-cab{padding:26px 24px 24px}
+.rl-top{display:grid; grid-template-columns:auto minmax(0,1fr); gap:20px; align-items:center}
+.rl-wheelbox{width:min(320px, 42vw); display:flex; flex-direction:column; align-items:center; gap:8px}
+#rlWheel{display:block; touch-action:none; cursor:grab; border-radius:50%; box-shadow:0 18px 40px rgba(0,0,0,.55)}
+#rlWheel.grab{cursor:grabbing}
+.rl-call{font-weight:700; letter-spacing:.18em; text-transform:uppercase; font-size:13px; color:var(--gold); min-height:1.3em; text-align:center}
+.rl-call.nomore{color:#ff6b7f; animation:rlBlink .5s steps(2) 4}
+@keyframes rlBlink{50%{opacity:.25}}
+.rl-info{display:flex; flex-direction:column; gap:12px; min-width:0}
+.rl-variant{display:flex; flex-wrap:wrap; gap:6px}
+.rl-variant .ghost:disabled{opacity:.45; cursor:not-allowed}
+.rl-result{display:flex; align-items:center; gap:12px}
+.rl-result .lbl{display:block; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted)}
+.rl-result small{display:block; font-size:14px; color:var(--ink); margin-top:2px}
+.rl-num{flex:none; width:62px; height:62px; border-radius:50%; display:grid; place-items:center; font-size:27px; font-weight:700; color:#fff;
+  background:#0f0307; border:3px solid var(--gold); box-shadow:0 0 0 2px #1a050c, 0 6px 16px rgba(0,0,0,.5)}
+.rl-num.r{background:#b3102c} .rl-num.b{background:#17141d} .rl-num.g{background:#0b7a3f}
+.rl-recent{display:flex; flex-wrap:wrap; gap:4px; min-height:26px}
+.rl-recent em{color:var(--faint); font-size:13px}
+.rl-pill{min-width:27px; height:26px; padding:0 4px; border-radius:6px; display:grid; place-items:center; font-size:13px; font-weight:700; color:#fff; font-variant-numeric:tabular-nums}
+.rl-pill.r{background:#b3102c} .rl-pill.b{background:#17141d; box-shadow:inset 0 0 0 1px #4a3a44} .rl-pill.g{background:#0b7a3f}
+.rl-recent .rl-pill:first-child{box-shadow:0 0 0 2px var(--gold)}
+.rl-msg{min-height:2.6em; font-size:15px; line-height:1.3; color:var(--ink)}
+.rl-shake{animation:rlShake .35s}
+@keyframes rlShake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+/* the felt */
+.rl-tablewrap{background:radial-gradient(120% 90% at 50% 20%, #13553b, #0a3322 70%); border:3px solid var(--gold-lo); border-radius:16px; padding:12px;
+  box-shadow:inset 0 0 0 2px rgba(255,230,160,.18), inset 0 8px 24px rgba(0,0,0,.4)}
+.rl-table{position:relative; width:100%; user-select:none; -webkit-user-select:none; touch-action:manipulation; --cs:26px}
+.rl-table.h{aspect-ratio:2.75}
+.rl-table.v{aspect-ratio:.6; max-width:430px; margin:0 auto}
+.rl-table button{position:absolute; margin:0; padding:0; border:0; background:none; font:inherit; color:inherit; cursor:pointer}
+.rl-cell{display:grid; place-items:center; font-weight:700; font-size:clamp(13px,1.7vw,19px); color:#fff; box-shadow:inset 0 0 0 1px rgba(255,238,176,.6); transition:filter .12s}
+.rl-cell.r{background:#b3102c} .rl-cell.b{background:#17141d} .rl-cell.z{background:#0b7a3f}
+.rl-cell.col span{white-space:nowrap}
+.rl-cell.o{font-size:clamp(11px,1.25vw,14px); letter-spacing:.08em; text-transform:uppercase; color:var(--gold-hi)}
+.rl-table.v .rl-cell.dz span, .rl-table.v .rl-cell.em span:not(.dia){writing-mode:vertical-rl; transform:rotate(180deg)}
+.rl-cell .dia{display:block; width:62%; height:46%; clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.rl-table.v .rl-cell .dia{width:46%; height:40%}
+.rl-cell .dia.r{background:#d0173a} .rl-cell .dia.b{background:#0c0a10; box-shadow:none}
+.rl-cell:hover, .rl-cell.hl{filter:brightness(1.3); box-shadow:inset 0 0 0 3px var(--gold-hi)}
+.rl-cell:focus-visible{outline:none; box-shadow:inset 0 0 0 3px var(--cyan)}
+.rl-cell.winner{animation:rlWin .8s ease-in-out 3; z-index:1}
+@keyframes rlWin{50%{filter:brightness(1.6); box-shadow:inset 0 0 0 4px #ffe27a, 0 0 22px #ffe27a}}
+.rl-edge{z-index:2; border-radius:50%}
+.rl-edge:hover{background:rgba(255,238,176,.35)}
+.rl-layer{position:absolute; inset:0; pointer-events:none; z-index:3}
+.rl-chipon, .rl-chipbtn{--cc:#8a8f98; color:#fff; font-weight:700; border-radius:50%;
+  background:radial-gradient(circle, var(--cc) 0 50%, rgba(255,255,255,.9) 51% 56%, transparent 57%), repeating-conic-gradient(var(--cc) 0 30deg, #fff 30deg 45deg);
+  text-shadow:0 1px 2px rgba(0,0,0,.7)}
+.c1{--cc:#7d8591} .c5{--cc:#c8102e} .c25{--cc:#1b8a4b} .c100{--cc:#1d1a22} .c500{--cc:#6b2fb3}
+.rl-chipon{position:absolute; width:var(--cs); height:var(--cs); margin:calc(var(--cs) / -2) 0 0 calc(var(--cs) / -2); display:grid; place-items:center; font-style:normal;
+  font-size:calc(var(--cs) * .36); box-shadow:0 2px 4px rgba(0,0,0,.6); transition:transform .25s, opacity .6s .3s}
+.rl-chipon.drop{animation:rlDrop .18s ease-out}
+@keyframes rlDrop{from{transform:translateY(-8px) scale(1.2); opacity:.3}}
+.rl-chipon.win{transform:scale(1.3); box-shadow:0 0 0 3px var(--gold-hi), 0 0 18px var(--gold)}
+.rl-chipon.lose{opacity:0; transform:scale(.5) translateY(-20px)}
+.rl-dolly{position:absolute; width:calc(var(--cs) * 1.1); height:calc(var(--cs) * 1.1); margin:calc(var(--cs) * -.55) 0 0 calc(var(--cs) * -.55); border-radius:50%; z-index:5;
+  display:grid; place-items:center; font-style:normal; font-size:calc(var(--cs) * .62); color:#5a0613;
+  background:radial-gradient(circle at 40% 32%, #fff, #ffe79a 45%, #c8912a 100%); box-shadow:0 0 0 2px #fff6d6, 0 0 20px rgba(255,238,176,.95), 0 6px 10px rgba(0,0,0,.5); animation:rlDolly .45s cubic-bezier(.2,1.6,.4,1)}
+@keyframes rlDolly{from{transform:translateY(-30px) scale(1.6); opacity:0}}
+
+/* chip rack & buttons */
+.rl-rack{display:grid; grid-template-columns:minmax(0,1fr) auto; grid-template-areas:"chips spin" "acts spin"; gap:12px 18px; align-items:center}
+.rl-chips{grid-area:chips; display:flex; gap:10px; flex-wrap:wrap}
+.rl-chipbtn{width:48px; height:48px; border:0; font-size:14px; box-shadow:0 4px 8px rgba(0,0,0,.5); transition:transform .12s, box-shadow .12s}
+.rl-chipbtn[aria-checked="true"]{transform:translateY(-6px); box-shadow:0 0 0 3px var(--gold-hi), 0 0 14px var(--gold), 0 8px 12px rgba(0,0,0,.5)}
+.rl-acts{grid-area:acts; display:flex; gap:6px; flex-wrap:wrap}
+.rl-acts .autobtn:disabled{opacity:.4; cursor:not-allowed}
+.rl-spinwrap{grid-area:spin}
+.rl-spinbtn:disabled{filter:saturate(.4) brightness(.75)}
+.rl-broke .autobtn{border-color:var(--gold); color:var(--gold-hi)}
+
+/* side panel */
+.rl-pt{width:100%; border-collapse:collapse; font-size:14px}
+.rl-pt th{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); text-align:left; padding:0 4px 6px}
+.rl-pt td{padding:7px 4px; border-top:1px solid var(--line); vertical-align:middle}
+.rl-pt td small{display:block; color:var(--muted); font-size:12px}
+.rl-pt .rl-pays{color:var(--gold-hi); font-weight:700; white-space:nowrap}
+.rl-pt .rl-ch{color:var(--muted); text-align:right; font-variant-numeric:tabular-nums}
+.rl-note{font-size:13px; color:var(--muted); line-height:1.4; margin:10px 0 0}
+.rl-calls{display:grid; gap:8px; margin-top:10px}
+.rl-callbtn{display:block; width:100%; text-align:left; background:#0f0307; border:1px solid var(--line); border-radius:12px; padding:9px 12px; margin-top:0}
+.rl-callbtn b{display:block; font-size:15px; color:var(--gold-hi)}
+.rl-callbtn small{display:block; font-size:12.5px; color:var(--muted)}
+.rl-callbtn:hover{border-color:var(--gold)}
+.rl-nbr{margin-top:12px}
+.rl-nbr[aria-pressed="true"]{border-color:var(--cyan); box-shadow:0 0 12px rgba(62,227,240,.35)}
+.rl-sect{margin-top:14px}
+.rl-sect .lbl{display:block; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--faint); margin-bottom:6px}
+.rl-split{display:flex; height:24px; border-radius:6px; overflow:hidden; font-size:12px; font-weight:700}
+.rl-split span{display:grid; place-items:center; color:#fff; min-width:22px}
+.rl-split .r{background:#b3102c} .rl-split .b{background:#17141d} .rl-split .g{background:#0b7a3f}
+.rl-split em{color:var(--faint); font-size:13px}
+
+@media (max-width:760px){
+  .rl-top{grid-template-columns:1fr; justify-items:center}
+  .rl-wheelbox{width:min(300px, 100%)}
+  .rl-info{width:100%; align-items:center; text-align:center}
+  .rl-variant, .rl-recent{justify-content:center}
+  .rl-result{justify-content:center; text-align:left}
+}
+@media (max-width:520px){
+  .rl-cab{padding:22px 12px 18px}
+  .rl-tablewrap{padding:8px}
+  .rl-rack{grid-template-columns:1fr; grid-template-areas:"chips" "acts" "spin"; justify-items:center}
+  .rl-chips, .rl-acts{justify-content:center}
+  .rl-chipbtn{width:44px; height:44px}
+}
+
+/* ---- 16-bit ---- */
+body.retro .rl-chipon, body.retro .rl-chipbtn, body.retro .rl-dolly, body.retro .rl-num, body.retro #rlWheel{border-radius:50% !important}
+body.retro .rl-call{font-family:var(--display); font-size:9px; letter-spacing:.08em; color:#f5c542}
+body.retro .rl-call.nomore{color:#ff6b7f}
+body.retro .rl-result .lbl, body.retro .rl-sect .lbl, body.retro .rl-pt th{font-family:var(--display); font-size:8px; letter-spacing:.04em; color:#d9c9a3}
+body.retro .rl-result small, body.retro .rl-msg{font-size:20px; line-height:1.1}
+body.retro .rl-num{font-family:var(--display); font-size:16px; border:4px solid #0b0d0c; box-shadow:0 0 0 3px #f5c542}
+body.retro .rl-num.r{background:#c8102e} body.retro .rl-num.b{background:#1b1f1c} body.retro .rl-num.g{background:#1e9e57}
+body.retro .rl-pill{font-family:var(--ui); font-size:19px; font-weight:400; box-shadow:2px 2px 0 #030504}
+body.retro .rl-pill.r, body.retro .rl-split .r{background:#c8102e} body.retro .rl-pill.b, body.retro .rl-split .b{background:#1b1f1c} body.retro .rl-pill.g, body.retro .rl-split .g{background:#1e9e57}
+body.retro .rl-tablewrap{background:#14261c; border:4px solid #0b0d0c; box-shadow:0 0 0 3px #9c7a2e, 6px 6px 0 3px #030504}
+body.retro .rl-cell{font-family:var(--display); font-weight:400; font-size:clamp(8px,1.1vw,11px); box-shadow:inset 0 0 0 2px #0b0d0c}
+body.retro .rl-cell.r{background:#c8102e} body.retro .rl-cell.b{background:#1b1f1c} body.retro .rl-cell.z{background:#1e9e57}
+body.retro .rl-cell.o{font-size:clamp(7px,.9vw,9px); color:#f5c542; letter-spacing:.02em}
+body.retro .rl-cell .dia.r{background:#c8102e; clip-path:polygon(50% 0,75% 25%,100% 50%,75% 75%,50% 100%,25% 75%,0 50%,25% 25%)}
+body.retro .rl-cell .dia.b{background:#0b0d0c}
+body.retro .rl-cell:hover, body.retro .rl-cell.hl{filter:none; box-shadow:inset 0 0 0 3px #f5c542, inset 0 0 0 6px #0b0d0c}
+body.retro .rl-chipon, body.retro .rl-chipbtn{background:var(--cc); box-shadow:inset 0 0 0 3px rgba(251,247,236,.85), inset 0 0 0 5px var(--cc), 2px 2px 0 #030504; font-family:var(--ui); font-weight:400; text-shadow:1px 1px 0 #000}
+body.retro .rl-chipon{font-size:calc(var(--cs) * .5)}
+body.retro .rl-chipbtn{font-size:20px}
+body.retro .rl-chipbtn[aria-checked="true"]{box-shadow:inset 0 0 0 3px rgba(251,247,236,.85), 0 0 0 3px #f5c542, 4px 4px 0 #030504}
+body.retro .rl-dolly{background:#f5c542; color:#6d0a1a; box-shadow:0 0 0 3px #0b0d0c, 0 0 0 5px #fbf7ec}
+body.retro .rl-pt{font-size:19px}
+body.retro .rl-pt td small{font-size:16px}
+body.retro .rl-note{font-size:18px}
+body.retro .rl-callbtn{background:#14261c; border:3px solid #0b0d0c; box-shadow:inset -3px -3px 0 #0b0d0c, inset 3px 3px 0 #9c7a2e, 3px 3px 0 #030504}
+body.retro .rl-callbtn b{font-family:var(--display); font-size:9px; color:#f5c542; margin-bottom:4px}
+body.retro .rl-callbtn small{font-size:17px}
+body.retro .rl-variant .ghost{font-size:8px}
+body.retro .rl-spinbtn{width:124px}
+
+/* ---- Terminal ---- */
+body.term .rl-call{font-family:var(--ui); font-size:20px; letter-spacing:.1em; color:#8ff0b4}
+body.term .rl-call.nomore{color:#c8ffdc}
+body.term .rl-result .lbl, body.term .rl-sect .lbl, body.term .rl-pt th{font-family:var(--ui); font-size:17px; letter-spacing:.06em; color:#4f9f73}
+body.term .rl-result small, body.term .rl-msg, body.term .rl-note{font-size:19px; color:#8ff0b4}
+body.term .rl-note{color:#4f9f73}
+body.term .rl-num{background:#06120c; border:2px solid #8ff0b4; box-shadow:0 0 12px var(--tg); font-size:30px; font-weight:400}
+body.term .rl-num.r{color:#ff9aa2; border-color:#ff9aa2; background:#1a0c0e} body.term .rl-num.b{color:#8ff0b4; background:#06120c} body.term .rl-num.g{color:#c8ffdc; background:#14382a}
+body.term .rl-pill{font-weight:400; font-size:18px}
+body.term .rl-pill.r, body.term .rl-split .r{background:#2a1215; color:#ff9aa2; box-shadow:inset 0 0 0 1px #5c2328}
+body.term .rl-pill.b, body.term .rl-split .b{background:#06120c; color:#8ff0b4; box-shadow:inset 0 0 0 1px #1c4a33}
+body.term .rl-pill.g, body.term .rl-split .g{background:#14382a; color:#c8ffdc; box-shadow:inset 0 0 0 1px #4f9f73}
+body.term .rl-recent .rl-pill:first-child{box-shadow:0 0 0 2px #8ff0b4}
+body.term .rl-tablewrap{background:#06120c; border:2px solid #1c4a33; box-shadow:0 0 18px rgba(143,240,180,.06) inset}
+body.term .rl-cell{background:transparent; box-shadow:inset 0 0 0 1px #1c4a33; color:#8ff0b4; font-family:var(--ui); font-weight:400; font-size:clamp(17px,2vw,23px)}
+body.term .rl-cell.r{background:#150a0c; color:#ff9aa2; text-shadow:0 0 5px rgba(255,120,130,.35)}
+body.term .rl-cell.b{background:#06120c}
+body.term .rl-cell.z{background:#0f2a1c; color:#c8ffdc}
+body.term .rl-cell.o{color:#4f9f73; font-size:clamp(15px,1.6vw,19px); letter-spacing:.04em}
+body.term .rl-cell.col{font-size:clamp(13px,1.3vw,17px); letter-spacing:0}
+body.term .rl-cell .dia.r{background:#ff9aa2; opacity:.75} body.term .rl-cell .dia.b{background:#8ff0b4; opacity:.55}
+body.term .rl-cell:hover, body.term .rl-cell.hl{filter:none; background:#14382a; box-shadow:inset 0 0 0 2px #8ff0b4}
+body.term .rl-edge:hover{background:rgba(143,240,180,.35)}
+body.term .rl-chipon, body.term .rl-chipbtn{background:#06120c; color:#c8ffdc; box-shadow:inset 0 0 0 2px var(--tc), 0 0 8px rgba(143,240,180,.35); font-family:var(--ui); font-weight:400; text-shadow:none}
+body.term .c1{--tc:#4f9f73} body.term .c5{--tc:#ff9aa2} body.term .c25{--tc:#8ff0b4} body.term .c100{--tc:#c8ffdc} body.term .c500{--tc:#b8a0ff}
+body.term .rl-chipon{font-size:calc(var(--cs) * .5)}
+body.term .rl-chipbtn{font-size:20px}
+body.term .rl-chipbtn[aria-checked="true"]{background:#14382a; box-shadow:inset 0 0 0 2px var(--tc), 0 0 0 2px #8ff0b4, 0 0 14px rgba(143,240,180,.5)}
+body.term .rl-dolly{background:#8ff0b4; color:#06120c; box-shadow:0 0 0 2px #06120c, 0 0 18px rgba(143,240,180,.9)}
+body.term .rl-pt{font-size:19px}
+body.term .rl-pt td{border-top-color:#1c4a33}
+body.term .rl-pt td small{font-size:16px; color:#4f9f73}
+body.term .rl-pt .rl-pays{color:#c8ffdc; font-weight:400}
+body.term .rl-callbtn{background:transparent; border:2px solid #1c4a33}
+body.term .rl-callbtn b{font-weight:400; font-size:20px; color:#8ff0b4}
+body.term .rl-callbtn small{font-size:17px; color:#4f9f73}
+body.term .rl-callbtn:hover{border-color:#4f9f73}
+body.term .rl-nbr[aria-pressed="true"]{border-color:#8ff0b4; box-shadow:0 0 12px var(--tg)}
+body.term #rlWheel{box-shadow:0 0 0 2px #1c4a33, 0 0 30px rgba(143,240,180,.08)}
 </style>
 </head>
 <body>
+
 <div class="app">
   <header class="top">
-    <div class="brand"><h1>Royal Reels</h1><span class="tag">Card slots · 8 paylines · Hearts rule</span></div>
+    <div class="brand"><h1 id="brandH">Royal Reels</h1><span class="tag" id="brandTag">Card slots · 8 paylines · Hearts rule</span></div>
     <div class="level" aria-hidden="true"></div>
-    <div class="termbar" id="termbar" aria-hidden="true"><span>ROYAL REELS</span><span id="termStat">Score: 0 · Spins: 10</span></div>
+    <div class="termbar" id="termbar" aria-hidden="true"><span id="termName">ROYAL REELS</span><span id="termStat">Score: 0 · Spins: 10</span></div>
     <div class="top-actions">
+      <div class="games" role="group" aria-label="Game">
+        <button class="ghost" type="button" data-game="slots" aria-pressed="true">Slots</button>
+        <button class="ghost" type="button" data-game="roulette" aria-pressed="false">Roulette</button>
+      </div>
       <div class="looks" role="group" aria-label="Look">
         <button class="ghost" type="button" data-look="pixel" aria-pressed="true">16-bit</button>
         <button class="ghost" type="button" data-look="term" aria-pressed="false">Terminal</button>
@@ -914,7 +1162,7 @@ body.term .resetbtn.armed{background:#8ff0b4; color:#06120c; border-color:#8ff0b
     </div>
   </header>
 
-  <main class="layout">
+  <main class="layout" id="slotGame">
     <section class="cabinet" id="cabinet" aria-label="Slot machine">
       <div class="bulbs" id="bulbs" aria-hidden="true"></div>
       <div class="cab-inner">
@@ -959,7 +1207,7 @@ body.term .resetbtn.armed{background:#8ff0b4; color:#06120c; border-color:#8ff0b
                 <div class="banner" id="banner" hidden></div>
                 <div class="coach" id="coach" hidden>
                   <div class="hand" aria-hidden="true"></div>
-                  <p>Swipe down or pull the lever to spin<br>Tap the reels to stop them</p>
+                  <p>Wind the wheel, then let go to spin<br>Hold it to slow the reels down</p>
                 </div>
               </div>
             </div>
@@ -987,7 +1235,16 @@ body.term .resetbtn.armed{background:#8ff0b4; color:#06120c; border-color:#8ff0b
             <button class="autobtn" id="newGameBtn" type="button">New game</button>
             <button class="autobtn resetbtn" id="resetBtn" type="button" title="Clears your high score, stats and spin history, and starts a new game">Reset scores</button>
           </div>
-          <div class="spinwrap"><button class="spin ready" id="spinBtn" type="button"><span id="spinLbl">SPIN</span><small id="spinSub">10 left</small></button></div>
+          <div class="spinwrap">
+            <button class="spin ready" id="spinBtn" type="button" hidden><span id="spinLbl">SPIN</span><small id="spinSub">10 left</small></button>
+            <div class="crank ready" id="crank" tabindex="0" role="button" aria-label="Crank handle: turn it in circles to spin. Enter also spins.">
+              <span class="crank-plate"></span>
+              <span class="crank-arm" id="crankArm"><span class="crank-knob"></span></span>
+              <span class="crank-hub"></span>
+            </div>
+            <span class="lbl crank-lbl" id="crankLbl">Crank to spin</span>
+            <small class="crank-sub" id="crankSub">10 spins left</small>
+          </div>
           <div class="autogrp">
             <button class="instant" id="hornBtn" type="button" aria-label="Take your call: rev up the shuffle and the reels" title="Take your call: tap (or hold) to rev up the shuffle and the reels — keep tapping to keep them fast">
               <span class="dome"></span>
@@ -1027,6 +1284,97 @@ body.term .resetbtn.armed{background:#8ff0b4; color:#06120c; border-color:#8ff0b
       </section>
     </aside>
   </main>
+  <main class="layout rl-layout" id="rlGame" hidden>
+    <section class="cabinet rl-cab" aria-label="Roulette table">
+      <div class="cab-inner">
+        <div class="scoreboard">
+          <div class="sb sb-score"><span>Chips</span><b id="rlBal">1,000</b><em class="pop" id="rlPop" aria-hidden="true"></em></div>
+          <div class="sb"><span>Your bet</span><b id="rlBet">0</b></div>
+          <div class="sb sb-high"><span>Best bankroll</span><b id="rlBest">1,000</b><small id="rlVarTag">European</small></div>
+        </div>
+
+        <div class="rl-top">
+          <div class="rl-wheelbox">
+            <canvas id="rlWheel" width="300" height="300" aria-label="Roulette wheel. Flick it to spin." role="img"></canvas>
+            <div class="rl-call" id="rlCall" aria-live="polite">Place your bets</div>
+          </div>
+          <div class="rl-info">
+            <div class="rl-variant" role="group" aria-label="Wheel">
+              <button class="ghost" type="button" data-v="eu" aria-pressed="true">European</button>
+              <button class="ghost" type="button" data-v="fr" aria-pressed="false">French</button>
+              <button class="ghost" type="button" data-v="us" aria-pressed="false">American</button>
+            </div>
+            <div class="rl-result">
+              <span class="rl-num" id="rlNum">–</span>
+              <div><span class="lbl">Last number</span><small id="rlNumSub">No spins yet</small></div>
+            </div>
+            <div class="rl-recent" id="rlRecent" aria-label="Recent numbers"></div>
+            <div class="rl-msg" id="rlMsg" aria-live="polite">Pick a chip, tap the table to bet, then flick the wheel or press SPIN.</div>
+            <div class="rl-broke" id="rlBroke" hidden><button class="autobtn" id="rlRefill" type="button">Take 1,000 more chips</button></div>
+          </div>
+        </div>
+
+        <div class="rl-tablewrap" id="rlTableWrap"><div class="rl-table" id="rlTable"></div></div>
+
+        <div class="rl-rack">
+          <div class="rl-chips" id="rlChips" role="radiogroup" aria-label="Chip value">
+            <button class="rl-chipbtn c1" type="button" role="radio" data-v="1" aria-checked="false">1</button>
+            <button class="rl-chipbtn c5" type="button" role="radio" data-v="5" aria-checked="true">5</button>
+            <button class="rl-chipbtn c25" type="button" role="radio" data-v="25" aria-checked="false">25</button>
+            <button class="rl-chipbtn c100" type="button" role="radio" data-v="100" aria-checked="false">100</button>
+            <button class="rl-chipbtn c500" type="button" role="radio" data-v="500" aria-checked="false">500</button>
+          </div>
+          <div class="rl-acts">
+            <button class="autobtn" id="rlUndo" type="button">Undo</button>
+            <button class="autobtn" id="rlClear" type="button">Clear</button>
+            <button class="autobtn" id="rlRebet" type="button">Rebet</button>
+            <button class="autobtn" id="rlDouble" type="button">Double</button>
+          </div>
+          <div class="rl-spinwrap"><button class="spin rl-spinbtn" id="rlSpin" type="button"><span id="rlSpinLbl">SPIN</span><small id="rlSpinSub">place a bet</small></button></div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="side">
+      <section class="panel">
+        <div class="tabs rtabs" role="tablist">
+          <button role="tab" aria-selected="true" data-rtab="pay" type="button">Payouts</button>
+          <button role="tab" aria-selected="false" data-rtab="call" type="button">Call bets</button>
+          <button role="tab" aria-selected="false" data-rtab="stats" type="button">Stats</button>
+        </div>
+        <div data-rpane="pay">
+          <table class="rl-pt" id="rlPayT"></table>
+          <p class="rl-note" id="rlEdge"></p>
+          <p class="rl-note">Tap a spot to add the chip you picked. Right-click a bet (or use Undo) to take it back.</p>
+        </div>
+        <div data-rpane="call" hidden>
+          <div id="rlCallsBox">
+            <p class="rl-note">French "call" bets cover a whole section of the wheel. Each one places several chips of the value you picked.</p>
+            <div class="rl-calls">
+              <button class="rl-callbtn" type="button" data-call="voisins"><b>Voisins du Zéro</b><small>17 numbers around zero · 9 chips</small></button>
+              <button class="rl-callbtn" type="button" data-call="tiers"><b>Tiers du Cylindre</b><small>12 numbers opposite zero · 6 chips</small></button>
+              <button class="rl-callbtn" type="button" data-call="orph"><b>Orphelins</b><small>The 8 numbers left over · 5 chips</small></button>
+              <button class="rl-callbtn" type="button" data-call="zero"><b>Jeu Zéro</b><small>7 numbers closest to zero · 4 chips</small></button>
+            </div>
+          </div>
+          <p class="rl-note" id="rlCallsUS" hidden>Call bets are played on single-zero wheels. Switch to European or French to use them.</p>
+          <button class="rl-callbtn rl-nbr" id="rlNbr" type="button" aria-pressed="false"><b>Neighbours</b><small>Tap here, then a number: it and the 2 pockets on each side of it on the wheel · 5 chips</small></button>
+        </div>
+        <div data-rpane="stats" hidden>
+          <div class="stats">
+            <div><span>Spins</span><b id="rlSpins">0</b></div>
+            <div><span>Biggest win</span><b id="rlBig">0</b></div>
+            <div><span>Net result</span><b id="rlNet">0</b></div>
+            <div><span>Chip refills</span><b id="rlRefills">0</b></div>
+          </div>
+          <div class="rl-sect"><span class="lbl">Red · Black · Zero (last 100)</span><div class="rl-split" id="rlSplit"></div></div>
+          <div class="rl-sect"><span class="lbl">Hot numbers (last 100)</span><div class="rl-recent" id="rlHot"></div></div>
+          <div class="rl-sect"><span class="lbl">Cold numbers (longest wait)</span><div class="rl-recent" id="rlCold"></div></div>
+          <p class="rl-note">Hot and cold are just history: the wheel has no memory, and every pocket has the same chance on every spin.</p>
+        </div>
+      </section>
+    </aside>
+  </main>
 </div>
 
 <canvas id="fx" aria-hidden="true"></canvas>
@@ -1050,10 +1398,10 @@ body.term .resetbtn.armed{background:#8ff0b4; color:#06120c; border-color:#8ff0b
   <div class="dialog">
     <h3 id="howTitle">How to play</h3>
     <ul>
-      <li>Every game gives you <b>10 spins</b>. <b>Pull the lever</b>, <b>swipe down on the cards</b>, press SPIN or hit the spacebar to start.</li>
+      <li>Every game gives you <b>10 spins</b>. <b>Wind the wheel</b> like a spring — the power ring fills as you turn it, up to 3 full turns — then <b>let go</b>. The spring unwinds and throws the reels: the more you wound, the faster and longer they spin. (A quick tap winds one turn for you; the lever, a swipe down on the cards and the spacebar also spin.)</li>
       <li><b>Take your call (red button):</b> tap it — or hold it — to rev up the shuffle and the reels, up to ×3. Keep tapping to keep them fast; stop and they slow back down. Tap between spins to charge up the next one. It never changes your chances.</li>
       <li><b>Every spin is freshly shuffled.</b> Each reel is its own deck, shuffled fairly with secure random numbers before every spin, so no run can be predicted.</li>
-      <li><b>Your tap and your spin decide the cards.</b> The reels keep spinning until you <b>tap the reels</b>, press <b>STOP</b>, hit the spacebar or pull the lever again. Each reel then slows down and settles — the faster you made it spin (harder pull, faster swipe, revving with Take your call), the further it slides. No hidden tricks.</li>
+      <li><b>Your hands decide the cards.</b> Leave the reels alone and they slow down by themselves and click onto cards when the spring's force is spent — the left reel first. Or <b>grab the wheel and hold it</b> to slow them down sooner, like a hand on a spinning wheel; let go and they coast on with what's left. The spacebar or the lever stops them with a slow slide. No hidden tricks.</li>
       <li><b>3 of the same in any line</b> (across, down or corner to corner): KKK = <b>1,000</b> (jackpot) · QQQ = 400 · ♥♥♥ = 250 · JJJ = 250 · ♦♦♦ = 180 · ♣♣♣ = 120 · ♠♠♠ = 80.</li>
       <li><b>Royal Line:</b> J, Q, K <b>in order</b> along a line (J → Q → K, or K → Q → J) = <b>200</b>.</li>
       <li><b>2 + 1 suits</b> — two cards of one suit <b>side by side</b> plus one of another suit, on any of the 8 lines (♥ ♥ ♠ and ♠ ♥ ♥ score, ♥ ♠ ♥ doesn't). Each mix has its own score, from ♥♥ + ♦ = 25 down to ♠♠ + ♣ = 5 (see the grid in Points). J, Q and K only score as a set of 3.</li>
@@ -1064,6 +1412,23 @@ body.term .resetbtn.armed{background:#8ff0b4; color:#06120c; border-color:#8ff0b
     </ul>
     <p style="color:var(--muted);font-size:13px">16-bit, Terminal and Classic are three looks for the same game — switch any time without losing your spins.</p>
     <div class="row"><button class="btn" id="howClose" type="button">Let's spin</button></div>
+  </div>
+</div>
+
+<div class="modal" id="rlHowModal" hidden role="dialog" aria-modal="true" aria-labelledby="rlHowTitle">
+  <div class="dialog">
+    <h3 id="rlHowTitle">How to play roulette</h3>
+    <ul>
+      <li><b>Chips:</b> you start with <b>1,000 chips</b>. Pick a chip value (1, 5, 25, 100 or 500), then tap the table to place it. Tap again to add more. If you run out, take another 1,000.</li>
+      <li><b>Bets:</b> tap a number for a straight up bet. Tap the line between two numbers for a split, a corner where four meet, or the outer edge of a row for a street (three) or six line (six). The outside boxes cover red/black, odd/even, 1–18/19–36, the dozens and the "2 to 1" columns.</li>
+      <li><b>Spin:</b> flick the wheel with your finger or mouse, or press SPIN (or the spacebar). You can keep betting while the ball circles, until the call "<b>No more bets</b>".</li>
+      <li><b>Winning:</b> the ball settles in a pocket and a crown marker goes on that number. Winning bets are paid with your stake back; losing chips are swept away. Use <b>Rebet</b> to place the same bets again, or <b>Double</b> to double them.</li>
+      <li><b>Pays:</b> straight up 35 to 1 · split 17 · street 11 · corner 8 · six line 5 · dozen or column 2 · red/black, odd/even, low/high 1 to 1. First four (0-1-2-3) pays 8; on the American wheel the top line (0-00-1-2-3) pays 6.</li>
+      <li><b>Wheels:</b> European has one zero (house edge 2.7%). French adds <b>La Partage</b>: when zero wins you get half of your even-money bets back. American has 0 and 00 (house edge 5.26%).</li>
+      <li><b>Call bets</b> (European and French): Voisins du Zéro, Tiers du Cylindre, Orphelins, Jeu Zéro and Neighbours cover whole sections of the wheel.</li>
+      <li><b>Fair play:</b> the pocket is drawn with secure random numbers when the ball is launched. Every pocket has exactly the same chance, and nothing depends on past spins or your bets. It's play money only.</li>
+    </ul>
+    <div class="row"><button class="btn" id="rlHowClose" type="button">Let's play</button></div>
   </div>
 </div>
 
@@ -1445,6 +1810,8 @@ const Sound = (() => {
     riser() { tone(220, 1.3, 'sawtooth', .07, 0, 1100); tone(330, 1.3, 'triangle', .05, 0, 1650); },
     chime(mult) { const f = 520 * Math.pow(2, Math.min(Math.log2(mult + 1), 7) / 4); tone(f, .35, 'sine', .22); tone(f * 1.5, .3, 'sine', .1, .05); },
     fanfare(big) { const n = big ? [523, 659, 784, 1047, 784, 1047, 1319] : [523, 659, 784, 1047]; n.forEach((f, i) => { tone(f, .28, 'square', .09, i * .11); tone(f / 2, .28, 'triangle', .12, i * .11); }); },
+    boing(k = 1) { tone(180, .32, 'sine', .16 * k, 0, 460); tone(460, .22, 'triangle', .07 * k, .07, 240); },
+    ratchet(p = 0) { tone(700 + p * 1300, .025, 'square', .045); },
     coin() { tone(1320, .08, 'square', .06); tone(1760, .12, 'square', .05, .06); },
     press(lv = 0, b = 0) { tone(160, .06, 'square', .16, 0, 90); const f = 330 + 520 * b; tone(f, .12, 'sawtooth', .07, .03, f * 1.35); },
     level() { [392, 523, 659, 784, 1047].forEach((f, i) => tone(f, .22, 'triangle', .14, i * .08)); },
@@ -1516,6 +1883,7 @@ function cardHTML(c) {
 function slotH() { return reelEls[0].clientHeight / 3; }
 function sizeSlots() { document.documentElement.style.setProperty('--sh', slotH() + 'px'); }
 function renderReelsStatic(grid) {
+  preReels = null; reelEls.forEach(r => r.classList.remove('primed'));
   stripEls.forEach((strip, c) => {
     strip.innerHTML = [grid[c], grid[c + 3], grid[c + 6]].map(cardHTML).join('');
     strip.style.transform = 'translateY(0)';
@@ -1555,7 +1923,6 @@ function boostTick(now) {
   const dt = Math.min(100, now - boostLast) / 1000; boostLast = now;
   const fade = phase === 'spinning' ? .3 : .12;                  // per second
   boost = Math.max(0, boost - fade * dt);
-  if (reelRun) reelRun.V = reelRun.V0 * speedMult();              // the spinning reels follow your revving
   renderBoost();
   if (boost > 0) requestAnimationFrame(boostTick); else boostLoop = false;
 }
@@ -1575,28 +1942,44 @@ function shuffleFx() {
     reels.style.setProperty('--shufd', dur + 'ms');
     for (let i = 0; i < 9; i++) setTimeout(() => Sound.tick(), (40 + i * 45) * dur / 560);   // riffle sound
     buzz([6, 30, 6, 30, 6]);
-    setTimeout(() => { reels.classList.remove('shuffling'); $('winNum').textContent = 'Tap the reels or press STOP'; res(); }, dur);
+    setTimeout(() => { reels.classList.remove('shuffling'); $('winNum').textContent = 'Let it run out, or hold the wheel to slow down'; res(); }, dur);
   });
 }
-function startReels(power = 1) {
+/* Build the reel strips ahead of time (while you wind the wheel), so letting go starts them instantly.
+   It's invisible: each strip still shows the current cards at the top. The decks are shuffled fairly here. */
+let preReels = null;
+function buildStrip(c, A) {
+  const prev = [currentGrid[c], currentGrid[c + 3], currentGrid[c + 6]];
+  // The loop is drawn twice so it wraps seamlessly. The first 3 slots of each copy start out showing
+  // the previous cards (so the reel starts from what you see) and are swapped for A's cards off-screen.
+  const view = [...A, ...A]; for (let i = 0; i < 3; i++) { view[i] = prev[i]; view[N_VIEW(i)] = prev[i]; }
+  stripEls[c].innerHTML = view.map(cardHTML).join('');
+  stripEls[c].style.transform = 'translateY(0)';
+}
+const N_VIEW = i => REEL_LEN + i;
+function prepareReels() {
+  if (preReels || phase !== 'idle' || reelRun) return;
+  prepareOdds();
+  preReels = reelEls.map((reel, c) => { const A = shuffledDeck(spinWeights, REEL_LEN); reel.classList.add('primed'); buildStrip(c, A); return A; });
+  collectCards();
+}
+function startReels(power = 1, snap = false) {
   return new Promise(resolve => {
     const H = slotH(), N = REEL_LEN, NH = N * H;
     const V0 = (H / 60) * Math.max(.85, Math.min(1.25, power));  // ×1 cruise ≈ 16 cards per second
-    const V = V0 * speedMult();                                   // revved up by "Take your call"
-    const run = { H, N, NH, V, V0, reels: [], done: 0, resolve, lastTick: 0, last: performance.now(), retro: isRetro() };
+    const V = V0 * reelMult();                                    // your cranking × "Take your call"
+    const run = { H, N, NH, V, V0, snap, reels: [], done: 0, resolve, lastTick: 0, last: performance.now(), retro: isRetro() };
     reelEls.forEach((reel, c) => {
-      const prev = [currentGrid[c], currentGrid[c + 3], currentGrid[c + 6]];
-      const A = shuffledDeck(spinWeights, N);                    // a freshly shuffled deck every spin
+      const ready = preReels && preReels[c];
+      const A = ready || shuffledDeck(spinWeights, N);          // a freshly shuffled deck every spin
       const el = stripEls[c];
-      // The loop is drawn twice so it wraps seamlessly. The first 3 slots of each copy start out showing
-      // the previous cards (so the reel starts from what you see) and are swapped for A's cards off-screen.
-      const view = [...A, ...A]; for (let i = 0; i < 3; i++) { view[i] = prev[i]; view[N + i] = prev[i]; }
-      el.innerHTML = view.map(cardHTML).join('');
-      el.style.transform = 'translateY(0)';
+      if (!ready) buildStrip(c, A);
       reel.classList.add('running');
-      run.reels.push({ c, A, el, reel, t0: performance.now() + c * 90, v: 0, pos: 0, state: 'wind', stopAt: null, lock: null, landed: false, lastIdx: 0, swapped: false });
+      run.reels.push({ c, A, el, reel, t0: performance.now() + c * (snap ? 22 : 90), v: 0, pos: 0, state: snap ? 'run' : 'wind', stopAt: null, lock: null, landed: false, lastIdx: 0, swapped: false });
     });
+    preReels = null;
     reelRun = run;
+    if (stopQueued) { stopQueued = false; stopAll(); }
     // Save the strips now: a reload mid-spin can't give the spin back (it's resolved at a random stop).
     S.pendingStrips = run.reels.map(r => r.A.map(x => ({ r: x.r, s: x.s }))); save();
     requestAnimationFrame(reelTick);
@@ -1604,8 +1987,9 @@ function startReels(power = 1) {
 }
 function reelTick(now) {
   const run = reelRun; if (!run) return;
-  const dt = Math.min(50, now - run.last); run.last = now;
-  const { H, V } = run, wind = RM ? 0 : H * .14, tWind = RM ? 0 : 130, tAcc = RM ? 60 : 260;
+  const dt = Math.max(0, Math.min(50, now - run.last)); run.last = Math.max(now, run.last);
+  const { H, V, V0 } = run, wind = RM || run.snap ? 0 : H * .14, tWind = RM || run.snap ? 0 : 130,
+    tAcc = RM ? 60 : run.snap ? Math.max(45, 220 / launchMult) : 260;   // a released spring snaps them to speed at once
   run.reels.forEach(r => {
     if (r.landed) return;
     const t = now - r.t0;
@@ -1615,9 +1999,20 @@ function reelTick(now) {
       else { r.state = 'run'; r.pos = -wind; r.v = 0; }
     }
     if (r.state === 'run') {
-      r.v = Math.min(V, r.v + V * dt / tAcc);
-      r.pos += r.v * dt;
-      if (r.stopAt != null && now >= r.stopAt && r.v >= V * .999) beginSlowStop(run, r, now);
+      if (Crank.braking && r.swapped) {                           // hand brake: friction slows the reel down
+        r.peaked = true;
+        r.v *= Math.exp(-dt / (RM ? 150 : 430 * (1 + r.c * .12)));
+        r.pos += r.v * dt;
+        if (r.v < V0 * .1) beginSnap(run, r, now);
+      } else {
+        if (!r.peaked) { r.v = Math.min(V, r.v + V * dt / tAcc); if (r.v >= V * .999) r.peaked = true; }   // thrown by the spring
+        else r.v *= Math.exp(-dt / ((RM ? 500 : (950 + r.c * 300) * (.75 + .15 * launchMult)) * Math.sqrt(speedMult())));          // then friction slows it
+        r.pos += r.v * dt;
+        if (r.peaked && r.swapped && r.stopAt == null && r.v < V0 * .12) { beginSnap(run, r, now); }   // force spent: click onto a card
+        else if (r.stopAt != null && now >= r.stopAt && (r.peaked || t > tWind + tAcc + 80)) {
+          if (r.v < V0 * .3) beginSnap(run, r, now); else beginSlowStop(run, r, now);
+        }
+      }
     }
     let speed = r.v;
     if (r.state === 'lock') {
@@ -1626,7 +2021,7 @@ function reelTick(now) {
       else if (t2 < L.T + L.tb) { const b = (t2 - L.T) / L.tb; r.pos = L.pos0 + L.D + L.over * Math.sin(b * Math.PI); speed = 0; }
       else { landReel(run, r); return; }
     }
-    r.el.classList.toggle('blur', !RM && speed > V * .55);
+    r.el.classList.toggle('blur', !RM && speed > V0 * .7);
     if (!r.swapped && r.pos > 4 * H) {                            // old cards are off-screen now: replace them
       r.swapped = true;
       const kids = r.el.children;
@@ -1652,23 +2047,40 @@ function beginSlowStop(run, r, now) {
   r.finals = [r.A[k], r.A[(k + 1) % run.N], r.A[(k + 2) % run.N]];
   r.state = 'lock';
 }
+/* Snap: a nearly-still reel clicks onto the nearest card edge (forward, or a little back if it's closer). */
+function beginSnap(run, r, now) {
+  const H = run.H;
+  let D = mod(-r.pos, H);                                         // distance forward to the next card edge
+  if (D > H * .6) D -= H;                                         // closer behind: settle back into place
+  const v = Math.max(r.v, run.V0 * .03);
+  const T = RM ? 60 : D < 0 ? 170 : Math.max(90, Math.min(320, 2 * D / v));
+  const k = Math.round(mod(-(r.pos + D), run.NH) / H) % run.N;
+  r.lock = { s0: now, pos0: r.pos, D, T, tb: RM ? 0 : 110, over: RM ? 0 : H * .025 };
+  r.finals = [r.A[k], r.A[(k + 1) % run.N], r.A[(k + 2) % run.N]];
+  r.state = 'lock';
+  Sound.tick(); buzz(Crank.braking ? [14, 30, 8] : 6);
+  if (Crank.braking) crankKick(-(3 + run.done * 2), run.done === 2);
+}
 function landReel(run, r) {
   r.landed = true;
   r.el.innerHTML = r.finals.map(cardHTML).join('');
   r.el.style.transform = 'translateY(0)';
-  r.reel.classList.remove('running');
+  r.reel.classList.remove('running', 'primed');
   Sound.thunk(); buzz(18);
   renderHUD();
   if (++run.done === 3) {
     const grid = new Array(9);
     run.reels.forEach(x => x.finals.forEach((card, row) => { grid[row * 3 + x.c] = card; }));
-    reelRun = null; collectCards(); run.resolve(grid);
+    reelRun = null; collectCards(); if (Crank.braking) setBrake(false); run.resolve(grid);
   }
 }
 /* Stop control: one tap stops all three reels, each starting its slow-down 280 ms after the one to its left. */
 function reelFree(r) { return r && !r.landed && r.state !== 'lock' && r.stopAt == null; }
+let stopQueued = false;                                            // STOP pressed while the cards were still shuffling
 function stopAll() {
-  const run = reelRun; if (!run || !run.reels.some(reelFree)) return;
+  const run = reelRun;
+  if (!run) { if (phase === 'spinning') stopQueued = true; return; }
+  if (!run.reels.some(reelFree)) return;
   const now = performance.now();
   run.reels.forEach((r, i) => { if (reelFree(r)) r.stopAt = now + i * 280 * SPD().coast; });
   buzz([10, 20, 10]); renderHUD();
@@ -1894,13 +2306,14 @@ function renderHUD() {
   $('mSpinsLeft').textContent = S.spinsLeft;
   renderBoost();
   $('mHighTag').textContent = bonusSpins() ? `+${bonusSpins()} spin${bonusSpins() > 1 ? 's' : ''} per game` : 'to beat';
-  $('termStat').textContent = `Score: ${fmt(S.score)} · Spins: ${S.spinsLeft} · High: ${fmt(highScore())}`;
+  if (!rlActive()) $('termStat').textContent = `Score: ${fmt(S.score)} · Spins: ${S.spinsLeft} · High: ${fmt(highScore())}`;
   $('sbSpins').classList.toggle('low', S.spinsLeft > 0 && S.spinsLeft <= 5);
   $('mHigh').textContent = fmt(highScore());
   const nx = nextStopIndex();
   $('spinLbl').textContent = phase === 'spinning' ? 'STOP' : 'SPIN';
   $('spinSub').textContent = phase === 'spinning' ? (nx >= 0 ? 'all reels' : 'stopping…') : (S.spinsLeft === 1 ? 'last spin!' : `${S.spinsLeft} left`);
   $('spinBtn').classList.toggle('stopmode', phase === 'spinning');
+  renderCrankText();
   reelEls.forEach((r, i) => r.classList.toggle('tap-stop', !!(reelRun && reelFree(reelRun.reels[i]))));
   const mi = S.meterIdx || 0, lo = mi ? meterGoal(mi - 1) : 0, hi = meterGoal(mi);
   $('heartFill').style.width = Math.max(0, Math.min(100, (S.score - lo) / (hi - lo) * 100)) + '%';
@@ -1910,6 +2323,8 @@ function renderHUD() {
   $('spinBtn').classList.toggle('ready', phase === 'idle');
   $('newGameBtn').disabled = phase !== 'idle';
   $('resetBtn').disabled = phase !== 'idle';
+  $('crank').classList.toggle('ready', phase === 'idle');
+  $('crank').classList.toggle('spinning', phase === 'spinning');
   $('lever').classList.toggle('off', phase === 'spinning');
   $('lever').classList.toggle('ready', phase === 'idle');
   cabinet.classList.toggle('spinning', phase === 'spinning');
@@ -2062,13 +2477,156 @@ const Lever = (() => {
   return { init, draw: () => draw(pull), get el() { return el; } };
 })();
 
+/* ---------- Wind-up wheel (spin) + hand brake (slow down) ----------
+   Wind the wheel like a spring: every turn stores more force (up to 3 turns). Let go and it unwinds and
+   throws the reels — the more you wound, the faster and longer they spin. Then the reels slow down by
+   themselves and click onto cards when the force is spent. Grab the wheel while they spin and hold it to
+   slow them down sooner. */
+const MAX_WIND = 3;                                                // turns of spring
+const TURN = Math.PI * 2;
+let launchMult = 1;
+const Crank = { disp: Math.PI / 2, vel: 0, tension: 0, lastBuzz: 0, holding: false, cranking: false, angle: Math.PI / 2, lastA: 0, lastT: 0,
+  wound: 0, windDir: 0, clickAcc: 0, braking: false, moved: 0, last: 0, downPhase: 'idle', charge: 0, strain: 0 };
+const windMult = turns => Math.max(.8, Math.min(3, .8 + turns * .75));   // ¼ turn ≈ ×1 · 3 turns = ×3
+function reelMult() { return Math.min(3.6, launchMult * speedMult()); }
+function setBrake(on) {
+  if (on === Crank.braking) return;
+  Crank.braking = on;
+  $('reels').classList.toggle('braking', on);
+  $('crank').classList.toggle('braking', on);
+  if (on) { buzz([8, 30, 8]); crankKick(-4); }                     // grabbing it: the wheel pushes back into your hand
+  else if (Crank.tension > .12) { crankKick(-Crank.tension * 10, true); buzz([20, 40, 12]); }
+  renderCrankText();
+}
+function renderCrankText() {
+  const lbl = $('crankLbl'), sub = $('crankSub'); if (!lbl) return;
+  const winding = Crank.cranking && Crank.downPhase === 'idle' && Crank.wound > .05;
+  lbl.textContent = phase === 'spinning' ? (Crank.braking ? 'Braking…' : 'Hold wheel to slow') : winding ? `Power ${Math.round(Crank.charge * 100)}%` : 'Wind to spin';
+  sub.textContent = phase === 'spinning' ? 'or let it run out' : winding ? (Crank.charge >= .999 ? 'fully wound · let go!' : 'let go to spin') : (S.spinsLeft === 1 ? 'last spin!' : `${S.spinsLeft} spins left`);
+}
+function drawCrank() { if (RM) { Crank.disp = Crank.angle; const a = $('crankArm'); if (a) a.style.transform = `translateX(-50%) rotate(${Crank.disp - Math.PI / 2}rad)`; } }
+let lastCrankText = '';
+function crankTick(now) {
+  const dt = Math.min(.1, (now - (Crank.last || now)) / 1000); Crank.last = now;
+  // how much force is left: while winding it's the wind, during a spin it's the reels' remaining speed
+  let charge = Crank.charge;
+  if (phase === 'spinning') {
+    if (reelRun) { const free = reelRun.reels.filter(r => !r.landed && r.state !== 'lock'); charge = free.length ? Math.max(...free.map(r => r.v)) / (reelRun.V0 * 3) : 0; }
+  } else if (Crank.cranking && Crank.downPhase === 'idle') charge = Crank.wound / (TURN * MAX_WIND);
+  else charge += (0 - charge) * (1 - Math.exp(-dt / .25));
+  Crank.charge = Math.max(0, Math.min(1, charge));
+  // during a spin the handle unwinds (runs backwards), slowing down with the reels
+  if (!Crank.cranking && phase === 'spinning' && reelRun && !Crank.braking && !RM) {
+    const free = reelRun.reels.filter(r => !r.landed && r.state === 'run');
+    if (free.length) { const sp = free.reduce((t, r) => t + r.v, 0) / free.length / reelRun.V0; Crank.angle -= (Crank.windDir || 1) * sp * TURN * .55 * dt; }
+  }
+  // ---- the spring: the handle is tied to where it should be by a springy link ----
+  let target = Crank.angle;
+  if (Crank.braking && reelRun) {                                // the spinning reels pull the wheel against your hand
+    const free = reelRun.reels.filter(r => !r.landed && r.state === 'run');
+    const sp = free.length ? Math.max(...free.map(r => r.v)) / reelRun.V0 : 0;
+    Crank.tension = Math.min(.75, sp * .45);
+    target = Crank.angle - (Crank.windDir || 1) * Crank.tension + (RM ? 0 : Math.sin(now / 26) * .05 * Math.min(1.5, sp));
+    if (sp > .12 && now - Crank.lastBuzz > 95) { Crank.lastBuzz = now; buzz(Math.round(3 + Math.min(3, sp) * 5)); }
+  } else Crank.tension += (0 - Crank.tension) * (1 - Math.exp(-dt / .12));
+  if (Crank.strain > 0) { target += Math.sin(now / 22) * .04 * Crank.strain; Crank.strain = Math.max(0, Crank.strain - dt * 3); }   // fully wound: it shudders
+  if (RM) { Crank.disp = target; Crank.vel = 0; }
+  else for (let t = 0; t < dt; t += 1 / 240) {                   // lightly damped: overshoots and wobbles
+    const h = Math.min(1 / 240, dt - t), winding = Crank.cranking && !Crank.holding;
+    const k = winding ? 380 * (1 - .55 * Crank.charge) : 170, c = winding ? 20 : 9;   // the tighter it's wound, the heavier it feels
+    Crank.vel += (k * (target - Crank.disp) - c * Crank.vel) * h;
+    Crank.disp += Crank.vel * h;
+  }
+  const arm = $('crankArm'); if (arm) arm.style.transform = `translateX(-50%) rotate(${Crank.disp - Math.PI / 2}rad)`;
+  const ce = $('crank');
+  ce.style.setProperty('--charge', Crank.charge.toFixed(3));
+  ce.style.setProperty('--tension', Crank.tension.toFixed(3));
+  ce.style.setProperty('--wob', Math.max(-1, Math.min(1, Crank.vel / 12)).toFixed(3));
+  ce.classList.toggle('full', Crank.cranking && Crank.downPhase === 'idle' && Crank.charge >= .999);
+  const txt = phase + Crank.braking + Math.round(Crank.charge * 100) + Crank.cranking;
+  if (txt !== lastCrankText) { lastCrankText = txt; renderCrankText(); }
+  requestAnimationFrame(crankTick);
+}
+/* A spring "kick": the handle jolts and wobbles back (used when a reel locks and when you let go). */
+function crankKick(v, sound) { Crank.vel += v; if (sound) Sound.boing(Math.min(1.4, Math.abs(v) / 6 + .4)); }
+function crankStart(opts) {
+  if (phase === 'celebrate') { celebrateSkip && celebrateSkip(); }
+  if (phase !== 'idle' || !$('overModal').hidden || !$('howModal').hidden) return false;
+  Sound.init(); spin(Object.assign({ crank: true }, opts || {}));
+  return true;
+}
+function initCrank() {
+  const el = $('crank');
+  const center = () => { const b = el.getBoundingClientRect(); return [b.left + b.width / 2, b.top + b.height / 2]; };
+  const angOf = e => { const [cx, cy] = center(); return Math.atan2(e.clientY - cy, e.clientX - cx); };
+  el.addEventListener('pointerdown', e => {
+    if (e.button > 0) return;
+    e.preventDefault(); Sound.init();
+    if (phase === 'celebrate' && celebrateSkip) celebrateSkip();
+    Crank.cranking = true; Crank.lastA = angOf(e); Crank.lastT = performance.now(); Crank.moved = 0; Crank.clickAcc = 0;
+    Crank.downPhase = phase === 'spinning' ? 'spinning' : 'idle';
+    if (Crank.downPhase === 'spinning') { Crank.holding = true; setBrake(true); }   // grab the spinning wheel: brake
+    else { Crank.wound = 0; Crank.windDir = 0; prepareReels(); }
+    el.setPointerCapture(e.pointerId); el.classList.add('grab');
+  });
+  el.addEventListener('pointermove', e => {
+    if (!Crank.cranking) return;
+    const a = angOf(e), now = performance.now();
+    let d = a - Crank.lastA; if (d > Math.PI) d -= TURN; else if (d < -Math.PI) d += TURN;
+    const [cx, cy] = center(), rr = Math.hypot(e.clientX - cx, e.clientY - cy);
+    Crank.lastA = a; Crank.lastT = now;
+    if (rr < 8) return;                                          // too close to the hub to read a direction
+    Crank.moved += Math.abs(d);
+    if (Crank.downPhase !== 'idle' || phase !== 'idle') return;   // holding a spinning wheel: that's the brake
+    // winding: the first real movement picks the direction; turning back lets the spring out again
+    if (!Crank.windDir) { if (Math.abs(d) < .02) return; Crank.windDir = Math.sign(d); }
+    const want = Crank.wound + d * Crank.windDir, max = TURN * MAX_WIND;
+    const nw = Math.max(0, Math.min(max, want));
+    const step = nw - Crank.wound;
+    Crank.wound = nw; Crank.angle += step * Crank.windDir;
+    if (want > max) { Crank.strain = 1; if (now - Crank.lastBuzz > 120) { Crank.lastBuzz = now; buzz(12); } }   // it won't go further
+    Crank.clickAcc += Math.abs(step);
+    if (Crank.clickAcc > Math.PI / 6) { Crank.clickAcc = 0; Sound.ratchet(Crank.wound / max); buzz(3 + Math.round(6 * Crank.wound / max)); }   // tighter = higher clicks
+  });
+  const up = () => {
+    if (!Crank.cranking) return;
+    Crank.cranking = false; el.classList.remove('grab');
+    if (Crank.holding) { Crank.holding = false; setBrake(false); return; }
+    if (Crank.downPhase !== 'idle') return;
+    const turns = Crank.wound / TURN;
+    if (turns >= .25) {                                          // let go: the spring unwinds and throws the reels
+      if (crankStart({ wind: turns })) { crankKick(-(Crank.windDir || 1) * (4 + turns * 4), true); buzz([30, 20, 18]); }
+      else { Crank.angle -= Crank.wound * Crank.windDir; }
+    } else if (Crank.moved < .35 && phase === 'idle') {           // a plain tap: it winds one turn for you
+      const a0 = Crank.angle, t0 = performance.now(); Crank.windDir = 1;
+      (function f(now) { const u = Math.min(1, (now - t0) / 380); Crank.angle = a0 + TURN * (1 - Math.pow(1 - u, 2)); Crank.charge = u / MAX_WIND; if (u < 1) requestAnimationFrame(f); else { crankStart({ wind: 1 }); crankKick(-6, true); } })(t0);
+    } else if (Crank.wound > 0) {                                 // not enough wind: it just springs back
+      Crank.angle -= Crank.wound * Crank.windDir; crankKick(-Crank.windDir * 3, true);
+      $('winNum').textContent = 'Wind at least a quarter turn, then let go';
+    }
+    Crank.wound = 0;
+  };
+  el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up); el.addEventListener('lostpointercapture', up);
+  el.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return; e.preventDefault(); e.stopPropagation();
+    if (phase === 'spinning') stopAll(); else crankStart({ wind: 1.3 });
+  });
+  Crank.angle = Crank.disp = Math.PI / 2;
+  requestAnimationFrame(crankTick);
+}
+
 function initSwipe() {
   const box = $('reels');
   let active = false, y0 = 0, yPrev = 0, tPrev = 0, vel = 0, pullDown = 0;
   const nudge = px => stripEls.forEach((st, i) => { st.style.transform = `translateY(${px * (1 - i * .12)}px)`; });
+  let brakeId = null;
+  const brakeOff = e => { if (brakeId === null || (e && e.pointerId !== brakeId)) return; brakeId = null; setBrake(false); };
   box.addEventListener('pointerdown', e => {
     if (e.button > 0) return;
-    if (phase === 'spinning') { stopAll(); return; }              // tap anywhere on the reels: stop them all
+    if (phase === 'spinning') {                                   // the brake is on the crank wheel now: point to it
+      const c = $('crank'); c.classList.remove('cue'); void c.offsetWidth; c.classList.add('cue');
+      $('winNum').textContent = 'Hold the wheel to slow the reels down'; return;
+    }
     active = true; y0 = yPrev = e.clientY; tPrev = performance.now(); vel = 0; pullDown = 0;
     box.setPointerCapture(e.pointerId); box.classList.add('dragging');
   });
@@ -2095,7 +2653,12 @@ function initSwipe() {
     if (flick) { buzz(12); gestureSpin(Math.max(.8, Math.min(1.35, .8 + vel * .5))); }
     else if (phase === 'celebrate' && pullDown === 0) { /* a tap during a celebration skips it */ celebrateSkip && celebrateSkip(); }
   };
-  box.addEventListener('pointerup', end); box.addEventListener('pointercancel', end);
+  box.addEventListener('pointerup', e => { brakeOff(e); end(); });
+  box.addEventListener('pointercancel', e => { brakeOff(e); end(); });
+  box.addEventListener('lostpointercapture', e => brakeOff(e));
+  // safety net: a finger lifted anywhere always releases the brake
+  window.addEventListener('pointerup', e => brakeOff(e)); window.addEventListener('pointercancel', e => brakeOff(e));
+  box.addEventListener('contextmenu', e => { if (phase === 'spinning') e.preventDefault(); });
 }
 
 /* ---------- High-score celebration: the King, Queen and Joker dance ---------- */
@@ -2181,15 +2744,20 @@ async function spin(opts = {}) {
   if (S.spinsLeft <= 0) { gameOver(); return; }
 
   phase = 'spinning'; clearWinDisplay(); hideBanner(); lastResult = null; cancelConfirm();
-  $('winNum').className = 'wnum zero'; $('winNum').textContent = 'Tap the reels or press STOP'; $('winSub').textContent = '';
-  $('receipt').innerHTML = '<li class="none">Tap when you\'re ready. Where the reels land depends on when you tap and how fast they\'re spinning.</li>';
+  $('winNum').className = 'wnum zero'; $('winNum').textContent = 'Let it run out, or hold the wheel to slow down'; $('winSub').textContent = '';
+  $('receipt').innerHTML = '<li class="none">Brake when you\'re ready. Where the reels land depends on when you brake and how fast they\'re spinning.</li>';
   // The spin is used up now (and the reel strips are saved as the reels start) —
   // so reloading mid-spin can't give the spin back or redraw the cards.
-  S.spinsLeft--; S.totalSpins++;
+  S.spinsLeft--; S.totalSpins++; stopQueued = false;
+  launchMult = windMult(opts.wind != null ? opts.wind : (opts.power || 1) * 1.3);   // how hard the reels are thrown
   prepareOdds();
   hideCoach();
-  await shuffleFx();                                              // the cards are visibly shuffled first
-  const reelsDone = startReels(opts.power || 1);
+  // A released spring throws the reels straight away (the deck is still freshly shuffled — just not shown).
+  // Lever, swipe and spacebar spins show the shuffle first.
+  const snap = opts.wind != null;
+  if (!snap) await shuffleFx();
+  else { $('winNum').textContent = 'Let it run out, or hold the wheel to slow down'; }
+  const reelsDone = startReels(opts.power || 1, snap);
   renderHUD();
   const grid = await reelsDone;
   currentGrid = grid;
@@ -2319,7 +2887,8 @@ function bind() {
   $('newGameBtn').addEventListener('click', () => { if (phase === 'idle') confirmThen('new', 'This', () => newGame()); });
   $('mega').addEventListener('click', () => celebrateSkip && celebrateSkip());
   document.querySelectorAll('.looks button').forEach(b => b.addEventListener('click', () => setLook(b.dataset.look)));
-  $('howBtn').addEventListener('click', () => { $('howModal').hidden = false; $('howClose').focus(); });
+  $('howBtn').addEventListener('click', () => { if (rlActive()) { RL.howOpen(); return; } $('howModal').hidden = false; $('howClose').focus(); });
+  document.querySelectorAll('.games button').forEach(b => b.addEventListener('click', () => setGame(b.dataset.game)));
   $('howClose').addEventListener('click', () => { $('howModal').hidden = true; });
   $('howModal').addEventListener('click', e => { if (e.target.id === 'howModal') $('howModal').hidden = true; });
   $('restartBtn').addEventListener('click', () => newGame());
@@ -2328,6 +2897,8 @@ function bind() {
   $('muteBtn').addEventListener('click', e => { e.stopPropagation(); userToggledSound = true; setMute(!Sound.muted); });
   document.addEventListener('pointerdown', () => { if (!userToggledSound) { userToggledSound = true; setMute(false); } }, { once: true });
   document.addEventListener('keydown', e => {
+    if (rlActive() && e.code === 'Space') { if (!userToggledSound) { userToggledSound = true; setMute(false); } if (e.target.closest && e.target.closest('button') && e.target.closest('#rlGame')) return; RL.key(e); return; }
+    if (e.code === 'Escape' && $('rlHowModal')) $('rlHowModal').hidden = true;
     if (e.code === 'Space') {
       e.preventDefault();
       if (!$('howModal').hidden) return;
@@ -2339,15 +2910,15 @@ function bind() {
     } else if (e.key === 'Escape') { $('howModal').hidden = true; }
   });
   document.addEventListener('keyup', e => { if (e.code === 'Space') e.preventDefault(); });
-  document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => {
-    document.querySelectorAll('.tabs button').forEach(x => x.setAttribute('aria-selected', String(x === b)));
+  document.querySelectorAll('.tabs:not(.rtabs) button').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.tabs:not(.rtabs) button').forEach(x => x.setAttribute('aria-selected', String(x === b)));
     document.querySelectorAll('[data-pane]').forEach(p => p.hidden = p.dataset.pane !== b.dataset.tab);
   }));
   let rt;
   window.addEventListener('resize', () => {
     clearTimeout(rt);
     rt = setTimeout(() => {
-      sizeFx(); buildBulbs(); sizeSlots(); Lever.draw();
+      sizeFx(); if (rlActive()) return; buildBulbs(); sizeSlots(); Lever.draw();
       if (phase === 'idle' && lastResult && lastResult.lineWins.length) { const w = lastResult.lineWins; clearTimeout(cycleTimer); showLines(w, null, false); startCycle(w); }
     }, 120);
   });
@@ -2361,6 +2932,7 @@ function applyModeClass() {
 }
 function setLook(look) {
   if (phase !== 'idle' || look === currentLook()) return;
+  if (rlActive() && RL.busy()) { toast('Wait for the ball to settle first'); return; }
   // Same rules in every look, so switching is purely visual and never restarts the game.
   if (look === 'classic') S.mode = 'classic';
   else { S.mode = 'retro'; S.theme = look; }
@@ -2370,6 +2942,8 @@ function setLook(look) {
   clearTimeout(cycleTimer);
   applyModeClass(); renderReelsStatic(currentGrid); renderPaytable(); renderHUD();
   if (lastResult && lastResult.lineWins.length) { showLines(lastResult.lineWins, null, false); startCycle(lastResult.lineWins); }
+  RL.onLook();
+  if (rlActive()) { toast(look === 'term' ? '> TERMINAL look. Green phosphor roulette.' : look === 'classic' ? 'Classic look. Mahogany wheel, green felt.' : '16-bit look.', 'cyan'); return; }
   toast(look === 'term' ? '> TERMINAL look. Same game, green phosphor screen.' : look === 'classic' ? 'Classic look. Same game, casino cards.' : '16-bit look.', 'cyan');
 }
 function setMode(mode, announce) {
@@ -2382,6 +2956,613 @@ function setMode(mode, announce) {
   if (announce && isRetro()) Sound.coin();
 }
 
+/* =====================================================================
+   ROYAL ROULETTE — a second game in the same cabinet.
+   Real wheel orders, real payouts. The pocket is drawn with secure random
+   numbers the moment the ball is launched: every pocket has the same chance.
+   ===================================================================== */
+const RL = (() => {
+  const KEY = 'royal-roulette-v1';
+  const DZ = 37;                                                    // "00"
+  const ORDER = {
+    eu: [0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26],
+    us: [0, 28, 9, 26, 30, 11, 7, 20, 32, 17, 5, 22, 34, 15, 3, 24, 36, 13, 1, DZ, 27, 10, 25, 29, 12, 8, 19, 31, 18, 6, 21, 33, 16, 4, 23, 35, 14, 2],
+  };
+  const REDS = new Set([1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36]);
+  const colorOf = n => (n === 0 || n === DZ) ? 'g' : REDS.has(n) ? 'r' : 'b';
+  const colorName = n => ({ g: 'Green', r: 'Red', b: 'Black' })[colorOf(n)];
+  const lab = n => n === DZ ? '00' : String(n);
+  const CHIPS = [1, 5, 25, 100, 500];
+  const START = 1000;
+  const VARIANTS = {
+    eu: { name: 'European', sub: 'Single zero · 2.7% house edge' },
+    fr: { name: 'French', sub: 'Single zero · La Partage on zero' },
+    us: { name: 'American', sub: '0 and 00 · 5.26% house edge' },
+  };
+  const wheelOf = v => v === 'us' ? ORDER.us : ORDER.eu;
+  const fmtC = n => (Math.round(n * 10) / 10) % 1 ? (Math.round(n * 10) / 10).toFixed(1) : fmt(n);
+  const chipLabel = n => n >= 1e6 ? (n / 1e6).toFixed(n % 1e6 ? 1 : 0) + 'M' : n >= 1000 ? (n / 1000).toFixed(n % 1000 ? 1 : 0) + 'K' : fmtC(n);
+  const denom = n => { let d = 1; CHIPS.forEach(c => { if (n >= c) d = c; }); return d; };
+
+  let R = { bal: START, best: START, variant: 'eu', hist: [], spins: 0, bigWin: 0, wagered: 0, returned: 0, refills: 0, lastBets: [], chip: 5, table: [], pendingNum: null };
+  function load() { try { const d = JSON.parse(localStorage.getItem(KEY) || 'null'); if (d && typeof d.bal === 'number') R = Object.assign(R, d); } catch (e) {} }
+  function save() { try { R.table = [...bets.values()].map(b => ({ key: b.key, amt: b.amt })); localStorage.setItem(KEY, JSON.stringify(R)); } catch (e) {} }
+
+  /* ---------- The betting layout ----------
+     One logical grid, drawn two ways: across the screen on wide tables (numbers in 3 rows of 12)
+     or down the screen on phones (12 rows of 3). a = across the 3 number columns (-1.4…3,
+     outside bets on the negative side), b = along the table (0 = zero, 1…13 numbers, 13…14 columns). */
+  const EA = .16, EB = .24;
+  function buildSpots(v) {
+    const S = [];
+    const add = (kind, key, nums, pays, rect, anchor, label, cls) => S.push({ kind, key, nums, pays, rect, anchor, label, cls: cls || '' });
+    const us = v === 'us';
+    if (!us) add('cell', 'S:0', [0], 35, [0, 3, 0, 1], [1.5, .5], '0', 'z');
+    else { add('cell', 'S:0', [0], 35, [0, 1.5, 0, 1], [.75, .5], '0', 'z'); add('cell', 'S:00', [DZ], 35, [1.5, 3, 0, 1], [2.25, .5], '00', 'z'); }
+    for (let n = 1; n <= 36; n++) { const c = (n - 1) % 3, r = Math.floor((n - 1) / 3); add('cell', 'S:' + n, [n], 35, [c, c + 1, 1 + r, 2 + r], [c + .5, 1.5 + r], String(n), colorOf(n)); }
+    for (let c = 0; c < 3; c++) { const nums = []; for (let n = c + 1; n <= 36; n += 3) nums.push(n); add('cell', 'C' + (c + 1), nums, 2, [c, c + 1, 13, 14], [c + .5, 13.5], '2 to 1', 'o col'); }
+    for (let d = 0; d < 3; d++) { const nums = []; for (let n = d * 12 + 1; n <= d * 12 + 12; n++) nums.push(n); add('cell', 'D' + (d + 1), nums, 2, [-.7, 0, 1 + 4 * d, 5 + 4 * d], [-.35, 3 + 4 * d], ['1st 12', '2nd 12', '3rd 12'][d], 'o dz'); }
+    [['LOW', '1–18', n => n <= 18], ['EVEN', 'Even', n => n % 2 === 0], ['RED', 'Red', n => REDS.has(n)], ['BLACK', 'Black', n => !REDS.has(n)], ['ODD', 'Odd', n => n % 2 === 1], ['HIGH', '19–36', n => n >= 19]]
+      .forEach(([k, l, f], i) => { const nums = []; for (let n = 1; n <= 36; n++) if (f(n)) nums.push(n); add('cell', k, nums, 1, [-1.4, -.7, 1 + 2 * i, 3 + 2 * i], [-1.05, 2 + 2 * i], l, 'o em ' + k.toLowerCase()); });
+    for (let n = 1; n <= 36; n++) {
+      const c = (n - 1) % 3, r = Math.floor((n - 1) / 3);
+      if (c < 2) add('edge', `SP:${n}-${n + 1}`, [n, n + 1], 17, [c + 1 - EA, c + 1 + EA, 1 + r + .25, 2 + r - .25], [c + 1, 1.5 + r]);
+      if (r < 11) add('edge', `SP:${n}-${n + 3}`, [n, n + 3], 17, [c + .25, c + .75, 2 + r - EB, 2 + r + EB], [c + .5, 2 + r]);
+      if (c < 2 && r < 11) add('edge', `CO:${n}-${n + 1}-${n + 3}-${n + 4}`, [n, n + 1, n + 3, n + 4], 8, [c + 1 - EA, c + 1 + EA, 2 + r - EB, 2 + r + EB], [c + 1, 2 + r]);
+      if (c === 0) {
+        add('edge', `ST:${n}`, [n, n + 1, n + 2], 11, [-EA, EA, 1 + r + .25, 2 + r - .25], [0, 1.5 + r]);
+        if (r < 11) add('edge', `LN:${n}`, [n, n + 1, n + 2, n + 3, n + 4, n + 5], 5, [-EA, EA, 2 + r - EB, 2 + r + EB], [0, 2 + r]);
+      }
+    }
+    if (!us) {
+      [1, 2, 3].forEach(n => add('edge', `SP:0-${n}`, [0, n], 17, [n - 1 + .25, n - .25, 1 - EB, 1 + EB], [n - .5, 1]));
+      add('edge', 'TR:0-1-2', [0, 1, 2], 11, [1 - EA, 1 + EA, 1 - EB, 1 + EB], [1, 1]);
+      add('edge', 'TR:0-2-3', [0, 2, 3], 11, [2 - EA, 2 + EA, 1 - EB, 1 + EB], [2, 1]);
+      add('edge', 'FF', [0, 1, 2, 3], 8, [-EA, EA, 1 - EB, 1 + EB], [0, 1]);
+    } else {
+      add('edge', 'SP:0-1', [0, 1], 17, [.25, .75, 1 - EB, 1 + EB], [.5, 1]);
+      add('edge', 'SP:00-3', [DZ, 3], 17, [2.25, 2.75, 1 - EB, 1 + EB], [2.5, 1]);
+      add('edge', 'SP:0-00', [0, DZ], 17, [1.5 - EA, 1.5 + EA, .25, .75], [1.5, .5]);
+      add('edge', 'TR:0-1-2', [0, 1, 2], 11, [1 - EA, 1 + EA, 1 - EB, 1 + EB], [1, 1]);
+      add('edge', 'TR:0-00-2', [0, DZ, 2], 11, [1.5 - EA, 1.5 + EA, 1 - EB, 1 + EB], [1.5, 1]);
+      add('edge', 'TR:00-2-3', [DZ, 2, 3], 11, [2 - EA, 2 + EA, 1 - EB, 1 + EB], [2, 1]);
+      add('edge', 'TL', [0, DZ, 1, 2, 3], 6, [-EA, EA, 1 - EB, 1 + EB], [0, 1]);
+    }
+    return S;
+  }
+  const KIND_NAME = { S: 'Straight up', SP: 'Split', ST: 'Street', CO: 'Corner', LN: 'Six line', TR: 'Trio', FF: 'First four', TL: 'Top line' };
+  function describe(s) {
+    const t = s.key.split(':')[0];
+    const OUT = { C1: 'Column 1 (1, 4, 7 … 34)', C2: 'Column 2 (2, 5, 8 … 35)', C3: 'Column 3 (3, 6, 9 … 36)', D1: '1st dozen (1–12)', D2: '2nd dozen (13–24)', D3: '3rd dozen (25–36)', LOW: 'Low (1–18)', HIGH: 'High (19–36)', RED: 'Red', BLACK: 'Black', ODD: 'Odd', EVEN: 'Even' };
+    const nm = KIND_NAME[t] || OUT[s.key] || s.label;
+    const nums = s.nums.length <= 6 ? ' ' + s.nums.map(lab).join('-') : '';
+    return `${nm}${KIND_NAME[t] ? nums : ''} · pays ${s.pays} to 1`;
+  }
+
+  /* French "call" bets: fixed sets of chips on the table, each named after a section of the wheel. */
+  const CALLS = {
+    voisins: { name: 'Voisins du Zéro', desc: '17 numbers around zero · 9 chips', parts: [['TR:0-2-3', 2], ['SP:4-7', 1], ['SP:12-15', 1], ['SP:18-21', 1], ['SP:19-22', 1], ['CO:25-26-28-29', 2], ['SP:32-35', 1]] },
+    zero: { name: 'Jeu Zéro', desc: '7 numbers closest to zero · 4 chips', parts: [['SP:0-3', 1], ['SP:12-15', 1], ['SP:32-35', 1], ['S:26', 1]] },
+    tiers: { name: 'Tiers du Cylindre', desc: '12 numbers opposite zero · 6 chips', parts: [['SP:5-8', 1], ['SP:10-11', 1], ['SP:13-16', 1], ['SP:23-24', 1], ['SP:27-30', 1], ['SP:33-36', 1]] },
+    orph: { name: 'Orphelins', desc: 'The 8 numbers left over · 5 chips', parts: [['S:1', 1], ['SP:6-9', 1], ['SP:14-17', 1], ['SP:17-20', 1], ['SP:31-34', 1]] },
+  };
+
+  /* What a bet gives back when the ball lands on n (stake included). */
+  function betReturn(b, n, v) {
+    if (b.nums.includes(n)) return b.amt * (b.pays + 1);
+    if (v === 'fr' && n === 0 && b.pays === 1 && b.nums.length === 18) return b.amt / 2;   // La Partage
+    return 0;
+  }
+
+  /* ---------- State ---------- */
+  let spots = [], spotByKey = new Map(), numEls = new Map(), bets = new Map(), undo = [];
+  let state = 'bet';                 // bet | spin | nomore | pay
+  let built = false, visible = false, orient = '', neighbourMode = false;
+  const $r = id => document.getElementById(id);
+  const totalBet = () => { let t = 0; bets.forEach(b => t += b.amt); return t; };
+
+  function addBet(key, amt, group) {
+    const s = spotByKey.get(key); if (!s) return false;
+    let b = bets.get(key);
+    if (!b) { b = { key, amt: 0, nums: s.nums, pays: s.pays }; bets.set(key, b); }
+    b.amt += amt; R.bal -= amt;
+    group.push([key, amt]);
+    return true;
+  }
+  function canBet() { return state === 'bet' || state === 'spin'; }
+  function place(parts, label) {                       // parts: [[key, amount], …] — all or nothing
+    if (!canBet()) { say(state === 'nomore' ? 'No more bets — the ball is dropping' : 'Wait for the next round'); return false; }
+    const cost = parts.reduce((t, p) => t + p[1], 0);
+    if (cost > R.bal + 1e-9) { say(`Not enough chips for that (${fmtC(cost)} needed)`); flash($r('rlBal')); return false; }
+    const g = []; parts.forEach(([k, a]) => addBet(k, a, g));
+    undo.push(g); Sound.coin(); buzz(8);
+    if (label) say(label);
+    save(); render();
+    return true;
+  }
+  function doUndo() {
+    if (state !== 'bet' || !undo.length) return;
+    const g = undo.pop();
+    g.forEach(([k, a]) => { const b = bets.get(k); if (!b) return; b.amt -= a; R.bal += a; if (b.amt <= 1e-9) bets.delete(k); });
+    save(); render();
+  }
+  function clearBets() {
+    if (state !== 'bet' || !bets.size) return;
+    R.bal += totalBet(); bets.clear(); undo = []; save(); render(); say('Table cleared');
+  }
+  function removeSpot(key) {
+    if (state !== 'bet') return;
+    const b = bets.get(key); if (!b) return;
+    R.bal += b.amt; bets.delete(key); undo = undo.map(g => g.filter(p => p[0] !== key)).filter(g => g.length);
+    save(); render(); say('Bet removed');
+  }
+  function rebet() {
+    if (state !== 'bet' || !R.lastBets.length) return;
+    const parts = R.lastBets.filter(p => spotByKey.has(p.key)).map(p => [p.key, p.amt]);
+    if (parts.length) place(parts, 'Same bets as last round');
+  }
+  function doubleUp() {
+    if (state !== 'bet' || !bets.size) return;
+    place([...bets.values()].map(b => [b.key, b.amt]), 'Bets doubled');
+  }
+  function callBet(id) {
+    const c = CALLS[id]; if (!c || R.variant === 'us') return;
+    place(c.parts.map(([k, u]) => [k, u * R.chip]), `${c.name} placed · ${fmtC(c.parts.reduce((t, p) => t + p[1], 0) * R.chip)} chips`);
+  }
+  function neighbours(n) {
+    const w = wheelOf(R.variant), i = w.indexOf(n), L = w.length;
+    const nums = [-2, -1, 0, 1, 2].map(d => w[(i + d + L) % L]);
+    place(nums.map(x => ['S:' + lab(x), R.chip]), `Neighbours of ${lab(n)}: ${nums.map(lab).join(' · ')}`);
+  }
+
+  /* ---------- Table rendering ---------- */
+  function buildTable() {
+    const T = $r('rlTable'); T.innerHTML = '';
+    spots = buildSpots(R.variant); spotByKey.clear(); numEls.clear();
+    spots.forEach(s => {
+      const el = document.createElement('button');
+      el.type = 'button'; el.className = 'rl-' + s.kind + ' ' + s.cls; el.dataset.key = s.key;
+      el.setAttribute('aria-label', describe(s)); el.title = describe(s);
+      if (s.kind === 'cell') el.innerHTML = s.key === 'RED' || s.key === 'BLACK' ? `<span class="dia ${s.key === 'RED' ? 'r' : 'b'}"></span>` : `<span>${s.label}</span>`;
+      else el.tabIndex = -1;
+      s.el = el; T.appendChild(el); spotByKey.set(s.key, s);
+      if (s.kind === 'cell' && s.nums.length === 1) numEls.set(s.nums[0], el);
+    });
+    const layer = document.createElement('div'); layer.className = 'rl-layer'; layer.id = 'rlLayer'; T.appendChild(layer);
+    orient = ''; layout();
+    // any saved chips that don't exist on this layout go back to the player
+    bets.forEach((b, k) => { if (!spotByKey.has(k)) { R.bal += b.amt; bets.delete(k); } });
+  }
+  function pos(a0, a1, b0, b1) {
+    if (orient === 'h') return { left: b0 / 14 * 100, top: (3 - a1) / 4.4 * 100, width: (b1 - b0) / 14 * 100, height: (a1 - a0) / 4.4 * 100 };
+    return { left: (a0 + 1.4) / 4.4 * 100, top: b0 / 14 * 100, width: (a1 - a0) / 4.4 * 100, height: (b1 - b0) / 14 * 100 };
+  }
+  function pt(a, b) { const p = pos(a, a, b, b); return { x: p.left, y: p.top }; }
+  function layout() {
+    const T = $r('rlTable'); if (!T || !T.parentElement.clientWidth) return;
+    const o = T.parentElement.clientWidth >= 600 ? 'h' : 'v';
+    if (o !== orient) {
+      orient = o; T.classList.toggle('h', o === 'h'); T.classList.toggle('v', o === 'v');
+      spots.forEach(s => { const p = pos(...s.rect); Object.assign(s.el.style, { left: p.left + '%', top: p.top + '%', width: p.width + '%', height: p.height + '%' }); });
+    }
+    const w = T.clientWidth, h = T.clientHeight;
+    const cell = o === 'h' ? Math.min(w / 14, h / 4.4) : Math.min(w / 4.4, h / 14);
+    T.style.setProperty('--cs', Math.max(18, Math.min(34, cell * .62)) + 'px');
+    renderChips();
+  }
+  function renderChips(list) {
+    const layer = $r('rlLayer'); if (!layer) return;
+    let html = ''; const seen = new Map();
+    (list || [...bets.values()]).forEach(b => {
+      const s = spotByKey.get(b.key); if (!s) return;
+      const p = pt(...s.anchor), fresh = !list && shownAmt.get(b.key) !== b.amt;
+      seen.set(b.key, b.amt);
+      html += `<i class="rl-chipon c${denom(b.amt)}${fresh ? ' drop' : ''}" data-k="${b.key}" style="left:${p.x}%;top:${p.y}%">${chipLabel(b.amt)}</i>`;
+    });
+    if (!list) shownAmt = seen;
+    layer.innerHTML = html + (dolly != null && numEls.has(dolly) ? (() => { const s = spotByKey.get('S:' + lab(dolly)); const p = pt(...s.anchor); return `<i class="rl-dolly" style="left:${p.x}%;top:${p.y}%">♛</i>`; })() : '');
+  }
+  function highlight(nums) {
+    numEls.forEach((el, n) => el.classList.toggle('hl', !!nums && nums.includes(n)));
+  }
+  let dolly = null, shownAmt = new Map();
+
+  /* ---------- Wheel drawing ---------- */
+  let cv, g, W = 0, work, wg, bowlArt, rotorArt, artKey = '';
+  const rotor = { th: 0, w: .35, dir: 1 };
+  let ball = { psi: 0, r: .555, show: false };
+  let run = null;                        // the ball in play
+  function pal() {
+    if (isTerm()) return { rim1: '#0a1c13', rim2: '#06120c', track: '#0c2519', trackLine: '#1c4a33', slope: '#081810', dia: '#4f9f73', r: '#3a1518', b: '#06120c', g: '#14382a', numR: '#ff9aa2', numB: '#8ff0b4', numG: '#c8ffdc', fret: '#4f9f73', floorDark: .55, cone1: '#0c2519', cone2: '#06120c', turret: '#8ff0b4', ring: '#8ff0b4', ball: '#c8ffdc', glow: 'rgba(143,240,180,.9)' };
+    if (isRetro()) return { rim1: '#6d0a1a', rim2: '#3a0a14', track: '#14261c', trackLine: '#9c7a2e', slope: '#0b0d0c', dia: '#f5c542', r: '#c8102e', b: '#1b1f1c', g: '#1e9e57', numR: '#fbf7ec', numB: '#fbf7ec', numG: '#fbf7ec', fret: '#f5c542', floorDark: .7, cone1: '#9c7a2e', cone2: '#6d4a14', turret: '#f5c542', ring: '#f5c542', ball: '#fbf7ec', glow: null };
+    return { rim1: '#6b3515', rim2: '#2a1206', track: '#4a2410', trackLine: '#8c5a16', slope: '#1c0c05', dia: '#e6b24c', r: '#b3102c', b: '#17141d', g: '#0b7a3f', numR: '#fff', numB: '#fff', numG: '#fff', fret: '#e6b24c', floorDark: .72, cone1: '#8a4a1c', cone2: '#3a1a08', turret: '#ffe79a', ring: '#e6b24c', ball: '#fff', glow: null };
+  }
+  const pixel = () => isRetro() && !isTerm();
+  function sizeWheel() {
+    if (!cv) return;
+    const box = cv.parentElement, css = Math.round(Math.min(box.clientWidth || 300, 340));
+    if (!css) return;
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    cv.style.width = css + 'px'; cv.style.height = css + 'px';
+    cv.width = cv.height = Math.round(css * dpr); W = cv.width;
+    artKey = ''; drawFrame();
+  }
+  function darken(hex, k) {
+    const n = parseInt(hex.slice(1), 16); const f = x => Math.round(x * k).toString(16).padStart(2, '0');
+    return '#' + f(n >> 16 & 255) + f(n >> 8 & 255) + f(n & 255);
+  }
+  function buildArt() {
+    const key = [W, R.variant, document.body.className].join('|'); if (key === artKey) return; artKey = key;
+    const L = pixel() ? Math.max(120, Math.round(W / 2)) : W;
+    const mk = () => { const c = document.createElement('canvas'); c.width = c.height = L; return c; };
+    work = mk(); wg = work.getContext('2d');
+    bowlArt = mk(); rotorArt = mk();
+    const P = pal(), c = L / 2, Rr = L / 2;
+    // bowl (fixed): wooden rim, ball track, sloped apron with diamond deflectors
+    let x = bowlArt.getContext('2d');
+    const circ = (ctx, r, fill) => { ctx.beginPath(); ctx.arc(c, c, r, 0, Math.PI * 2); ctx.fillStyle = fill; ctx.fill(); };
+    if (!isRetro()) { const gr = x.createRadialGradient(c, c * .8, Rr * .2, c, c, Rr); gr.addColorStop(0, P.rim1); gr.addColorStop(1, P.rim2); circ(x, Rr, gr); } else circ(x, Rr, P.rim1);
+    if (pixel()) { x.strokeStyle = '#0b0d0c'; x.lineWidth = 2; x.beginPath(); x.arc(c, c, Rr - 1, 0, 7); x.stroke(); }
+    circ(x, Rr * .975, P.trackLine); circ(x, Rr * .965, P.track);
+    if (!isRetro()) { const gr = x.createRadialGradient(c, c, Rr * .8, c, c, Rr * .965); gr.addColorStop(0, 'rgba(0,0,0,.35)'); gr.addColorStop(.5, 'rgba(255,220,160,.10)'); gr.addColorStop(1, 'rgba(0,0,0,.4)'); circ(x, Rr * .965, gr); }
+    circ(x, Rr * .845, P.trackLine); circ(x, Rr * .835, P.slope);
+    for (let i = 0; i < 8; i++) {
+      const a = i * Math.PI / 4 + Math.PI / 8, px = c + Math.sin(a) * Rr * .815, py = c - Math.cos(a) * Rr * .815;
+      x.save(); x.translate(px, py); x.rotate(a); x.fillStyle = P.dia;
+      x.beginPath(); x.moveTo(0, -Rr * .03); x.lineTo(Rr * .018, 0); x.lineTo(0, Rr * .03); x.lineTo(-Rr * .018, 0); x.closePath(); x.fill(); x.restore();
+    }
+    // rotor (turns): number ring, pockets with frets, cone and turret
+    x = rotorArt.getContext('2d');
+    const wh = wheelOf(R.variant), N = wh.length, step = Math.PI * 2 / N;
+    circ(x, Rr * .80, P.ring);
+    for (let i = 0; i < N; i++) {
+      const n = wh[i], col = P[colorOf(n)], a0 = i * step - step / 2 - Math.PI / 2, a1 = a0 + step;
+      x.beginPath(); x.moveTo(c, c); x.arc(c, c, Rr * .78, a0, a1); x.closePath(); x.fillStyle = col; x.fill();
+      x.beginPath(); x.moveTo(c, c); x.arc(c, c, Rr * .635, a0, a1); x.closePath(); x.fillStyle = darken(col.length === 7 ? col : '#000000', P.floorDark); x.fill();
+    }
+    x.strokeStyle = P.fret; x.lineWidth = Math.max(1, L / 260);
+    for (let i = 0; i < N; i++) {
+      const a = i * step - step / 2;
+      x.beginPath(); x.moveTo(c + Math.sin(a) * Rr * .47, c - Math.cos(a) * Rr * .47); x.lineTo(c + Math.sin(a) * Rr * .78, c - Math.cos(a) * Rr * .78); x.stroke();
+    }
+    x.beginPath(); x.arc(c, c, Rr * .635, 0, 7); x.stroke();
+    x.textAlign = 'center'; x.textBaseline = 'middle';
+    const fs = pixel() ? Math.max(6, Math.round(L * .038)) : Math.round(L * .044);
+    x.font = pixel() ? `${fs}px 'Press Start 2P', monospace` : isTerm() ? `${Math.round(fs * 1.25)}px VT323, monospace` : `700 ${fs}px 'Barlow Semi Condensed', sans-serif`;
+    for (let i = 0; i < N; i++) {
+      const n = wh[i], a = i * step;
+      x.save(); x.translate(c + Math.sin(a) * Rr * .707, c - Math.cos(a) * Rr * .707); x.rotate(a);
+      x.fillStyle = P['num' + colorOf(n).toUpperCase()]; x.fillText(lab(n), 0, 0); x.restore();
+    }
+    if (!isRetro()) { const gr = x.createRadialGradient(c - Rr * .1, c - Rr * .12, Rr * .02, c, c, Rr * .47); gr.addColorStop(0, '#c98a4a'); gr.addColorStop(.55, P.cone1); gr.addColorStop(1, P.cone2); circ(x, Rr * .47, gr); }
+    else { circ(x, Rr * .47, P.cone2); circ(x, Rr * .40, P.cone1); }
+    x.strokeStyle = P.turret; x.lineCap = pixel() ? 'butt' : 'round'; x.lineWidth = Rr * .045;
+    for (let k = 0; k < 4; k++) { const a = k * Math.PI / 2; x.beginPath(); x.moveTo(c, c); x.lineTo(c + Math.sin(a) * Rr * .3, c - Math.cos(a) * Rr * .3); x.stroke(); }
+    for (let k = 0; k < 4; k++) { const a = k * Math.PI / 2; circ2(x, c + Math.sin(a) * Rr * .3, c - Math.cos(a) * Rr * .3, Rr * .045, P.turret); }
+    circ(x, Rr * .09, P.turret); circ(x, Rr * .05, isRetro() ? P.rim1 : '#fff6d6');
+  }
+  function circ2(ctx, x, y, r, fill) { ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fillStyle = fill; ctx.fill(); }
+  function drawFrame() {
+    if (!W || !visible) return;
+    buildArt();
+    const L = work.width, c = L / 2, P = pal();
+    wg.clearRect(0, 0, L, L);
+    wg.imageSmoothingEnabled = !pixel();
+    wg.drawImage(bowlArt, 0, 0);
+    wg.save(); wg.translate(c, c); wg.rotate(rotor.th); wg.drawImage(rotorArt, -c, -c); wg.restore();
+    if (ball.show) {
+      const phi = rotor.th + ball.psi, rr = ball.r * c, bx = c + Math.sin(phi) * rr, by = c - Math.cos(phi) * rr, br = Math.max(2, c * .034);
+      if (pixel()) { wg.fillStyle = '#0b0d0c'; wg.fillRect(Math.round(bx - br) + 1, Math.round(by - br) + 1, Math.round(br * 2), Math.round(br * 2)); wg.fillStyle = P.ball; wg.fillRect(Math.round(bx - br), Math.round(by - br), Math.round(br * 2), Math.round(br * 2)); }
+      else {
+        if (P.glow) { wg.shadowColor = P.glow; wg.shadowBlur = br * 2.5; }
+        const gr = wg.createRadialGradient(bx - br * .35, by - br * .4, br * .1, bx, by, br);
+        gr.addColorStop(0, '#ffffff'); gr.addColorStop(.6, P.ball); gr.addColorStop(1, isTerm() ? '#4f9f73' : '#b9b1a4');
+        wg.beginPath(); wg.arc(bx, by, br, 0, 7); wg.fillStyle = gr; wg.fill(); wg.shadowBlur = 0;
+      }
+    }
+    g.imageSmoothingEnabled = !pixel();
+    g.clearRect(0, 0, W, W); g.drawImage(work, 0, 0, W, W);
+  }
+
+  /* ---------- The spin ----------
+     The ball's path is worked out relative to the rotor: it starts fast, slows, drops off the track,
+     rattles over the deflectors and pockets, and comes to rest in the drawn pocket. */
+  const RADII = [[0, .905], [.55, .905], [.68, .8], [.72, .68], [.76, .745], [.8, .6], [.84, .665], [.88, .56], [.92, .6], [.96, .555], [1, .555]];
+  function radiusAt(u) {
+    for (let i = 1; i < RADII.length; i++) if (u <= RADII[i][0]) {
+      const [u0, r0] = RADII[i - 1], [u1, r1] = RADII[i], k = (u - u0) / (u1 - u0);
+      return r0 + (r1 - r0) * (1 - Math.cos(k * Math.PI)) / 2;
+    }
+    return .555;
+  }
+  const mod2 = x => ((x % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+  function launch(flickW) {
+    if (state !== 'bet') return;
+    if (!bets.size) { say('Place a bet first — tap the table'); flash($r('rlTableWrap')); return; }
+    Sound.init();
+    const wh = wheelOf(R.variant), N = wh.length, step = Math.PI * 2 / N;
+    const k = Math.floor(RNG() * N);                                       // every pocket equally likely
+    const num = wh[k];
+    R.pendingNum = num; R.pendingVariant = R.variant; save();
+    const dir = flickW ? Math.sign(flickW) : 1;
+    const w0 = flickW ? Math.min(4, Math.max(1.2, Math.abs(flickW))) : 2.2;
+    rotor.w = dir * w0; rotor.dir = dir;
+    const T = RM ? 1700 : Math.round(7200 + (w0 - 1.2) * 450 + RNG() * 900);
+    const p = 2.6;
+    const psi0 = ball.show ? ball.psi : mod2(-rotor.th + Math.PI * .75);
+    const base = (9 + w0) * (T / 1000) / p;                                    // ≈ 1.5 turns a second at launch
+    const Drel = base + mod2(dir * (psi0 - k * step) - base);
+    run = { t0: performance.now(), T, p, psi0, Drel, dir, k, num, r0: ball.show ? ball.r : .905, lastPocket: null, lastTick: 0, called: false };
+    ball.show = true;
+    state = 'spin'; dolly = null; undo = [];
+    say('Ball in play — you can still bet');
+    renderChips(); render();
+  }
+  let lastT = 0;
+  function loop(now) {
+    if (!visible) { looping = false; return; }
+    const dt = Math.min(.05, (now - (lastT || now)) / 1000); lastT = now;
+    const idleW = .3 * rotor.dir;
+    if (!dragging) { rotor.w += (idleW - rotor.w) * (1 - Math.exp(-dt / 7)); rotor.th += rotor.w * dt; }
+    if (run) {
+      const u = Math.min(1, (now - run.t0) / run.T);
+      const E = 1 - Math.pow(1 - u, run.p);
+      let jit = 0;
+      if (u > .68 && !RM) jit = .09 * Math.sin(u * 70) * Math.pow(1 - u, 1.4);
+      ball.psi = run.psi0 - run.dir * run.Drel * E + jit;
+      ball.r = u < .04 ? run.r0 + (.905 - run.r0) * (u / .04) : radiusAt(u);
+      if (u > .5 && !run.called) { run.called = true; state = 'nomore'; say('No more bets'); $r('rlCall').classList.add('nomore'); Sound.thunk(); render(); }
+      if (u > .66) {
+        const N = wheelOf(R.variant).length, pk = Math.floor(mod2(ball.psi) / (Math.PI * 2 / N) + .5);
+        if (pk !== run.lastPocket) { run.lastPocket = pk; if (now - run.lastTick > 45) { run.lastTick = now; Sound.tick(); } }
+      }
+      if (u >= 1) { const r = run; run = null; ball.psi = r.k * Math.PI * 2 / wheelOf(R.variant).length; ball.r = .555; Sound.thunk(); buzz(20); resolve(r.num); }
+    }
+    drawFrame();
+    requestAnimationFrame(loop);
+  }
+  let looping = false;
+  function startLoop() { if (looping) return; looping = true; lastT = 0; requestAnimationFrame(loop); }
+
+  /* ---------- Paying out ---------- */
+  function resolve(num) {
+    const list = [...bets.values()], v = R.pendingVariant || R.variant;
+    const staked = list.reduce((t, b) => t + b.amt, 0);
+    let ret = 0; const winKeys = new Set();
+    list.forEach(b => { const r = betReturn(b, num, v); ret += r; if (r > b.amt) winKeys.add(b.key); });
+    R.bal += ret; R.returned += ret; R.wagered += staked; R.spins++;
+    R.hist.unshift(num); if (R.hist.length > 200) R.hist.length = 200;
+    R.lastBets = list.map(b => ({ key: b.key, amt: b.amt }));
+    R.pendingNum = null;
+    const net = ret - staked;
+    if (net > R.bigWin) R.bigWin = net;
+    const newBest = R.bal > R.best; if (newBest) R.best = R.bal;
+    bets.clear(); undo = []; save();
+    // show it: the marker goes on the number, winners glow, losers are swept
+    state = 'pay'; dolly = num;
+    renderChips(list);
+    const layerChips = [...document.querySelectorAll('#rlLayer .rl-chipon')];
+    list.forEach((b, i) => { const el = layerChips[i]; if (el) el.classList.add(winKeys.has(b.key) ? 'win' : 'lose'); });
+    const cell = numEls.get(num); if (cell) { cell.classList.remove('winner'); void cell.offsetWidth; cell.classList.add('winner'); }
+    $r('rlCall').classList.remove('nomore');
+    const head = `${lab(num)} ${colorName(num)}`;
+    if (ret > 0) {
+      say(ret > staked ? `${head} · you win ${fmtC(ret)} (${fmtC(net)} profit)` : `${head} · ${fmtC(ret)} back`);
+      pop('+' + fmtC(ret));
+      const big = net >= Math.max(200, staked * 10);
+      if (big) { spawn('coin', 70); spawn('conf', 90); Sound.fanfare(true); buzz([60, 40, 60, 40, 160]); } else { Sound.fanfare(false); buzz([30, 30, 30]); }
+    } else say(`${head} · no win this time`);
+    if (newBest && R.spins > 1) setTimeout(() => { toast(`New best bankroll: <b>${fmtC(R.best)}</b> chips`, 'cyan'); spawn('conf', 60); }, 700);
+    render();
+    setTimeout(() => {
+      state = 'bet'; renderChips(); render();
+      if (R.bal < 1 && !bets.size) say('Out of chips — take another 1,000 to keep playing');
+      else if (!ret) say('Place your bets');
+    }, RM ? 400 : 1900);
+  }
+  function pop(text) { const el = $r('rlPop'); el.textContent = text; el.classList.remove('go'); void el.offsetWidth; el.classList.add('go'); }
+  function flash(el) { if (!el) return; el.classList.remove('rl-shake'); void el.offsetWidth; el.classList.add('rl-shake'); }
+  function say(t) { const m = $r('rlMsg'); if (m) m.textContent = t; }
+
+  /* ---------- Rendering the rest ---------- */
+  function render() {
+    if (!built) return;
+    $r('rlBal').textContent = fmtC(R.bal);
+    $r('rlBet').textContent = fmtC(totalBet());
+    $r('rlBest').textContent = fmtC(R.best);
+    $r('rlVarTag').textContent = VARIANTS[R.variant].name;
+    $r('rlCall').textContent = state === 'bet' ? 'Place your bets' : state === 'spin' ? 'Ball in play' : state === 'nomore' ? 'No more bets' : 'Winning number';
+    const last = R.hist[0];
+    const rn = $r('rlNum'); rn.className = 'rl-num' + (last != null ? ' ' + colorOf(last) : ''); rn.textContent = last != null ? lab(last) : '–';
+    $r('rlNumSub').textContent = last != null ? `${colorName(last)}${last !== 0 && last !== DZ ? ` · ${last % 2 ? 'Odd' : 'Even'} · ${last <= 18 ? '1–18' : '19–36'}` : ''}` : 'No spins yet';
+    $r('rlRecent').innerHTML = R.hist.slice(0, 14).map(n => `<span class="rl-pill ${colorOf(n)}">${lab(n)}</span>`).join('');
+    const open = state === 'bet';
+    $r('rlUndo').disabled = !open || !undo.length;
+    $r('rlClear').disabled = !open || !bets.size;
+    $r('rlRebet').disabled = !open || !!bets.size || !R.lastBets.length;
+    $r('rlDouble').disabled = !open || !bets.size;
+    const sb = $r('rlSpin'); sb.disabled = !open || !bets.size; sb.classList.toggle('ready', open && !!bets.size);
+    $r('rlSpinLbl').textContent = open ? 'SPIN' : state === 'pay' ? 'PAYING' : 'ROLLING';
+    $r('rlSpinSub').textContent = open ? (bets.size ? `bet ${fmtC(totalBet())}` : 'place a bet') : state === 'spin' ? 'bets open' : '…';
+    $r('rlBroke').hidden = !(open && R.bal < 1 && !bets.size);
+    document.querySelectorAll('.rl-chipbtn').forEach(b => b.setAttribute('aria-checked', String(+b.dataset.v === R.chip)));
+    document.querySelectorAll('.rl-variant button').forEach(b => { b.setAttribute('aria-pressed', String(b.dataset.v === R.variant)); b.disabled = !open || !!bets.size; });
+    $r('rlCallsBox').hidden = R.variant === 'us';
+    $r('rlCallsUS').hidden = R.variant !== 'us';
+    $r('rlNbr').setAttribute('aria-pressed', String(neighbourMode));
+    renderStats(); renderPay();
+    if (typeof rlActive === 'function' && rlActive()) $('termStat').textContent = `Chips: ${fmtC(R.bal)} · Bet: ${fmtC(totalBet())} · Last: ${last != null ? lab(last) : '-'}`;
+    if (state !== 'pay') renderChips();
+  }
+  function renderStats() {
+    const h = R.hist, n = h.length;
+    $r('rlSpins').textContent = fmt(R.spins);
+    $r('rlBig').textContent = fmtC(R.bigWin);
+    $r('rlNet').textContent = (R.returned - R.wagered >= 0 ? '+' : '') + fmtC(R.returned - R.wagered);
+    $r('rlRefills').textContent = fmt(R.refills);
+    const cnt = { r: 0, b: 0, g: 0 }; h.slice(0, 100).forEach(x => cnt[colorOf(x)]++);
+    const m = Math.min(100, n);
+    $r('rlSplit').innerHTML = m ? `<span class="r" style="flex:${cnt.r}">${cnt.r}</span><span class="b" style="flex:${cnt.b}">${cnt.b}</span>${cnt.g ? `<span class="g" style="flex:${cnt.g}">${cnt.g}</span>` : ''}` : '<em>No spins yet</em>';
+    const freq = new Map(); h.slice(0, 100).forEach(x => freq.set(x, (freq.get(x) || 0) + 1));
+    const hot = [...freq.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5);
+    const all = wheelOf(R.variant);
+    const since = x => { const i = h.indexOf(x); return i < 0 ? Infinity : i; };
+    const cold = [...all].sort((a, b) => since(b) - since(a)).slice(0, 5);
+    $r('rlHot').innerHTML = n ? hot.map(([x, c]) => `<span class="rl-pill ${colorOf(x)}" title="${c} times">${lab(x)}</span>`).join('') : '<em>—</em>';
+    $r('rlCold').innerHTML = n ? cold.map(x => `<span class="rl-pill ${colorOf(x)}">${lab(x)}</span>`).join('') : '<em>—</em>';
+  }
+  function renderPay() {
+    const N = wheelOf(R.variant).length;
+    const rows = [['Straight up', 'One number', 1, 35], ['Split', 'Two side by side', 2, 17], ['Street', 'A row of three', 3, 11], ['Corner', 'Four in a square', 4, 8],
+      ...(R.variant === 'us' ? [['Top line', '0, 00, 1, 2, 3', 5, 6]] : [['First four', '0, 1, 2, 3', 4, 8]]),
+      ['Six line', 'Two rows of three', 6, 5], ['Dozen', '1st, 2nd or 3rd 12', 12, 2], ['Column', '"2 to 1" row', 12, 2], ['Red / Black', 'Colour', 18, 1], ['Odd / Even', '', 18, 1], ['1–18 / 19–36', 'Low or high', 18, 1]];
+    $r('rlPayT').innerHTML = '<tr class="rl-ph"><th>Bet</th><th>Pays</th><th>Chance</th></tr>' + rows.map(([a, b, n, p]) => `<tr><td><b>${a}</b>${b ? `<small>${b}</small>` : ''}</td><td class="rl-pays">${p} to 1</td><td class="rl-ch">${(n / N * 100).toFixed(1)}%</td></tr>`).join('');
+    $r('rlEdge').textContent = R.variant === 'us' ? 'House edge 5.26% on every bet (7.89% on the top line).' : R.variant === 'fr' ? 'House edge 2.7%; only 1.35% on even-money bets, because La Partage gives back half when zero wins.' : 'House edge 2.7% on every bet.';
+  }
+
+  /* ---------- Wiring ---------- */
+  let dragging = false;
+  function bindTable() {
+    const T = $r('rlTable');
+    let touchHL = null;
+    T.addEventListener('click', e => {
+      const el = e.target.closest('[data-key]'); if (!el) return;
+      const key = el.dataset.key, s = spotByKey.get(key);
+      if (neighbourMode && s && s.key.startsWith('S:')) { neighbourMode = false; neighbours(s.nums[0]); render(); return; }
+      place([[key, R.chip]]);
+    });
+    T.addEventListener('contextmenu', e => { const el = e.target.closest('[data-key]'); if (!el) return; e.preventDefault(); removeSpot(el.dataset.key); });
+    T.addEventListener('pointerover', e => { const el = e.target.closest('[data-key]'); if (!el) return; const s = spotByKey.get(el.dataset.key); highlight(s && s.nums); if (e.pointerType !== 'mouse') { clearTimeout(touchHL); touchHL = setTimeout(() => highlight(null), 700); } });
+    T.addEventListener('pointerleave', () => highlight(null));
+  }
+  function bindWheel() {
+    let lastA = 0, lastTm = 0, wv = 0, moved = 0;
+    const ang = e => { const b = cv.getBoundingClientRect(); return Math.atan2(e.clientX - (b.left + b.width / 2), -(e.clientY - (b.top + b.height / 2))); };
+    cv.addEventListener('pointerdown', e => {
+      if (run) return;
+      dragging = true; lastA = ang(e); lastTm = performance.now(); wv = 0; moved = 0;
+      cv.setPointerCapture(e.pointerId); cv.classList.add('grab');
+    });
+    cv.addEventListener('pointermove', e => {
+      if (!dragging) return;
+      const a = ang(e), now = performance.now(); let d = a - lastA; if (d > Math.PI) d -= Math.PI * 2; else if (d < -Math.PI) d += Math.PI * 2;
+      const dt = Math.max(8, now - lastTm) / 1000; lastA = a; lastTm = now;
+      rotor.th += d; moved += Math.abs(d); wv = .5 * wv + .5 * (d / dt); rotor.w = wv; drawFrame();
+    });
+    const up = () => {
+      if (!dragging) return; dragging = false; cv.classList.remove('grab');
+      if (Math.abs(wv) > 1.1 && moved > .3) {
+        if (state === 'bet' && bets.size) launch(wv);
+        else { rotor.dir = Math.sign(wv); if (!bets.size && state === 'bet') say('Nice spin! Place a bet, then flick the wheel to play'); }
+      } else if (moved < .05 && state === 'bet' && bets.size) launch(0);
+    };
+    cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+  }
+  function bindUI() {
+    $r('rlChips').addEventListener('click', e => { const b = e.target.closest('.rl-chipbtn'); if (!b) return; R.chip = +b.dataset.v; save(); render(); Sound.tick(); });
+    $r('rlUndo').addEventListener('click', doUndo);
+    $r('rlClear').addEventListener('click', clearBets);
+    $r('rlRebet').addEventListener('click', rebet);
+    $r('rlDouble').addEventListener('click', doubleUp);
+    $r('rlSpin').addEventListener('click', () => launch(0));
+    $r('rlRefill').addEventListener('click', () => { R.bal += START; R.refills++; save(); render(); say('1,000 fresh chips. Place your bets'); Sound.coin(); });
+    document.querySelectorAll('.rl-variant button').forEach(b => b.addEventListener('click', () => setVariant(b.dataset.v)));
+    document.querySelectorAll('[data-call]').forEach(b => b.addEventListener('click', () => callBet(b.dataset.call)));
+    $r('rlNbr').addEventListener('click', () => { neighbourMode = !neighbourMode; render(); say(neighbourMode ? 'Neighbours: tap a number on the table' : 'Place your bets'); });
+    document.querySelectorAll('.rtabs button').forEach(b => b.addEventListener('click', () => {
+      document.querySelectorAll('.rtabs button').forEach(x => x.setAttribute('aria-selected', String(x === b)));
+      document.querySelectorAll('[data-rpane]').forEach(p => p.hidden = p.dataset.rpane !== b.dataset.rtab);
+    }));
+    $r('rlHowClose').addEventListener('click', () => { $r('rlHowModal').hidden = true; });
+    $r('rlHowModal').addEventListener('click', e => { if (e.target.id === 'rlHowModal') $r('rlHowModal').hidden = true; });
+    if ('ResizeObserver' in window) new ResizeObserver(() => { if (visible) { layout(); } }).observe($r('rlTableWrap'));
+    let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { if (visible) { sizeWheel(); layout(); } }, 120); });
+  }
+  function setVariant(v) {
+    if (state !== 'bet' || bets.size || v === R.variant || !VARIANTS[v]) { if (bets.size) say('Clear the table before changing the wheel'); return; }
+    R.variant = v; save(); dolly = null;
+    buildTable(); artKey = ''; ball.show = false; render(); drawFrame();
+    say(`${VARIANTS[v].name} wheel · ${VARIANTS[v].sub}`);
+  }
+
+  function init() {
+    if (built) return;
+    load();
+    cv = $r('rlWheel'); g = cv.getContext('2d');
+    built = true;
+    buildTable();
+    // restore: a spin cut short by a reload is settled on the number drawn at launch
+    (R.table || []).forEach(p => { const s = spotByKey.get(p.key); if (s && p.amt > 0) bets.set(p.key, { key: p.key, amt: p.amt, nums: s.nums, pays: s.pays }); });
+    bindTable(); bindWheel(); bindUI();
+    if (R.hist.length) { const wh = wheelOf(R.variant), i = wh.indexOf(R.hist[0]); if (i >= 0) { ball.show = true; ball.psi = i * Math.PI * 2 / wh.length; ball.r = .555; } }
+    if (R.pendingNum != null) { const n = R.pendingNum; setTimeout(() => { resolve(n); toast(`Your last spin landed while you were away: <b>${lab(n)} ${colorName(n)}</b>`); }, 400); }
+    render();
+  }
+  function show() {
+    init(); visible = true;
+    requestAnimationFrame(() => { sizeWheel(); orient = ''; layout(); render(); startLoop(); });
+  }
+  function hide() { visible = false; }
+  function onLook() { artKey = ''; if (visible) drawFrame(); }
+  function busy() { return state !== 'bet'; }
+  function howOpen() { $r('rlHowModal').hidden = false; $r('rlHowClose').focus(); }
+  function key(e) {
+    if (e.code === 'Space') { e.preventDefault(); if (!$r('rlHowModal').hidden) return; launch(0); }
+  }
+
+  /* ---------- Self-checks: payouts and fairness ---------- */
+  function selfTest(log = console.log) {
+    let pass = 0, fail = 0;
+    const ok = (c, m) => { c ? pass++ : fail++; if (!c) log('FAIL  Roulette: ' + m); };
+    ['eu', 'us'].forEach(v => {
+      const sp = buildSpots(v), N = wheelOf(v).length;
+      ok(new Set(wheelOf(v)).size === N && N === (v === 'us' ? 38 : 37), v + ' wheel has every pocket once');
+      ok(sp.every(s => s.key === 'TL' ? s.pays === 6 : s.pays === 36 / s.nums.length - 1), v + ' every bet pays 36/n − 1');
+      sp.forEach(s => { let ret = 0; wheelOf(v).forEach(n => ret += betReturn({ amt: 1, nums: s.nums, pays: s.pays }, n, v)); const want = s.key === 'TL' ? 35 / 38 : 36 / N; if (Math.abs(ret / N - want) > 1e-9) ok(false, `${v} ${s.key} return ${ret / N}`); });
+      ok(new Set(sp.map(s => s.key)).size === sp.length, v + ' bet keys unique');
+    });
+    ok(betReturn({ amt: 10, nums: [17], pays: 35 }, 17, 'eu') === 360, 'straight 17 pays 35 to 1');
+    const red = buildSpots('eu').find(s => s.key === 'RED');
+    ok(betReturn({ amt: 10, nums: red.nums, pays: 1 }, 0, 'eu') === 0, 'red loses on zero (European)');
+    ok(betReturn({ amt: 10, nums: red.nums, pays: 1 }, 0, 'fr') === 5, 'La Partage gives half back on zero');
+    ok(betReturn({ amt: 10, nums: [0, DZ, 1, 2, 3], pays: 6 }, DZ, 'us') === 70, 'top line on 00 pays 6 to 1');
+    const euKeys = new Set(buildSpots('eu').map(s => s.key));
+    Object.entries(CALLS).forEach(([id, c]) => ok(c.parts.every(p => euKeys.has(p[0])), id + ' uses real table spots'));
+    const cover = id => { const s = new Set(); CALLS[id].parts.forEach(([k]) => buildSpots('eu').find(x => x.key === k).nums.forEach(n => s.add(n))); return s.size; };
+    ok(cover('voisins') === 17 && cover('zero') === 7 && cover('tiers') === 12 && cover('orph') === 8, 'call bets cover 17 / 7 / 12 / 8 numbers');
+    // fairness: 74,000 draws, every pocket within 12% of the expected count
+    const cnt = new Array(37).fill(0); for (let i = 0; i < 74000; i++) cnt[Math.floor(RNG() * 37)]++;
+    ok(cnt.every(c => Math.abs(c - 2000) < 240), 'every pocket equally likely');
+    log(`Roulette self-tests: ${pass}/${pass + fail} passed`);
+    return fail === 0;
+  }
+
+  return { init, show, hide, onLook, busy, howOpen, key, selfTest, launch, get state() { return state; }, get R() { return R; }, _bets: bets, place, callBet, setVariant };
+})();
+
+/* ---------- Two games, one cabinet ---------- */
+const GAME_KEY = 'royal-game';
+let currentGame = 'slots';
+function rlActive() { return currentGame === 'roulette'; }
+function setGame(gname, quiet) {
+  if (gname === currentGame && !quiet) return;
+  if (!quiet && gname === 'roulette' && phase !== 'idle') { toast('Finish this spin first'); return; }
+  if (!quiet && gname === 'slots' && RL.busy()) { toast('Wait for the ball to settle first'); return; }
+  currentGame = gname; try { localStorage.setItem(GAME_KEY, gname); } catch (e) {}
+  const rl = gname === 'roulette';
+  $('slotGame').hidden = rl; $('rlGame').hidden = !rl;
+  document.querySelectorAll('.games button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.game === gname)));
+  $('brandH').textContent = rl ? 'Royal Roulette' : 'Royal Reels';
+  $('brandTag').textContent = rl ? 'European · French · American wheels' : 'Card slots · 8 paylines · Hearts rule';
+  $('termName').textContent = rl ? 'ROYAL ROULETTE' : 'ROYAL REELS';
+  document.title = rl ? 'Royal Roulette' : 'Royal Reels';
+  if (rl) RL.show();
+  else {
+    RL.hide(); sizeSlots(); buildBulbs(); renderReelsStatic(currentGrid); Lever.draw(); renderHUD();
+    if (!quiet && (S.spinsLeft <= 0 || S.ended) && $('overModal').hidden) setTimeout(gameOver, 200);
+  }
+  if (!quiet) window.scrollTo({ top: 0, behavior: RM ? 'auto' : 'smooth' });
+}
 function boot() {
   load(); applyModeClass();
   let resumed = null;
@@ -2389,10 +3570,13 @@ function boot() {
   else if (S.pending && S.pending.length === 9) { const r = commitSpin(S.pending); currentGrid = S.history[0].g; resumed = r.total; }
   if (S.history[0] && S.history[0].g.every(c => SUIT_SYM[c.s])) currentGrid = S.history[0].g;
   sizeSlots(); renderReelsStatic(currentGrid); renderPaytable(); buildBulbs(); sizeFx(); bind(); renderAll();
-  Lever.init(); initSwipe(); showCoachOnce();
+  Lever.init(); initSwipe(); initCrank(); showCoachOnce();
   runSelfTests();
-  setTimeout(() => toast(resumed != null ? `Your last spin finished while you were away: <b>+${fmt(resumed)}</b>` : inProgress() ? `Welcome back · ${S.spinsLeft} spins left in this game` : `${S.spinsLeft} spins. Three Kings = 1,000 point jackpot!`), 600);
-  if (S.spinsLeft <= 0 || S.ended) setTimeout(gameOver, 300);
+  setTimeout(() => !rlActive() && toast(resumed != null ? `Your last spin finished while you were away: <b>+${fmt(resumed)}</b>` : inProgress() ? `Welcome back · ${S.spinsLeft} spins left in this game` : `${S.spinsLeft} spins. Three Kings = 1,000 point jackpot!`), 600);
+  RL.selfTest();
+  let g0 = 'slots'; try { g0 = localStorage.getItem(GAME_KEY) === 'roulette' ? 'roulette' : 'slots'; } catch (e) {}
+  if (g0 === 'roulette') setGame('roulette', true);
+  else if (S.spinsLeft <= 0 || S.ended) setTimeout(gameOver, 300);
 }
 boot();
 </script>
